@@ -14,6 +14,7 @@
 		34630BE91CBEA7DA00914FD0 /* Ingrediente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BE81CBEA7DA00914FD0 /* Ingrediente.swift */; };
 		34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEA1CBEABA600914FD0 /* Paciente.swift */; };
 		34630BED1CBEACD800914FD0 /* Fecha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEC1CBEACD800914FD0 /* Fecha.swift */; };
+		34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */; };
 		346F3FBE1CB5733900A48626 /* ViewControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */; };
 		346F3FC21CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */; };
 		346F3FC51CB573FF00A48626 /* ViewControllerVerMedicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */; };
@@ -53,6 +54,7 @@
 		34630BE81CBEA7DA00914FD0 /* Ingrediente.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ingrediente.swift; sourceTree = "<group>"; };
 		34630BEA1CBEABA600914FD0 /* Paciente.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paciente.swift; sourceTree = "<group>"; };
 		34630BEC1CBEACD800914FD0 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
+		34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCalendario.swift; sourceTree = "<group>"; };
 		346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerMenu.swift; sourceTree = "<group>"; };
 		346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerMisMedicamentos.swift; sourceTree = "<group>"; };
 		346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerVerMedicamento.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				344A22111CBDFC3C006BE5B0 /* sbCalendario.storyboard */,
+				34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */,
 			);
 			name = Calendario;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				34630BE91CBEA7DA00914FD0 /* Ingrediente.swift in Sources */,
 				34630BED1CBEACD800914FD0 /* Fecha.swift in Sources */,
 				34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */,
+				34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */,
 				34D130641CB46C61005E206C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
