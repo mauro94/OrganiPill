@@ -7,21 +7,60 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		342801081CBDBBBE0061BE49 /* Persona.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342801071CBDBBBE0061BE49 /* Persona.swift */; };
+		344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */; };
+		344A22101CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */; };
+		344A22121CBDFC3C006BE5B0 /* sbCalendario.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A22111CBDFC3C006BE5B0 /* sbCalendario.storyboard */; };
+		346F3FBE1CB5733900A48626 /* ViewControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */; };
+		346F3FC21CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */; };
+		346F3FC51CB573FF00A48626 /* ViewControllerVerMedicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */; };
+		346F3FC71CB57FFF00A48626 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FC61CB57FFF00A48626 /* Realm.framework */; };
+		346F3FC81CB57FFF00A48626 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FC61CB57FFF00A48626 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		346F3FCB1CB5800700A48626 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FCA1CB5800700A48626 /* RealmSwift.framework */; };
+		346F3FCC1CB5800700A48626 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FCA1CB5800700A48626 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		349E7F5B1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */; };
 		34D130641CB46C61005E206C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D130631CB46C61005E206C /* AppDelegate.swift */; };
-		34D130661CB46C61005E206C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D130651CB46C61005E206C /* ViewController.swift */; };
 		34D130691CB46C61005E206C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34D130671CB46C61005E206C /* Main.storyboard */; };
 		34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D1306A1CB46C61005E206C /* Assets.xcassets */; };
 		34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34D1306C1CB46C61005E206C /* LaunchScreen.storyboard */; };
+		34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBD7B01CB5B94B00DA952C /* Medicamento.swift */; };
+		34DBD7B31CB5C32E00DA952C /* TableViewCellMedicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		346F3FC91CB57FFF00A48626 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				346F3FCC1CB5800700A48626 /* RealmSwift.framework in Embed Frameworks */,
+				346F3FC81CB57FFF00A48626 /* Realm.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		342801071CBDBBBE0061BE49 /* Persona.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persona.swift; sourceTree = "<group>"; };
+		344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbMisMedicamentos.storyboard; sourceTree = "<group>"; };
+		344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
+		344A22111CBDFC3C006BE5B0 /* sbCalendario.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbCalendario.storyboard; sourceTree = "<group>"; };
+		346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerMenu.swift; sourceTree = "<group>"; };
+		346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerMisMedicamentos.swift; sourceTree = "<group>"; };
+		346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerVerMedicamento.swift; sourceTree = "<group>"; };
+		346F3FC61CB57FFF00A48626 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		346F3FCA1CB5800700A48626 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAgregarMedicamento1.swift; sourceTree = "<group>"; };
 		34D130601CB46C61005E206C /* OrganiPill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrganiPill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D130631CB46C61005E206C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		34D130651CB46C61005E206C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		34D130681CB46C61005E206C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		34D1306A1CB46C61005E206C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34D1306D1CB46C61005E206C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34D1306F1CB46C61005E206C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		34DBD7B01CB5B94B00DA952C /* Medicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medicamento.swift; sourceTree = "<group>"; };
+		34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellMedicamento.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,15 +68,77 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				346F3FCB1CB5800700A48626 /* RealmSwift.framework in Frameworks */,
+				346F3FC71CB57FFF00A48626 /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3403369A1CBBE6D60054540E /* Calendario */ = {
+			isa = PBXGroup;
+			children = (
+				344A22111CBDFC3C006BE5B0 /* sbCalendario.storyboard */,
+			);
+			name = Calendario;
+			sourceTree = "<group>";
+		};
+		3403369B1CBBE7060054540E /* Registrar Datos */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Registrar Datos";
+			sourceTree = "<group>";
+		};
+		3403369C1CBBE7190054540E /* Reportes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Reportes;
+			sourceTree = "<group>";
+		};
+		3403369D1CBBE7240054540E /* Actividad del Dia */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Actividad del Dia";
+			sourceTree = "<group>";
+		};
+		346F3FC31CB573B900A48626 /* MisMedicamentos */ = {
+			isa = PBXGroup;
+			children = (
+				346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */,
+				346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */,
+				344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */,
+				34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */,
+			);
+			name = MisMedicamentos;
+			sourceTree = "<group>";
+		};
+		349E7F591CB754ED00BFEB6F /* AgregarMedicamento */ = {
+			isa = PBXGroup;
+			children = (
+				344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */,
+				349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */,
+			);
+			name = AgregarMedicamento;
+			sourceTree = "<group>";
+		};
+		349E7F5C1CB7552500BFEB6F /* RealmFIles */ = {
+			isa = PBXGroup;
+			children = (
+				34DBD7B01CB5B94B00DA952C /* Medicamento.swift */,
+				342801071CBDBBBE0061BE49 /* Persona.swift */,
+			);
+			name = RealmFIles;
+			sourceTree = "<group>";
+		};
 		34D130571CB46C61005E206C = {
 			isa = PBXGroup;
 			children = (
+				346F3FCA1CB5800700A48626 /* RealmSwift.framework */,
+				346F3FC61CB57FFF00A48626 /* Realm.framework */,
 				34D130621CB46C61005E206C /* OrganiPill */,
 				34D130611CB46C61005E206C /* Products */,
 			);
@@ -54,9 +155,16 @@
 		34D130621CB46C61005E206C /* OrganiPill */ = {
 			isa = PBXGroup;
 			children = (
-				34D130631CB46C61005E206C /* AppDelegate.swift */,
-				34D130651CB46C61005E206C /* ViewController.swift */,
+				346F3FC31CB573B900A48626 /* MisMedicamentos */,
+				349E7F591CB754ED00BFEB6F /* AgregarMedicamento */,
+				349E7F5C1CB7552500BFEB6F /* RealmFIles */,
+				3403369A1CBBE6D60054540E /* Calendario */,
+				3403369D1CBBE7240054540E /* Actividad del Dia */,
+				3403369C1CBBE7190054540E /* Reportes */,
+				3403369B1CBBE7060054540E /* Registrar Datos */,
 				34D130671CB46C61005E206C /* Main.storyboard */,
+				34D130631CB46C61005E206C /* AppDelegate.swift */,
+				346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */,
 				34D1306A1CB46C61005E206C /* Assets.xcassets */,
 				34D1306C1CB46C61005E206C /* LaunchScreen.storyboard */,
 				34D1306F1CB46C61005E206C /* Info.plist */,
@@ -74,6 +182,8 @@
 				34D1305C1CB46C61005E206C /* Sources */,
 				34D1305D1CB46C61005E206C /* Frameworks */,
 				34D1305E1CB46C61005E206C /* Resources */,
+				346F3FC91CB57FFF00A48626 /* Embed Frameworks */,
+				346F3FCD1CB5835100A48626 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -124,19 +234,44 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */,
+				344A22101CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard in Resources */,
 				34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */,
+				344A22121CBDFC3C006BE5B0 /* sbCalendario.storyboard in Resources */,
+				344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */,
 				34D130691CB46C61005E206C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		346F3FCD1CB5835100A48626 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		34D1305C1CB46C61005E206C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34D130661CB46C61005E206C /* ViewController.swift in Sources */,
+				342801081CBDBBBE0061BE49 /* Persona.swift in Sources */,
+				346F3FC51CB573FF00A48626 /* ViewControllerVerMedicamento.swift in Sources */,
+				349E7F5B1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift in Sources */,
+				346F3FC21CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift in Sources */,
+				346F3FBE1CB5733900A48626 /* ViewControllerMenu.swift in Sources */,
+				34DBD7B31CB5C32E00DA952C /* TableViewCellMedicamento.swift in Sources */,
+				34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */,
 				34D130641CB46C61005E206C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,6 +385,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(SRCROOT)",
+				);
 				INFOPLIST_FILE = OrganiPill/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mx.itesm.OrganiPill;
@@ -261,6 +401,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(SRCROOT)",
+				);
 				INFOPLIST_FILE = OrganiPill/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mx.itesm.OrganiPill;
@@ -287,6 +432,7 @@
 				34D130741CB46C61005E206C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

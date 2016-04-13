@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io/api/xcode,swift
 
 ##My ignores##
-
+.storyboard
 
 ### Xcode ###
 # Xcode
