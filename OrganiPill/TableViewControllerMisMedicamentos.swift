@@ -30,7 +30,7 @@ class TableViewControllerMisMedicamentos: UITableViewController {
 		
 		perPersona.sNombre = "Gonzalo"
 		
-		perPersona.medMedicamentos.append(medMedicamentos)
+		//perPersona.medMedicamentos.append(medMedicamentos)
 		
 		// Get the default Realm
 		let realm = try! Realm()

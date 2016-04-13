@@ -12,7 +12,7 @@ import RealmSwift
 class Persona: Object {
 	dynamic var sNombre: String = ""
 	dynamic var sTelefono: String = ""
+	dynamic var sTelefonoSecundario: String = ""
 	dynamic var sCorreoElectronico: String = ""
-	dynamic var sGenero: String = ""
-	let medMedicamentos = List<Medicamento>()
+	dynamic var sTipo: String = ""
 }
