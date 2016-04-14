@@ -66,7 +66,7 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         // Configure the cell...
 		let cell: TableViewCellMedicamento = tableView.dequeueReusableCellWithIdentifier("medicamento", forIndexPath: indexPath) as! TableViewCellMedicamento
 		
-		cell.lbNombreMedicamento.text = medMedicamentos .sNombre
+		cell.lbNombreMedicamento.text = medMedicamentos.sNombre
 
         return cell
     }

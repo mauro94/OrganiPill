@@ -10,8 +10,8 @@ import UIKit
 
 class TableViewCellMedicamento: UITableViewCell {
 	//variables
-	@IBOutlet weak var lbNombreMedicamento: UILabel!
 	
+    @IBOutlet weak var lbNombreMedicamento: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
