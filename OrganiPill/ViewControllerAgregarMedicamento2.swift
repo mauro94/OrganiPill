@@ -1,28 +1,27 @@
 //
-//  ViewControllerAgregarMedicamento1.swift
+//  ViewControllerAgregarMedicamento2.swift
 //  OrganiPill
 //
-//  Created by Mauro Amarante on 4/7/16.
+//  Created by David Benitez on 4/13/16.
 //  Copyright © 2016 Mauro Amarante. All rights reserved.
 //
 
 import UIKit
 
-class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-
+class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    
     // MARK: - Outlets
-    @IBOutlet weak var pickerTipoMedicamentos: UIPickerView!
-    @IBOutlet weak var fldNombre: UITextField!
+    @IBOutlet weak var pickerMedidas: UIPickerView!
     
     // MARK: - Global Variables
-    let arrTiposMedicamento = ["Pastilla", "Inyección", "Supositorio", "Liquida"]
-    
+    //var arrMedidas = NSMutableArray()
+    let arrMedidas = ["Miligramos", "Mililitros"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.pickerTipoMedicamentos.dataSource = self
-        self.pickerTipoMedicamentos.delegate = self
-		self.title = "Agregar Medicamento"
+        
+        self.pickerMedidas.dataSource = self
+        self.pickerMedidas.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,21 +35,22 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return arrTiposMedicamento.count;
+        return arrMedidas.count;
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return arrTiposMedicamento[row]
+        return arrMedidas[row]
     }
+    
 
+    /*
     // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        
-        if(fldNombre.text != nil){
-            
-        }
     }
+    */
 
 }
