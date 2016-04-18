@@ -20,6 +20,13 @@ class ViewControllerVerMedicamento: UIViewController {
     @IBOutlet weak var lblVia: UILabel!
     @IBOutlet weak var scScrollView: UIScrollView!
 	
+    @IBOutlet weak var imImage: UIImageView!
+    
+    
+    
+    
+    
+    
     var nombres:String!
     
     var Dosis:String!
@@ -32,6 +39,10 @@ class ViewControllerVerMedicamento: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        imImage.frame = CGRectMake(0,0, screenSize.height * 100, 350)
+        
         
         
         lblNombre.text = nombres
@@ -75,19 +86,47 @@ class ViewControllerVerMedicamento: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 	
-	
+    var cambFoto:Bool = true
+    @IBAction func CambiarFoto(sender: AnyObject) {
+        if(cambFoto){
+            imImage.image = UIImage(named:	"rojo")
+            cambFoto = false
+        }
+        else{
+            imImage.image = UIImage(named:	"negro")
+            cambFoto = true
+        }
+        
+    }
 	
 	
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        
+        let view = segue.destinationViewController as! ViewControllerEditar
+       
+        
+        
+        view.nombres = lblNombre.text
+        
+        view.Duracion = lblDuracion.text
+        
+        view.Dosis = lblDosis.text
+        
+       
+        
+        
+        
+        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+ 
 
 }

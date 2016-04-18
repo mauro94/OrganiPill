@@ -36,6 +36,7 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         medAux.sNombre = "Advil"
         medAux.sViaAdministracion = "Injeccion"
         medAux.iDias = 10;
+        medAux.dDosis = 3
         
         
         
@@ -43,7 +44,8 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         
         medAux2.sNombre = "Tempra"
         medAux2.sViaAdministracion = "Comestible"
-        medAux2.iDias = 1;
+        medAux2.iDias = 1
+        medAux2.dDosis = 2
 		
         
         
@@ -158,6 +160,8 @@ class TableViewControllerMisMedicamentos: UITableViewController {
 
 
         view.viaAdmi = ArrmedMedicamentos[indexPath!.row].sViaAdministracion
+        
+        view.Dosis = String (ArrmedMedicamentos[indexPath!.row].dDosis)
 
         
         
