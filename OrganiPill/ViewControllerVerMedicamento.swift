@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 class ViewControllerVerMedicamento: UIViewController {
 	//variables
     @IBOutlet weak var lblNombre: UILabel!
@@ -26,17 +26,25 @@ class ViewControllerVerMedicamento: UIViewController {
     
     
     
+    var indexMedicamento : Medicamento!
     
-    var nombres:String!
     
-    var Dosis:String!
+    func recargardatos(){
+        lblNombre.text = indexMedicamento.sNombre
+        lblDosis.text = String(indexMedicamento.dDosis)
+        lblVia.text = indexMedicamento.sViaAdministracion
+        lblDuracion.text = String(indexMedicamento.iDias)
+        lblHorario.text = ""
+        
+        
+    }
     
-    var Duracion:String!
     
-    var viaAdmi:String!
+    override func viewDidAppear(animated: Bool) {
+        recargardatos()
+    }
     
-    var Horario:String!
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,12 +52,9 @@ class ViewControllerVerMedicamento: UIViewController {
         imImage.frame = CGRectMake(0,0, screenSize.height * 100, 350)
         
         
+        recargardatos()
         
-        lblNombre.text = nombres
-        lblDosis.text = Dosis
-        lblVia.text = viaAdmi
-        lblDuracion.text = Duracion
-        lblHorario.text = Horario
+       
         
         
 		
@@ -59,11 +64,13 @@ class ViewControllerVerMedicamento: UIViewController {
 	
 		
        
-        //var editButton : UIBarButtonItem = UIBarButtonItem(title: "RigthButtonTitle", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(""))
+        let editButton : UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(""))
         
-        //self.navigationItem.rightBarButtonItem = editButton
+        self.navigationItem.rightBarButtonItem = editButton
         
         
+        editButton.target = self
+        editButton.action = "editbottonpress:"
         
 		var viewSize = self.view.frame.size
 		viewSize.height = 700
@@ -109,25 +116,53 @@ class ViewControllerVerMedicamento: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         
-        let view = segue.destinationViewController as! ViewControllerEditar
+        if(segue.identifier == "edit"){
+            
+            let view = segue.destinationViewController as! ViewControllerEditar
+            
+            
+            
+            view.nombres = lblNombre.text
+            
+            view.Duracion = lblDuracion.text
+            
+            view.Dosis = lblDosis.text
+            
+            view.imagg = imImage.image
+            
+            view.indMedicamento = indexMedicamento
+            
+        }
+        
        
         
-        
-        view.nombres = lblNombre.text
-        
-        view.Duracion = lblDuracion.text
-        
-        view.Dosis = lblDosis.text
-        
-        view.imagg = imImage.image
-        
-       
         
         
         
         
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+    }
+    
+
+
+    @IBAction func unwindToMenu(segue: UIStoryboardSegue) {
+    
+    
+    
+    
+    
+    }
+    
+        
+    func editbottonpress(sender:AnyObject){
+        
+        
+        performSegueWithIdentifier("edit", sender: sender)
+        
+        
+        
+        
     }
  
 

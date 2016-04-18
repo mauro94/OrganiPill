@@ -7,37 +7,53 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-
+    
     @IBOutlet weak var imImage: UIImageView!
-    @IBOutlet weak var pcPicker: UIScrollView!
+
     @IBOutlet weak var scScrollView: UIScrollView!
     
+    @IBOutlet weak var pcPicker: UIPickerView!
     @IBOutlet weak var tfNombre: UITextField!
     @IBOutlet weak var tfDuracion: UITextField!
     @IBOutlet weak var tfDosis: UITextField!
- 
+    
     let pickerData = ["Injeccion","Comestible","Supositorio", "Tomable"]
     var nombres : String!
     var Dosis : String!
     var Duracion : String!
     var imagg: UIImage!
     
+    var indMedicamento : Medicamento!
     
     
     
-
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let editButton : UIBarButtonItem = UIBarButtonItem(title: "Guardar", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(""))
+        
+        self.navigationItem.rightBarButtonItem = editButton
+        
+        
+        editButton.target = self
+        editButton.action = "guardarbottonpress:"
+        
+        
+        
+        
+        
         imImage.image = imagg
         tfNombre.text = nombres
         tfDosis.text = Dosis
         tfDuracion.text = Duracion
+        pcPicker.selectRow(2, inComponent: 0, animated: true)
         
-       
         
         var viewSize = self.view.frame.size
         viewSize.height = 800
@@ -49,7 +65,9 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         
         // Do any additional setup after loading the view.
     }
-
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -71,15 +89,28 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     
     
     
-    @IBAction func Guardar(sender: AnyObject) {
-        
-        
-        
-        
+    func Guardar() -> Bool {
         
         
         
         if(tfDuracion.text != "" && tfDosis.text != "" && tfNombre.text != "" ){
+            
+            
+            let realm = try! Realm()
+            
+            try! realm.write {
+                indMedicamento.sNombre = tfNombre.text!
+                indMedicamento.dDosis = Double(tfDosis.text!)!
+                indMedicamento.iDias = Int(tfDuracion.text!)!
+                indMedicamento.sViaAdministracion = pickerData[pcPicker.selectedRowInComponent(0)]
+            }
+            
+            
+            
+            
+            return true
+            
+            
             
         }
         else{
@@ -89,8 +120,8 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
             
             
             presentViewController(alerta,animated:true, completion:nil)
-
             
+            return false
             
             
         }
@@ -105,16 +136,50 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     
     
     
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func guardarbottonpress(sender:AnyObject){
+        
+        if(Guardar()){
+            
+            
+            var refreshAlert = UIAlertController(title: "Guardar", message: "Los datos se guardaron correctamente ", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+                
+                self.performSegueWithIdentifier("unwind", sender: sender)
+            }))
+            
+            
+            presentViewController(refreshAlert, animated: true, completion: nil)
+            
+            
+            
+            
+            
+            
+            
+        }
+        
+        
+        
+        
     }
-    */
-
+    
+    
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+    
+    
+    
+    
+    
 }
