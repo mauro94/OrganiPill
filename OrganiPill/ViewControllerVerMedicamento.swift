@@ -119,6 +119,8 @@ class ViewControllerVerMedicamento: UIViewController {
         
         view.Dosis = lblDosis.text
         
+        view.imagg = imImage.image
+        
        
         
         

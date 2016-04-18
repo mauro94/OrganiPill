@@ -10,6 +10,7 @@ import UIKit
 
 class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
+    @IBOutlet weak var imImage: UIImageView!
     @IBOutlet weak var pcPicker: UIScrollView!
     @IBOutlet weak var scScrollView: UIScrollView!
     
@@ -21,6 +22,8 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     var nombres : String!
     var Dosis : String!
     var Duracion : String!
+    var imagg: UIImage!
+    
     
     
     
@@ -29,6 +32,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        imImage.image = imagg
         tfNombre.text = nombres
         tfDosis.text = Dosis
         tfDuracion.text = Duracion
@@ -63,6 +67,40 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
+    }
+    
+    
+    
+    @IBAction func Guardar(sender: AnyObject) {
+        
+        
+        
+        
+        
+        
+        
+        if(tfDuracion.text != "" && tfDosis.text != "" && tfNombre.text != "" ){
+            
+        }
+        else{
+            let alerta = UIAlertController(title: "Error", message: "Dejaste casillas en blanco!",preferredStyle:  UIAlertControllerStyle.Alert)
+            
+            alerta.addAction(UIAlertAction(title: "Ok",style: UIAlertActionStyle.Cancel, handler:nil))
+            
+            
+            presentViewController(alerta,animated:true, completion:nil)
+
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
     }
     
     
