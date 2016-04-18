@@ -10,28 +10,28 @@ import UIKit
 
 class ViewControllerVerMedicamento: UIViewController {
 	//variables
-	@IBOutlet weak var scScroller: UIScrollView!
-	@IBOutlet weak var pgPageController: UIPageControl!
-	@IBOutlet weak var imgImagen: UIImageView!
+
 	
-	var sTitle: String = ""
+	
+    @IBOutlet weak var scScrollView: UIScrollView!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
         // Do any additional setup after loading the view.
-		self.title = sTitle
+		self.title = "Title"
 		
-		var barButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: NSSelectorFromString("editar"))
-		self.navigationItem.rightBarButtonItem = barButton
+		//var barButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: NSSelectorFromString("editar"))
+		//self.navigationItem.rightBarButtonItem = barButton
 		
 		var viewSize = self.view.frame.size
 		viewSize.height = 850
+        scScrollView.scrollEnabled = true;
+        scScrollView.contentSize = viewSize
+        
 		
-		scScroller.scrollEnabled = true
-		scScroller.contentSize = viewSize
 		
-		pgPageController.numberOfPages = 3
+		
 		
     }
 
@@ -40,16 +40,9 @@ class ViewControllerVerMedicamento: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 	
-	@IBAction func swipeImagen(sender: UISwipeGestureRecognizer) {
-		if (sender.direction == UISwipeGestureRecognizerDirection.Right) {
-			imgImagen.image = UIImage(named: "Image-1")
-			print("jala")
-		}
-	}
 	
-	@IBAction func editar(sender: UIButton) {
-		
-	}
+	
+	
     
 
     /*
