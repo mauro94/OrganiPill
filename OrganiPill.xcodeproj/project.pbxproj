@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		342801081CBDBBBE0061BE49 /* Persona.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342801071CBDBBBE0061BE49 /* Persona.swift */; };
+		3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3443C50F1CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift */; };
 		344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */; };
 		344A22101CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */; };
 		344A22121CBDFC3C006BE5B0 /* sbCalendario.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A22111CBDFC3C006BE5B0 /* sbCalendario.storyboard */; };
@@ -15,6 +16,7 @@
 		34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEA1CBEABA600914FD0 /* Paciente.swift */; };
 		34630BED1CBEACD800914FD0 /* Fecha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEC1CBEACD800914FD0 /* Fecha.swift */; };
 		34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */; };
+		34630BF51CC03DE400914FD0 /* tbcMedicamentoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BF41CC03DE400914FD0 /* tbcMedicamentoInfo.swift */; };
 		346F3FBE1CB5733900A48626 /* ViewControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */; };
 		346F3FC21CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */; };
 		346F3FC51CB573FF00A48626 /* ViewControllerVerMedicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */; };
@@ -48,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		342801071CBDBBBE0061BE49 /* Persona.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persona.swift; sourceTree = "<group>"; };
+		3443C50F1CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerMedicamentosTomados.swift; sourceTree = "<group>"; };
 		344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbMisMedicamentos.storyboard; sourceTree = "<group>"; };
 		344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
 		344A22111CBDFC3C006BE5B0 /* sbCalendario.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbCalendario.storyboard; sourceTree = "<group>"; };
@@ -55,6 +58,7 @@
 		34630BEA1CBEABA600914FD0 /* Paciente.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paciente.swift; sourceTree = "<group>"; };
 		34630BEC1CBEACD800914FD0 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
 		34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCalendario.swift; sourceTree = "<group>"; };
+		34630BF41CC03DE400914FD0 /* tbcMedicamentoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tbcMedicamentoInfo.swift; sourceTree = "<group>"; };
 		346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerMenu.swift; sourceTree = "<group>"; };
 		346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerMisMedicamentos.swift; sourceTree = "<group>"; };
 		346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerVerMedicamento.swift; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				344A22111CBDFC3C006BE5B0 /* sbCalendario.storyboard */,
+				3443C50F1CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift */,
+				34630BF41CC03DE400914FD0 /* tbcMedicamentoInfo.swift */,
 				34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */,
 			);
 			name = Calendario;
@@ -285,8 +291,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */,
 				34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */,
 				342801081CBDBBBE0061BE49 /* Persona.swift in Sources */,
+				34630BF51CC03DE400914FD0 /* tbcMedicamentoInfo.swift in Sources */,
 				346F3FC51CB573FF00A48626 /* ViewControllerVerMedicamento.swift in Sources */,
 				349E7F5B1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift in Sources */,
 				346F3FC21CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift in Sources */,

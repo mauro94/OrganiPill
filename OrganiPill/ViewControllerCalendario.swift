@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import RealmSwift
 
-class ViewControllerCalendario: UIViewController {
-	//outlets
+class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableViewDataSource {
+	//outlets-------------------------------------------
 	//botones de cada dia
 	@IBOutlet weak var btDomingo: UIButton!
 	@IBOutlet weak var btLunes: UIButton!
@@ -28,17 +29,36 @@ class ViewControllerCalendario: UIViewController {
 	@IBOutlet weak var lbViernes: UILabel!
 	@IBOutlet weak var lbSabado: UILabel!
 	
+	//nombre del dia
+	@IBOutlet weak var lbNombreDia: UILabel!
+	
+	//reloj
+	@IBOutlet weak var lbReloj: UILabel!
+	
+	//tabla medicamentos
+	@IBOutlet weak var tbvMedicamentosPendientes: UITableView!
+	
+	//-----------------------------------------------------
 	//variables
 	let clBoton: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 	var botonesDias = [UIButton]()
 	var lbNumeroDias = [UILabel]()
+	let nombreDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabádo"]
+	var timer = NSTimer()
 	
+	let animals: [String] = ["Horse", "Cow", "Camel", "Sheep", "Goat"]
 	
+	let realm = try! Realm()
+	var medicamentos: Results<Medicamento>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+		self.title = "Calendario"
+		
+		//realm
+		medicamentos = realm.objects(Medicamento)
+		
 		//crear arreglo de botones de dias
 		botonesDias.append(btDomingo)
 		botonesDias.append(btLunes)
@@ -90,14 +110,27 @@ class ViewControllerCalendario: UIViewController {
 		//llama funcion que agrega UI a los botones
 		agregarUIBoton()
 		
+		//reloj
+		self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0,
+			target: self,
+			selector: Selector("tick"),
+			userInfo: nil,
+			repeats: true)
 		
+		//confirgurar tabla de medicamentos pendientes
+		tbvMedicamentosPendientes.delegate = self
+		tbvMedicamentosPendientes.dataSource = self
     }
+	
+	
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 	
+	
+	
+	//Presionar boton del calendario
 	@IBAction func btPresionarBotonDia(sender: AnyObject) {
 		//cambair todos los botones a blanco
 		for boton in botonesDias {
@@ -115,7 +148,11 @@ class ViewControllerCalendario: UIViewController {
 		
 		let iUbicacionArreglo = botonesDias.indexOf(sender as! UIButton)
 		lbNumeroDias[iUbicacionArreglo!].textColor = UIColor.whiteColor()
+		
+		//cambiar nombre del dia
+		lbNombreDia.text = nombreDias[iUbicacionArreglo!]
 	}
+	
 	
 	
 	//funcion que agrega UI a los botones
@@ -147,12 +184,17 @@ class ViewControllerCalendario: UIViewController {
 		}
 	}
 	
-	//funcion que agregar bordes
+	
+	
+	//funcion que agregar bordes a los botones
 	func agregaBorderButton(sender: UIButton) {
 		sender.layer.borderWidth = 0.5
 		sender.layer.borderColor = UIColor.blackColor().CGColor
 	}
 	
+	
+	
+	//funcion que actualiza los numeros de los dias de la semana
 	func actualizaNumeroDias(diaDeLaSemana: String, dateFechaHoy: NSDate, dateFormatter: NSDateFormatter) {
 		//variables
 		var iUbicacionArreglo: Int = 0
@@ -212,6 +254,57 @@ class ViewControllerCalendario: UIViewController {
 		}
 	}
 	
+	
+	
+	//funcion que crea qle reloj
+	@objc func tick() {
+		lbReloj.text = NSDateFormatter.localizedStringFromDate(NSDate(),
+		                        dateStyle: .NoStyle,
+		                        timeStyle: .MediumStyle)
+	}
+	
+	
+	
+	// MARK: - UITableView
+
+	// numero de filas de la table
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return animals.count
+	}
+	
+	
+	
+	// crea la celda de la tabla
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		
+		let cell: tbcMedicamentoInfo = self.tbvMedicamentosPendientes.dequeueReusableCellWithIdentifier("cell") as! tbcMedicamentoInfo
+		
+		cell.lbNombreMedicamento.text = self.animals[indexPath.row]
+		
+		if (animals[indexPath.row] == animals[0]) {
+			cell.bPrimerCelda = true
+			cell.bUltimaCelda = false
+		}
+		
+		else if (animals[indexPath.row] == animals[animals.count-1]) {
+			cell.bPrimerCelda = false
+			cell.bUltimaCelda = true
+		}
+		else {
+			cell.bPrimerCelda = false
+			cell.bUltimaCelda = false
+		}
+		
+		cell.setNeedsDisplay()
+		
+		return cell
+	}
+
+
+	/*override func viewDidAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		tbvMedicamentosPendientes.deselectRowAtIndexPath(tbvMedicamentosPendientes.indexPathForSelectedRow!, animated: true)
+	}*/
 	
 
     /*
