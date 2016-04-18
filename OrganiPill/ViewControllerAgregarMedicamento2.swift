@@ -41,6 +41,15 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
         // Dispose of any resources that can be recreated.
     }
     
+    func emptyField(field : String){
+        //creates popup message
+        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        presentViewController(alerta, animated: true, completion: nil)
+    }
+    
     func decideTitulo(){
         //decide titulo de la siguiente vista
         switch(tipoMedicamento){
@@ -79,8 +88,17 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     }
     
     // MARK: - Navigation
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if(fldNumeroPCaja.text != "" && fieldCantidadPCaja.text != ""){
+            return true
+        }
+        else{
+            emptyField("algun campo")
+            return false
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
         let viewSiguiente = segue.destinationViewController as! ViewControllerAgregarMedicamentoFoto1
         
         medMedicina.dMiligramosCaja = Double(fldNumeroPCaja.text!)!*Double(fieldCantidadPCaja.text!)!

@@ -33,6 +33,15 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
         // Dispose of any resources that can be recreated.
     }
     
+    func emptyField(field : String){
+        //creates popup message
+        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste llenar el \(field)", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        presentViewController(alerta, animated: true, completion: nil)
+    }
+    
     // MARK: - Picker Functions
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
@@ -47,19 +56,23 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     }
 
     // MARK: - Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if(fldNombre.text != nil){
-            let viewSiguiente = segue.destinationViewController as! ViewControllerAgregarMedicamento2
-        
-            viewSiguiente.tipoMedicamento = pickerTipoMedicamentos.selectedRowInComponent(0)
-        
-            medMedicina.sNombre = fldNombre.text!
-            viewSiguiente.medMedicina = medMedicina
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if(fldNombre.text != ""){
+            return true
         }
         else{
-            //warning popup
+            emptyField("nombre del medicamento")
+            return false
         }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let viewSiguiente = segue.destinationViewController as! ViewControllerAgregarMedicamento2
+        
+        viewSiguiente.tipoMedicamento = pickerTipoMedicamentos.selectedRowInComponent(0)
+        
+        medMedicina.sNombre = fldNombre.text!
+        viewSiguiente.medMedicina = medMedicina
     }
 
 }

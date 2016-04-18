@@ -49,6 +49,15 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         // Dispose of any resources that can be recreated.
     }
     
+    func emptyField(field : String){
+        //creates popup message
+        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        presentViewController(alerta, animated: true, completion: nil)
+    }
+    
     // MARK: - Picker Functions
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         if(pickerView.tag == 0){
@@ -87,6 +96,16 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     }
 
     // MARK: - Navigation
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if(fldDosis.text != "" && fldDuracion.text != ""){
+            return true
+        }
+        else{
+            emptyField("algun campo")
+            return false
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamento4ViewController
         

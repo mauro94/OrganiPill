@@ -16,6 +16,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
     //MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
     var pathImagen : NSURL!
+    var tieneImagen : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,15 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func emptyImage(){
+        //creates popup message
+        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste elegir una foto", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        presentViewController(alerta, animated: true, completion: nil)
     }
     
     @IBAction func abreGaleria(sender: UIButton) {
@@ -56,11 +66,22 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
         
         imgFoto.image = foto
         dismissViewControllerAnimated(true, completion: nil)
+        
+        tieneImagen = true
     }
     
      // MARK: - Navigation
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if(tieneImagen){
+            return true
+        }
+        else{
+            emptyImage()
+            return false
+        }
+    }
+    
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamentoFoto3ViewController
         
         medMedicina.sFotoCaja = pathImagen.absoluteString

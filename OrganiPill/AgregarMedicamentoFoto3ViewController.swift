@@ -17,6 +17,7 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
     //MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
     var pathImagen : NSURL!
+    var tieneImagen : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,8 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
         dismissViewControllerAnimated(true, completion: nil)
         
         bttnSiguiente.setTitle("Siguiente", forState: UIControlState.Normal)
+        
+        tieneImagen = true
     }
     
      // MARK: - Navigation
@@ -66,7 +69,9 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
 
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamento3ViewController
         
-        medMedicina.sFotoPastillero = pathImagen.absoluteString
+        if(tieneImagen){
+            medMedicina.sFotoPastillero = pathImagen.absoluteString
+        }
         
         viewSiguiente.medMedicina = medMedicina
      }
