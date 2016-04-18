@@ -122,6 +122,8 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         
         let indexPath = tableView.indexPathForSelectedRow
         
+        
+        
         let realm = try! Realm()
         
         
@@ -133,6 +135,7 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         
         
         view.indexMedicamento = current
+        
         
         
         

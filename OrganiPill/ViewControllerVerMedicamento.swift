@@ -23,7 +23,7 @@ class ViewControllerVerMedicamento: UIViewController {
     @IBOutlet weak var imImage: UIImageView!
     
     
-    
+    var inPath : Int!
     
     
     var indexMedicamento : Medicamento!

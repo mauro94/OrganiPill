@@ -12,7 +12,7 @@ import RealmSwift
 class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var imImage: UIImageView!
-
+    
     @IBOutlet weak var scScrollView: UIScrollView!
     
     @IBOutlet weak var pcPicker: UIPickerView!
@@ -29,7 +29,24 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     var indMedicamento : Medicamento!
     
     
-    
+    func checarPosicionPicker() -> Int{
+        if(indMedicamento.sViaAdministracion == "Injeccion"){
+            return 0
+        }
+        else if(indMedicamento.sViaAdministracion == "Comestible"){
+            return 1
+        }
+        else if(indMedicamento.sViaAdministracion == "Supositorio"){
+            return 2
+        }
+        else if(indMedicamento.sViaAdministracion == "Tomable"){
+            return 3
+        }
+        else{
+            return 4
+            
+        }
+    }
     
     
     
@@ -52,7 +69,13 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         tfNombre.text = nombres
         tfDosis.text = Dosis
         tfDuracion.text = Duracion
-        pcPicker.selectRow(2, inComponent: 0, animated: true)
+        
+        
+        
+        
+        
+        
+        pcPicker.selectRow(checarPosicionPicker(), inComponent: 0, animated: true)
         
         
         var viewSize = self.view.frame.size
