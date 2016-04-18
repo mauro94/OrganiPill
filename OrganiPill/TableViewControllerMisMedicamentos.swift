@@ -11,10 +11,15 @@ import RealmSwift
 
 class TableViewControllerMisMedicamentos: UITableViewController {
 	//variables
-	var medMedicamentos = Medicamento()   //variable de almacienamiento en realm
+    
+    var indice : Int!
+	
 	var perPersona = Persona()
 	
-
+    //variable de almacienamiento en realm
+    
+    
+    var ArrmedMedicamentos = [Medicamento]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,9 +31,31 @@ class TableViewControllerMisMedicamentos: UITableViewController {
 		
 		self.title = "Mis Medicamentos"
 		
-		medMedicamentos.sNombre = "Marihuana"
+        let medAux: Medicamento! = Medicamento()
+        
+        medAux.sNombre = "Advil"
+        medAux.sViaAdministracion = "Injeccion"
+        medAux.iDias = 10;
+        
+        
+        
+        let medAux2: Medicamento! = Medicamento()
+        
+        medAux2.sNombre = "Tempra"
+        medAux.sViaAdministracion = "Comestible"
+        medAux.iDias = 1;
+		
+        
+        
+        ArrmedMedicamentos.append(medAux);
+        ArrmedMedicamentos.append(medAux2);
 		
 		perPersona.sNombre = "Gonzalo"
+        
+        
+        
+        
+        
 		
 		//perPersona.medMedicamentos.append(medMedicamentos)
 		
@@ -40,7 +67,8 @@ class TableViewControllerMisMedicamentos: UITableViewController {
 		try! realm.write {
 			realm.add(perPersona)
 		}
-		
+	
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,16 +85,20 @@ class TableViewControllerMisMedicamentos: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return ArrmedMedicamentos.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
+      
+        
+        
+        
         // Configure the cell...
 		let cell: TableViewCellMedicamento = tableView.dequeueReusableCellWithIdentifier("medicamento", forIndexPath: indexPath) as! TableViewCellMedicamento
 		
-		cell.lbNombreMedicamento.text = medMedicamentos.sNombre
+        cell.lbNombreMedicamento.text =  ArrmedMedicamentos[indexPath.row].sNombre
 
         return cell
     }
@@ -107,14 +139,35 @@ class TableViewControllerMisMedicamentos: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        
+        
+        let view = segue.destinationViewController as! ViewControllerVerMedicamento
+        
+        let indexPath = tableView.indexPathForSelectedRow
+        
+        
+        view.nombres = ArrmedMedicamentos[indexPath!.row].sNombre
+        
+        view.Duracion = String( ArrmedMedicamentos[indexPath!.row].iDias)
+
+
+        view.viaAdmi = ArrmedMedicamentos[indexPath!.row].sViaAdministracion
+
+        
+        
+        indice = (indexPath?.row)!
+        
+        
+        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+ 
 
 }

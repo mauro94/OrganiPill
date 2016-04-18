@@ -10,13 +10,37 @@ import UIKit
 
 class ViewControllerVerMedicamento: UIViewController {
 	//variables
+    @IBOutlet weak var lblNombre: UILabel!
 
+    @IBOutlet weak var lblDuracion: UILabel!
 	
+    @IBOutlet weak var lblHorario: UILabel!
+    @IBOutlet weak var lblDosis: UILabel!
 	
+    @IBOutlet weak var lblVia: UILabel!
     @IBOutlet weak var scScrollView: UIScrollView!
 	
+    var nombres:String!
+    
+    var Dosis:String!
+    
+    var Duracion:String!
+    
+    var viaAdmi:String!
+    
+    var Horario:String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        lblNombre.text = nombres
+        lblDosis.text = Dosis
+        lblVia.text = viaAdmi
+        lblDuracion.text = Duracion
+        lblHorario.text = Horario
+        
+        
 		
         // Do any additional setup after loading the view.
 		self.title = "Title"
@@ -30,6 +54,10 @@ class ViewControllerVerMedicamento: UIViewController {
         scScrollView.contentSize = viewSize
         
 		
+        
+        
+        
+        
 		
 		
 		

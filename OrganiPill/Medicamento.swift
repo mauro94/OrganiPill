@@ -26,4 +26,9 @@ class Medicamento: Object {
 	override static func indexedProperties() -> [String] {
 		return ["sNombre"]
 	}
+    
+    
+    
+    
+    
 }
