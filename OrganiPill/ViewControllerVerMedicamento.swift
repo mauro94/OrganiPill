@@ -43,16 +43,23 @@ class ViewControllerVerMedicamento: UIViewController {
         
 		
         // Do any additional setup after loading the view.
-		self.title = "Title"
+		self.title = "Medicina"
 		
-		//var barButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: NSSelectorFromString("editar"))
-		//self.navigationItem.rightBarButtonItem = barButton
+	
 		
+       
+        //var editButton : UIBarButtonItem = UIBarButtonItem(title: "RigthButtonTitle", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(""))
+        
+        //self.navigationItem.rightBarButtonItem = editButton
+        
+        
+        
 		var viewSize = self.view.frame.size
-		viewSize.height = 850
+		viewSize.height = 700
+        viewSize.width = 100
         scScrollView.scrollEnabled = true;
         scScrollView.contentSize = viewSize
-        
+        scScrollView.showsVerticalScrollIndicator = false
 		
         
         

@@ -42,8 +42,8 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         let medAux2: Medicamento! = Medicamento()
         
         medAux2.sNombre = "Tempra"
-        medAux.sViaAdministracion = "Comestible"
-        medAux.iDias = 1;
+        medAux2.sViaAdministracion = "Comestible"
+        medAux2.iDias = 1;
 		
         
         
