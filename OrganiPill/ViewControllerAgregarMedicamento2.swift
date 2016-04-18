@@ -12,21 +12,57 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     
     // MARK: - Outlets
     @IBOutlet weak var pickerMedidas: UIPickerView!
+    @IBOutlet weak var lblTitulo: UILabel!
+    @IBOutlet weak var fldNumeroPCaja: UITextField!
+    @IBOutlet weak var fieldCantidadPCaja: UITextField!
     
     // MARK: - Global Variables
     //var arrMedidas = NSMutableArray()
     let arrMedidas = ["Miligramos", "Mililitros"]
+    var titulo : String!
+    var tipoMedicamento : Int!
+    var medMedicina : Medicamento = Medicamento()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.pickerMedidas.dataSource = self
         self.pickerMedidas.delegate = self
+        self.pickerMedidas.selectRow(1, inComponent: 0, animated: true)
+        
+        self.title = "Información del medicamento"
+        
+        decideTitulo()
+        lblTitulo.text = titulo
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func decideTitulo(){
+        //decide titulo de la siguiente vista
+        switch(tipoMedicamento){
+        //pastillas
+        case 0:
+            titulo = "Número de pastillas en caja"
+            break
+        //inyeccion
+        case 1:
+            titulo = "Número de inyecciones en WHAT?"
+            break
+        //supositorio
+        case 2:
+            titulo = "Número de WHAT en WHAT?"
+            break
+        //liquida
+        case 3:
+            titulo = "Número de algo en algo?"
+            break
+        default:
+            break
+        }
     }
     
     // MARK: - Picker Functions
@@ -42,15 +78,14 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
         return arrMedidas[row]
     }
     
-
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+
+        let viewSiguiente = segue.destinationViewController as! ViewControllerAgregarMedicamentoFoto1
+        
+        medMedicina.dMiligramosCaja = Double(fldNumeroPCaja.text!)!*Double(fieldCantidadPCaja.text!)!
+        
+        viewSiguiente.medMedicina = medMedicina
     }
-    */
 
 }

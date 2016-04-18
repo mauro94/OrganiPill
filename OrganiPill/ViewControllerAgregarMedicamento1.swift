@@ -16,13 +16,16 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     
     // MARK: - Global Variables
     let arrTiposMedicamento = ["Pastilla", "Inyección", "Supositorio", "Liquida"]
+    var medMedicina : Medicamento = Medicamento()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.pickerTipoMedicamentos.dataSource = self
         self.pickerTipoMedicamentos.delegate = self
-		self.title = "Agregar Medicamento"
+        self.pickerTipoMedicamentos.selectRow(2, inComponent: 0, animated: true)
+        
+		self.title = "Información del medicamento"
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,11 +48,17 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         
         if(fldNombre.text != nil){
-            
+            let viewSiguiente = segue.destinationViewController as! ViewControllerAgregarMedicamento2
+        
+            viewSiguiente.tipoMedicamento = pickerTipoMedicamentos.selectedRowInComponent(0)
+        
+            medMedicina.sNombre = fldNombre.text!
+            viewSiguiente.medMedicina = medMedicina
+        }
+        else{
+            //warning popup
         }
     }
 

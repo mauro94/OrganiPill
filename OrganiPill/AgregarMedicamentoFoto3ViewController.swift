@@ -14,6 +14,10 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
     @IBOutlet weak var imgFoto: UIImageView!
     @IBOutlet weak var bttnSiguiente: UIButton!
     
+    //MARK: - Global Variables
+    var medMedicina : Medicamento = Medicamento()
+    var pathImagen : NSURL!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,21 +50,25 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
         
         let foto = info[UIImagePickerControllerOriginalImage] as? UIImage;
         
+        //guarda el path de la imagen seleccionada/tomada
+        let imageURL = info[UIImagePickerControllerReferenceURL] as! NSURL
+        let imagePath =  imageURL.path!
+        pathImagen = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(imagePath)
+        
         imgFoto.image = foto
         dismissViewControllerAnimated(true, completion: nil)
         
         bttnSiguiente.setTitle("Siguiente", forState: UIControlState.Normal)
     }
     
-    
-    /*
      // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+        let viewSiguiente = segue.destinationViewController as! AgregarMedicamento3ViewController
+        
+        medMedicina.sFotoPastillero = pathImagen.absoluteString
+        
+        viewSiguiente.medMedicina = medMedicina
      }
-     */
     
 }

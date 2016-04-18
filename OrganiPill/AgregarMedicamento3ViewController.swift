@@ -14,21 +14,32 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var pickerDosis: UIPickerView!
     @IBOutlet weak var pickerDuracion: UIPickerView!
     @IBOutlet weak var pickerViaAdmin: UIPickerView!
+    @IBOutlet weak var fldDosis: UITextField!
+    @IBOutlet weak var fldDuracion: UITextField!
     
     // MARK: - Global Variables
     let arrDosis = ["Miligramos", "Mililitros"]
     let arrDuracion = ["Dia(s)", "Semana(s)", "Mes(es)"]
     let arrViaAdmin = ["Oral", "Inyección", "Supositorio"]
+    var medMedicina : Medicamento = Medicamento()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.pickerDosis.dataSource = self
         self.pickerDosis.delegate = self
+        self.pickerDosis.selectRow(1, inComponent: 0, animated: true)
+        
         self.pickerDuracion.dataSource = self
         self.pickerDuracion.delegate = self
+        self.pickerDuracion.selectRow(1, inComponent: 0, animated: true)
+        
         self.pickerViaAdmin.dataSource = self
         self.pickerViaAdmin.delegate = self
+        self.pickerViaAdmin.selectRow(1, inComponent: 0, animated: true)
+        
+        self.title = "Información de la receta"
+
 
         // Do any additional setup after loading the view.
     }
@@ -75,14 +86,15 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         }
     }
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let viewSiguiente = segue.destinationViewController as! AgregarMedicamento4ViewController
+        
+        medMedicina.dDosis = Double(fldDosis.text!)!
+        medMedicina.iDias = Int(fldDuracion.text!)!
+        medMedicina.sViaAdministracion = arrViaAdmin[pickerViaAdmin.selectedRowInComponent(0)]
+        
+        viewSiguiente.medMedicina = medMedicina
     }
-    */
 
 }

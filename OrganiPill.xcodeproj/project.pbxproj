@@ -12,6 +12,7 @@
 		312734571CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312734561CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift */; };
 		312734591CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312734581CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift */; };
 		3127345B1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127345A1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift */; };
+		317C98431CC4793600C28D04 /* AgregarMedicamento4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */; };
 		342801081CBDBBBE0061BE49 /* Persona.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342801071CBDBBBE0061BE49 /* Persona.swift */; };
 		344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */; };
 		344A22101CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */; };
@@ -56,6 +57,7 @@
 		312734561CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamentoFoto2ViewController.swift; sourceTree = "<group>"; };
 		312734581CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamentoFoto3ViewController.swift; sourceTree = "<group>"; };
 		3127345A1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento3ViewController.swift; sourceTree = "<group>"; };
+		317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento4ViewController.swift; sourceTree = "<group>"; };
 		342801071CBDBBBE0061BE49 /* Persona.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persona.swift; sourceTree = "<group>"; };
 		344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbMisMedicamentos.storyboard; sourceTree = "<group>"; };
 		344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				312734541CBED7E4004BD7ED /* ViewControllerAgregarMedicamentoFoto1.swift */,
 				312734521CBEC9BE004BD7ED /* ViewControllerAgregarMedicamento2.swift */,
 				349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */,
+				317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */,
 			);
 			name = AgregarMedicamento;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				312734551CBED7E4004BD7ED /* ViewControllerAgregarMedicamentoFoto1.swift in Sources */,
 				34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */,
 				34D130641CB46C61005E206C /* AppDelegate.swift in Sources */,
+				317C98431CC4793600C28D04 /* AgregarMedicamento4ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
