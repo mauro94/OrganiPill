@@ -18,7 +18,7 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var fldDuracion: UITextField!
     
     // MARK: - Global Variables
-    let arrDosis = ["Miligramos", "Mililitros"]
+    let arrDosis = ["Pastillas", "Cucharadas", ]
     let arrDuracion = ["Dia(s)", "Semana(s)", "Mes(es)"]
     let arrViaAdmin = ["Oral", "Inyección", "Supositorio"]
     var medMedicina : Medicamento = Medicamento()
@@ -110,7 +110,7 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamento4ViewController
         
         medMedicina.dDosis = Double(fldDosis.text!)!
-        medMedicina.iDias = Int(fldDuracion.text!)!
+        medMedicina.iDuracion = Int(fldDuracion.text!)!
         medMedicina.sViaAdministracion = arrViaAdmin[pickerViaAdmin.selectedRowInComponent(0)]
         
         viewSiguiente.medMedicina = medMedicina

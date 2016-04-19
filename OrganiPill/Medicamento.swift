@@ -11,12 +11,13 @@ import RealmSwift
 
 class Medicamento: Object {
 	dynamic var sNombre: String = ""
-	let ingrediente = List<Ingrediente>()
 	dynamic var dDosis: Double = 0.0
 	dynamic var dMiligramosCaja: Double = 0.0
+    dynamic var dMiligramosCajaActual: Double = 0.0
 	dynamic var sViaAdministracion: String = ""
-	dynamic var iDias: Int = 0
-	let horario = List<Fecha>()
+	dynamic var iDuracion: Int = 0
+    dynamic var sTipoDuracion: String = ""
+	let horario = List<CustomDate>()
 	dynamic var bNecesitaAlimento: Bool = false
 	dynamic var sComentario: String = ""
 	dynamic var sFotoCaja: String = ""
