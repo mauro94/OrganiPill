@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,ProtocoloAgregarHorario {
+class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProtocoloAgregarHorario {
 
     // MARK: - Outlets
     @IBOutlet weak var tableHorarios: UITableView!
@@ -17,6 +17,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     // MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
     var listaHorarios = List<CustomDate>()
+    var index : Int!
     let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
 
     override func viewDidLoad() {
@@ -24,12 +25,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         
         self.title = "Horario"
         
-        let newButton : UIBarButtonItem = UIBarButtonItem(title: "+", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
-        self.navigationItem.rightBarButtonItem = newButton
-        
-        newButton.target = self
-        newButton.action = #selector(AgregarMedicamento4ViewController.newButtonPressed(_:))
-
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AgregarMedicamento4ViewController.newButtonPressed(_:)))
 
         //print(medMedicina.dDosis)
         //print(medMedicina.dMiligramosCaja)
@@ -50,21 +46,22 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         performSegueWithIdentifier("newH", sender: sender)
     }
     
+    //MARK: - Protocol functions
     func agregarHorario(horario : CustomDate) {
         listaHorarios.append(horario)
-        //print(listaHorarios)
-        //print(horario.horas)
-        //print(horario.minutos)
-        //print(horario.meridiano)
-        //print(horario.listaDias)
         tableHorarios.reloadData()
     }
     
-    //MARK: - Table View Data Source functions
+    func editarHorario(horario : CustomDate){
+        listaHorarios[index] = horario
+        tableHorarios.reloadData()
+    }
+    
     func quitaVista() {
         navigationController?.popViewControllerAnimated(true)
     }
     
+    //MARK: - Table View Data Source functions
     func tableView ( tableView: UITableView,
                      numberOfRowsInSection section: Int) -> Int{
         return listaHorarios.count
@@ -84,9 +81,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         
         hora = hora + "\(listaHorarios[indexPath.row].minutos) \(listaHorarios[indexPath.row].meridiano)"
         
-        
         cell.lblHora?.text = hora
-        
 
         //colorea los botones
         let numElementos = listaHorarios[indexPath.row].listaDias.count
@@ -115,6 +110,50 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         let viewAgregar = segue.destinationViewController as! AgregarHorarioViewController
         
         viewAgregar.delegado = self
+        
+        //nuevo horario
+        if(segue.identifier == "newH"){
+            viewAgregar.horaEdit = "12:00"
+        }
+        //editar horario
+        else if(segue.identifier == "editH"){
+            //guarda el indice seleccionado
+            let indexPath = self.tableHorarios.indexPathForSelectedRow
+            index = indexPath!.row
+
+            //se formatea un string con la hora seleccionada
+            var sHoraActual = ""
+            
+            //agrega horas al string
+            if(listaHorarios[index].meridiano == "AM"){
+                if(listaHorarios[index].horas == 12){
+                    sHoraActual = sHoraActual + "00:"
+
+                }
+                else{
+                    sHoraActual = sHoraActual + "\(listaHorarios[index].horas):"
+                }
+            }
+            else{
+                if(listaHorarios[index].horas == 12){
+                    sHoraActual = sHoraActual + "12:"
+                }
+                else{
+                    sHoraActual = sHoraActual + "\(listaHorarios[index].horas + 12):"
+                }
+            }
+            
+            //agrega minutos al string
+            sHoraActual = sHoraActual + "\(listaHorarios[index].minutos)"
+            
+            viewAgregar.horaEdit = sHoraActual
+            
+            for i in listaHorarios[index].listaDias{
+                viewAgregar.diasEdit.append(i.dia)
+            }
+            
+            viewAgregar.editing = true
+        }
     }
 
 }

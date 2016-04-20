@@ -8,8 +8,10 @@
 
 import UIKit
 
+//Delegado para agregar o editar un horario
 protocol ProtocoloAgregarHorario{
     func agregarHorario(horario : CustomDate)
+    func editarHorario(horario : CustomDate)
     func quitaVista()
 }
 
@@ -25,9 +27,14 @@ class AgregarHorarioViewController: UIViewController{
     @IBOutlet weak var bttnV: UIButton!
     @IBOutlet weak var bttnS: UIButton!
     
+    //Mark: - Global Variables
     var delegado = ProtocoloAgregarHorario!(nil)
     var horario : CustomDate = CustomDate()
     let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
+    var bEditing : Bool = false
+    var horaEdit : String!
+    var diasEdit : [Int] = []
+    var bttnDias = [UIButton]!(nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,25 +42,32 @@ class AgregarHorarioViewController: UIViewController{
         
         self.title = "Agregar Horario"
         
-        let guardarButton : UIBarButtonItem = UIBarButtonItem(title: "Guardar", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
-        self.navigationItem.rightBarButtonItem = guardarButton
+        //Agrega boton derecho a la barra de navegacion
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Guardar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
         
-        guardarButton.target = self
-        guardarButton.action = #selector(AgregarHorarioViewController.guardarButtonPressed(_:))
-    
-        let cancelarButton : UIBarButtonItem = UIBarButtonItem(title: "Cancelar", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
-        self.navigationItem.leftBarButtonItem = cancelarButton
+        //Agrega boton izquierdo a la barra de navegacion
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancelar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.cancelarButtonPressed(_:)))
         
-        cancelarButton.target = self
-        cancelarButton.action = #selector(AgregarHorarioViewController.cancelarButtonPressed(_:))
+        bttnDias = [bttnD, bttnL, bttnMa, bttnMi, bttnJ, bttnV, bttnS]
         
-        agregaBorderButton(bttnD)
-        agregaBorderButton(bttnL)
-        agregaBorderButton(bttnMa)
-        agregaBorderButton(bttnMi)
-        agregaBorderButton(bttnJ)
-        agregaBorderButton(bttnV)
-        agregaBorderButton(bttnS)
+        //agrega marcos a botones de dias
+        for i in 0...6{
+            agregaBorderButton(bttnDias[i])
+        }
+        
+        //prende los dias del horario a editar
+        if(editing){
+            for i in diasEdit{
+                selectDay(bttnDias[i-1])
+            }
+        }
+        
+        //muestra la hora default del datePicker
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat =  "HH:mm"
+        let date = dateFormatter.dateFromString(horaEdit)
+        datePicker.date = date!
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,8 +75,17 @@ class AgregarHorarioViewController: UIViewController{
         // Dispose of any resources that can be recreated.
     }
     
+    func noDayAlert(){
+        //creates popup message
+        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste seleccionar un día", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        presentViewController(alerta, animated: true, completion: nil)
+    }
+
+    
     // MARK: - Button functions
-    //funcion que agregar bordes a los botones
     func agregaBorderButton(sender: UIButton) {
         sender.layer.borderWidth = 0.5
         sender.layer.borderColor = onBttnColor.CGColor
@@ -87,6 +110,21 @@ class AgregarHorarioViewController: UIViewController{
     }
     
     func guardarButtonPressed(sender: AnyObject){
+        
+        //hace la lista de dias programados
+        for i in 0...6{
+            if(bttnDias[i].selected){
+                let dia : RealmInt = RealmInt()
+                dia.dia = i+1
+                horario.listaDias.append(dia)
+            }
+        }
+        
+        if(horario.listaDias.count == 0){
+            noDayAlert()
+            return
+        }
+        
         //saca la hora del picker
         let components = datePicker.calendar.components([.Hour, .Minute], fromDate: datePicker.date)
         
@@ -104,53 +142,17 @@ class AgregarHorarioViewController: UIViewController{
         if(horario.horas == 0){
             horario.horas = 12
         }
-        
-        //hace la lista de dias programados
-        
-        if(bttnD.selected){
-            let dia : RealmInt = RealmInt()
-            dia.dia = 1
-            horario.listaDias.append(dia)
+
+        //llama al metodo adecuado para generar o editar horario
+        if(!editing){
+            delegado.agregarHorario(horario)
         }
-        if(bttnL.selected){
-            let dia : RealmInt = RealmInt()
-            dia.dia = 2
-            horario.listaDias.append(dia)
-        }
-        if(bttnMa.selected){
-            let dia : RealmInt = RealmInt()
-            dia.dia = 3
-            horario.listaDias.append(dia)
-        }
-        if(bttnMi.selected){
-            let dia : RealmInt = RealmInt()
-            dia.dia = 4
-            horario.listaDias.append(dia)
-        }
-        if(bttnJ.selected){
-            let dia : RealmInt = RealmInt()
-            dia.dia = 5
-            horario.listaDias.append(dia)
-        }
-        if(bttnV.selected){
-            let dia : RealmInt = RealmInt()
-            dia.dia = 6
-            horario.listaDias.append(dia)
-        }
-        if(bttnS.selected){
-            let dia : RealmInt = RealmInt()
-            dia.dia = 7
-            horario.listaDias.append(dia)
+        else{
+            delegado.editarHorario(horario)
+            editing = false
         }
         
-        //print(horario.listaDias.count)
-        
-        //print(horario.horas)
-        //print(horario.minutos)
-        //print(horario.meridiano)
-        delegado.agregarHorario(horario)
         delegado.quitaVista()
-        
     }
     
 
