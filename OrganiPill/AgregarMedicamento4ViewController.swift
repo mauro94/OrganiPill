@@ -10,12 +10,14 @@ import UIKit
 import RealmSwift
 
 class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,ProtocoloAgregarHorario {
+
+    // MARK: - Outlets
+    @IBOutlet weak var tableHorarios: UITableView!
     
     // MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
     var listaHorarios = List<CustomDate>()
-
-    @IBOutlet weak var tableHorarios: UITableView!
+    let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +31,14 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         newButton.action = #selector(AgregarMedicamento4ViewController.newButtonPressed(_:))
 
 
-        print(medMedicina.dDosis)
-        print(medMedicina.dMiligramosCaja)
+        //print(medMedicina.dDosis)
+        //print(medMedicina.dMiligramosCaja)
         //print(medMedicina.iDias)
-        print(medMedicina.sFotoCaja)
-        print(medMedicina.sFotoPastillero)
-        print(medMedicina.sFotoMedicamento)
-        print(medMedicina.sNombre)
-        print(medMedicina.sViaAdministracion)
-
-        // Do any additional setup after loading the view.
+        //print(medMedicina.sFotoCaja)
+        //print(medMedicina.sFotoPastillero)
+        //print(medMedicina.sFotoMedicamento)
+        //print(medMedicina.sNombre)
+        //print(medMedicina.sViaAdministracion)
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +52,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     
     func agregarHorario(horario : CustomDate) {
         listaHorarios.append(horario)
-        print(listaHorarios)
+        //print(listaHorarios)
         //print(horario.horas)
         //print(horario.minutos)
         //print(horario.meridiano)
@@ -60,7 +60,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         tableHorarios.reloadData()
     }
     
-    //data source
+    //MARK: - Table View Data Source functions
     func quitaVista() {
         navigationController?.popViewControllerAnimated(true)
     }
@@ -70,41 +70,43 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         return listaHorarios.count
     }
     
-    func getDia(dia : Int) -> String{
-        switch(dia){
-            case 1:
-                return "Domingo"
-            case 2:
-                return "Lunes"
-            case 3:
-                return "Martes"
-            case 4:
-                return "Miercoles"
-            case 5:
-                return "Jueves"
-            case 6:
-                return "Viernes"
-            case 7:
-                return "Sabado"
-            default:
-                return "Dia raro"
-        }
-    }
-    
-    //data source
     func tableView(tableView: UITableView, cellForRowAtIndexPath
         indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(
-            "cell", forIndexPath: indexPath)
+            "cell", forIndexPath: indexPath) as! CustomTableViewCell
         
-        let hora = "\(listaHorarios[indexPath.row].horas):\(listaHorarios[indexPath.row].minutos) \(listaHorarios[indexPath.row].meridiano)"
+        var hora = "\(listaHorarios[indexPath.row].horas):"
         
-        cell.textLabel?.text = hora
+        if(listaHorarios[indexPath.row].minutos < 10){
+            hora = hora + "0"
+        }
         
-        cell.detailTextLabel?.text = getDia(listaHorarios[indexPath.row].listaDias[0].dia)
+        hora = hora + "\(listaHorarios[indexPath.row].minutos) \(listaHorarios[indexPath.row].meridiano)"
+        
+        
+        cell.lblHora?.text = hora
+        
 
+        //colorea los botones
+        let numElementos = listaHorarios[indexPath.row].listaDias.count
+        for i in 0...(numElementos-1){
+            var dia = listaHorarios[indexPath.row].listaDias[i]
+            cell.bttnDias?[(dia.dia - 1)].backgroundColor = onBttnColor
+        }
+        
+        //agrega marcos a los botones
+        for i in 0...6{
+            agregaBorderButton(cell.bttnDias[i])
+        }
+        
         return cell
+    }
+    
+    //funcion que agregar bordes a los botones
+    func agregaBorderButton(sender: UIButton) {
+        sender.layer.borderWidth = 0.5
+        sender.layer.borderColor = onBttnColor.CGColor
     }
 
     // MARK: - Navigation

@@ -15,6 +15,7 @@ protocol ProtocoloAgregarHorario{
 
 class AgregarHorarioViewController: UIViewController{
 
+    //MARK: - Outlets
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var bttnD: UIButton!
     @IBOutlet weak var bttnL: UIButton!
@@ -24,9 +25,9 @@ class AgregarHorarioViewController: UIViewController{
     @IBOutlet weak var bttnV: UIButton!
     @IBOutlet weak var bttnS: UIButton!
     
-    var delegado = ProtocoloAgregarHorario!()
+    var delegado = ProtocoloAgregarHorario!(nil)
     var horario : CustomDate = CustomDate()
-    //let horarioFormatter = NSDateFormatter()
+    let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,12 +47,39 @@ class AgregarHorarioViewController: UIViewController{
         cancelarButton.target = self
         cancelarButton.action = #selector(AgregarHorarioViewController.cancelarButtonPressed(_:))
         
-        //horarioFormatter.dateFormat = "EEEE, h a"
+        agregaBorderButton(bttnD)
+        agregaBorderButton(bttnL)
+        agregaBorderButton(bttnMa)
+        agregaBorderButton(bttnMi)
+        agregaBorderButton(bttnJ)
+        agregaBorderButton(bttnV)
+        agregaBorderButton(bttnS)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Button functions
+    //funcion que agregar bordes a los botones
+    func agregaBorderButton(sender: UIButton) {
+        sender.layer.borderWidth = 0.5
+        sender.layer.borderColor = onBttnColor.CGColor
+    }
+    
+    @IBAction func selectDay(sender: UIButton) {
+        //color de prendido
+        if(!sender.selected){
+            sender.backgroundColor = onBttnColor
+        }
+        //color de apagado
+        else{
+            sender.backgroundColor = UIColor.whiteColor()
+        }
+        
+        //voltea el valor
+        sender.selected = !sender.selected
     }
     
     func cancelarButtonPressed(sender: AnyObject){
@@ -77,14 +105,49 @@ class AgregarHorarioViewController: UIViewController{
             horario.horas = 12
         }
         
-        var dia : RealmInt = RealmInt()
-        dia.dia = 1
+        //hace la lista de dias programados
         
-        horario.listaDias.append(dia)
+        if(bttnD.selected){
+            let dia : RealmInt = RealmInt()
+            dia.dia = 1
+            horario.listaDias.append(dia)
+        }
+        if(bttnL.selected){
+            let dia : RealmInt = RealmInt()
+            dia.dia = 2
+            horario.listaDias.append(dia)
+        }
+        if(bttnMa.selected){
+            let dia : RealmInt = RealmInt()
+            dia.dia = 3
+            horario.listaDias.append(dia)
+        }
+        if(bttnMi.selected){
+            let dia : RealmInt = RealmInt()
+            dia.dia = 4
+            horario.listaDias.append(dia)
+        }
+        if(bttnJ.selected){
+            let dia : RealmInt = RealmInt()
+            dia.dia = 5
+            horario.listaDias.append(dia)
+        }
+        if(bttnV.selected){
+            let dia : RealmInt = RealmInt()
+            dia.dia = 6
+            horario.listaDias.append(dia)
+        }
+        if(bttnS.selected){
+            let dia : RealmInt = RealmInt()
+            dia.dia = 7
+            horario.listaDias.append(dia)
+        }
         
-        print(horario.horas)
-        print(horario.minutos)
-        print(horario.meridiano)
+        //print(horario.listaDias.count)
+        
+        //print(horario.horas)
+        //print(horario.minutos)
+        //print(horario.meridiano)
         delegado.agregarHorario(horario)
         delegado.quitaVista()
         
