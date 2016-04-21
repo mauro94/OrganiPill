@@ -162,6 +162,8 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         print(medMedicina)
     }
     
+    
+    
     //guarda la medicina a la base de datos REALM
     func guardaRealm(){
         let realm = try! Realm()
