@@ -155,11 +155,27 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
             viewAgregar.editing = true
         }
     }
+    
+    func noHorarioAlert(){
+        //creates popup message
+        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste agregar un horario", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        presentViewController(alerta, animated: true, completion: nil)
+    }
 
     @IBAction func presionaTerminar(sender: AnyObject) {
-        medMedicina.horario = listaHorarios
-        guardaRealm()
-        print(medMedicina)
+        if(listaHorarios.count == 0){
+            noHorarioAlert()
+            return
+        }
+        else{
+            medMedicina.horario = listaHorarios
+            guardaRealm()
+            //print(medMedicina)
+            navigationController?.popToRootViewControllerAnimated(true)
+        }
     }
     
     

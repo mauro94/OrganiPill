@@ -11,5 +11,5 @@ import RealmSwift
 
 class RealmInt: Object {
     
-	dynamic var dia: Int = 0
+    dynamic var dia: Int = 0
 }

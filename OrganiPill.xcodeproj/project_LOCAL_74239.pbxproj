@@ -12,25 +12,18 @@
 		312734571CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312734561CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift */; };
 		312734591CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312734581CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift */; };
 		3127345B1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127345A1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift */; };
-		316712EE1CC995190078211D /* RealmInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316712ED1CC995190078211D /* RealmInt.swift */; };
-		316712F11CC99A000078211D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 316712EF1CC99A000078211D /* LaunchScreen.storyboard */; };
-		316712F21CC99A000078211D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 316712F01CC99A000078211D /* Main.storyboard */; };
-		316712F41CC99ADC0078211D /* sbCalendario.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 316712F31CC99ADC0078211D /* sbCalendario.storyboard */; };
-		316712F61CC99AEF0078211D /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 316712F51CC99AEF0078211D /* sbAgregarMedicamento.storyboard */; };
 		317C98431CC4793600C28D04 /* AgregarMedicamento4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */; };
 		317C98451CC5517900C28D04 /* AgregarHorarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */; };
+		317C98491CC58E2B00C28D04 /* sbCalendario.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317C98481CC58E2B00C28D04 /* sbCalendario.storyboard */; };
 		317C984B1CC5B1B700C28D04 /* CustomDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C984A1CC5B1B700C28D04 /* CustomDate.swift */; };
+		317C984D1CC5B37700C28D04 /* RealmInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C984C1CC5B37700C28D04 /* RealmInt.swift */; };
 		317C984F1CC689A900C28D04 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */; };
-		3413995C1CC6FA48006D982B /* setupInicial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3413995B1CC6FA48006D982B /* setupInicial.storyboard */; };
-		3413995F1CC72C6F006D982B /* ViewControllerSetupInicial1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3413995E1CC72C6F006D982B /* ViewControllerSetupInicial1.swift */; };
-		341399611CC73815006D982B /* ViewControllerBienvenida.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341399601CC73815006D982B /* ViewControllerBienvenida.swift */; };
 		342801081CBDBBBE0061BE49 /* Persona.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342801071CBDBBBE0061BE49 /* Persona.swift */; };
-		3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3443C50F1CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift */; };
 		344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */; };
+		344A22101CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */; };
+		34630BE91CBEA7DA00914FD0 /* Ingrediente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BE81CBEA7DA00914FD0 /* Ingrediente.swift */; };
 		34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEA1CBEABA600914FD0 /* Paciente.swift */; };
 		34630BED1CBEACD800914FD0 /* Fecha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEC1CBEACD800914FD0 /* Fecha.swift */; };
-		34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */; };
-		34630BF51CC03DE400914FD0 /* tbcMedicamentoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BF41CC03DE400914FD0 /* tbcMedicamentoInfo.swift */; };
 		346F3FBE1CB5733900A48626 /* ViewControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */; };
 		346F3FC21CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */; };
 		346F3FC51CB573FF00A48626 /* ViewControllerVerMedicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */; };
@@ -40,6 +33,7 @@
 		346F3FCC1CB5800700A48626 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FCA1CB5800700A48626 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		349E7F5B1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */; };
 		34D130641CB46C61005E206C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D130631CB46C61005E206C /* AppDelegate.swift */; };
+		34D130691CB46C61005E206C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34D130671CB46C61005E206C /* Main.storyboard */; };
 		34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D1306A1CB46C61005E206C /* Assets.xcassets */; };
 		34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34D1306C1CB46C61005E206C /* LaunchScreen.storyboard */; };
 		34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBD7B01CB5B94B00DA952C /* Medicamento.swift */; };
@@ -67,25 +61,18 @@
 		312734561CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamentoFoto2ViewController.swift; sourceTree = "<group>"; };
 		312734581CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamentoFoto3ViewController.swift; sourceTree = "<group>"; };
 		3127345A1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento3ViewController.swift; sourceTree = "<group>"; };
-		316712ED1CC995190078211D /* RealmInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmInt.swift; sourceTree = "<group>"; };
-		316712EF1CC99A000078211D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		316712F01CC99A000078211D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		316712F31CC99ADC0078211D /* sbCalendario.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbCalendario.storyboard; sourceTree = "<group>"; };
-		316712F51CC99AEF0078211D /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
 		317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento4ViewController.swift; sourceTree = "<group>"; };
 		317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarHorarioViewController.swift; sourceTree = "<group>"; };
+		317C98481CC58E2B00C28D04 /* sbCalendario.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbCalendario.storyboard; sourceTree = "<group>"; };
 		317C984A1CC5B1B700C28D04 /* CustomDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDate.swift; sourceTree = "<group>"; };
+		317C984C1CC5B37700C28D04 /* RealmInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmInt.swift; sourceTree = "<group>"; };
 		317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		3413995B1CC6FA48006D982B /* setupInicial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setupInicial.storyboard; sourceTree = "<group>"; };
-		3413995E1CC72C6F006D982B /* ViewControllerSetupInicial1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerSetupInicial1.swift; sourceTree = "<group>"; };
-		341399601CC73815006D982B /* ViewControllerBienvenida.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerBienvenida.swift; sourceTree = "<group>"; };
 		342801071CBDBBBE0061BE49 /* Persona.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persona.swift; sourceTree = "<group>"; };
-		3443C50F1CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerMedicamentosTomados.swift; sourceTree = "<group>"; };
 		344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbMisMedicamentos.storyboard; sourceTree = "<group>"; };
+		344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
+		34630BE81CBEA7DA00914FD0 /* Ingrediente.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ingrediente.swift; sourceTree = "<group>"; };
 		34630BEA1CBEABA600914FD0 /* Paciente.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paciente.swift; sourceTree = "<group>"; };
 		34630BEC1CBEACD800914FD0 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
-		34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCalendario.swift; sourceTree = "<group>"; };
-		34630BF41CC03DE400914FD0 /* tbcMedicamentoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tbcMedicamentoInfo.swift; sourceTree = "<group>"; };
 		346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerMenu.swift; sourceTree = "<group>"; };
 		346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerMisMedicamentos.swift; sourceTree = "<group>"; };
 		346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerVerMedicamento.swift; sourceTree = "<group>"; };
@@ -94,6 +81,7 @@
 		349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAgregarMedicamento1.swift; sourceTree = "<group>"; };
 		34D130601CB46C61005E206C /* OrganiPill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrganiPill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D130631CB46C61005E206C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		34D130681CB46C61005E206C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		34D1306A1CB46C61005E206C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34D1306D1CB46C61005E206C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34D1306F1CB46C61005E206C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -117,10 +105,7 @@
 		3403369A1CBBE6D60054540E /* Calendario */ = {
 			isa = PBXGroup;
 			children = (
-				316712F31CC99ADC0078211D /* sbCalendario.storyboard */,
-				3443C50F1CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift */,
-				34630BF41CC03DE400914FD0 /* tbcMedicamentoInfo.swift */,
-				34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */,
+				317C98481CC58E2B00C28D04 /* sbCalendario.storyboard */,
 			);
 			name = Calendario;
 			sourceTree = "<group>";
@@ -146,16 +131,6 @@
 			name = "Actividad del Dia";
 			sourceTree = "<group>";
 		};
-		3413995D1CC72C31006D982B /* Setup Inicial */ = {
-			isa = PBXGroup;
-			children = (
-				3413995B1CC6FA48006D982B /* setupInicial.storyboard */,
-				341399601CC73815006D982B /* ViewControllerBienvenida.swift */,
-				3413995E1CC72C6F006D982B /* ViewControllerSetupInicial1.swift */,
-			);
-			name = "Setup Inicial";
-			sourceTree = "<group>";
-		};
 		346F3FC31CB573B900A48626 /* MisMedicamentos */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,8 +145,8 @@
 		349E7F591CB754ED00BFEB6F /* AgregarMedicamento */ = {
 			isa = PBXGroup;
 			children = (
-				316712F51CC99AEF0078211D /* sbAgregarMedicamento.storyboard */,
 				317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */,
+				344A220F1CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard */,
 				317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */,
 				3127345A1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift */,
 				312734581CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift */,
@@ -188,11 +163,12 @@
 			isa = PBXGroup;
 			children = (
 				34DBD7B01CB5B94B00DA952C /* Medicamento.swift */,
+				34630BE81CBEA7DA00914FD0 /* Ingrediente.swift */,
 				34630BEC1CBEACD800914FD0 /* Fecha.swift */,
 				317C984A1CC5B1B700C28D04 /* CustomDate.swift */,
 				342801071CBDBBBE0061BE49 /* Persona.swift */,
 				34630BEA1CBEABA600914FD0 /* Paciente.swift */,
-				316712ED1CC995190078211D /* RealmInt.swift */,
+				317C984C1CC5B37700C28D04 /* RealmInt.swift */,
 			);
 			name = RealmFIles;
 			sourceTree = "<group>";
@@ -201,8 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */,
-				316712EF1CC99A000078211D /* LaunchScreen.storyboard */,
-				316712F01CC99A000078211D /* Main.storyboard */,
+				34D130671CB46C61005E206C /* Main.storyboard */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -228,7 +203,6 @@
 		34D130621CB46C61005E206C /* OrganiPill */ = {
 			isa = PBXGroup;
 			children = (
-				3413995D1CC72C31006D982B /* Setup Inicial */,
 				34BCD1AE1CBE06A70078F162 /* Menu */,
 				346F3FC31CB573B900A48626 /* MisMedicamentos */,
 				349E7F591CB754ED00BFEB6F /* AgregarMedicamento */,
@@ -306,14 +280,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				316712F11CC99A000078211D /* LaunchScreen.storyboard in Resources */,
-				316712F21CC99A000078211D /* Main.storyboard in Resources */,
-				316712F61CC99AEF0078211D /* sbAgregarMedicamento.storyboard in Resources */,
 				34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */,
-				3413995C1CC6FA48006D982B /* setupInicial.storyboard in Resources */,
-				316712F41CC99ADC0078211D /* sbCalendario.storyboard in Resources */,
+				344A22101CBDFBE2006BE5B0 /* sbAgregarMedicamento.storyboard in Resources */,
 				34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */,
+				317C98491CC58E2B00C28D04 /* sbCalendario.storyboard in Resources */,
 				344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */,
+				34D130691CB46C61005E206C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,12 +312,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3413995F1CC72C6F006D982B /* ViewControllerSetupInicial1.swift in Sources */,
-				3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */,
 				34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */,
 				317C984B1CC5B1B700C28D04 /* CustomDate.swift in Sources */,
 				342801081CBDBBBE0061BE49 /* Persona.swift in Sources */,
-				34630BF51CC03DE400914FD0 /* tbcMedicamentoInfo.swift in Sources */,
 				317C984F1CC689A900C28D04 /* CustomTableViewCell.swift in Sources */,
 				346F3FC51CB573FF00A48626 /* ViewControllerVerMedicamento.swift in Sources */,
 				3127345B1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift in Sources */,
@@ -355,15 +324,14 @@
 				346F3FBE1CB5733900A48626 /* ViewControllerMenu.swift in Sources */,
 				312734531CBEC9BE004BD7ED /* ViewControllerAgregarMedicamento2.swift in Sources */,
 				34DBD7B31CB5C32E00DA952C /* TableViewCellMedicamento.swift in Sources */,
+				34630BE91CBEA7DA00914FD0 /* Ingrediente.swift in Sources */,
 				312734591CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift in Sources */,
 				34630BED1CBEACD800914FD0 /* Fecha.swift in Sources */,
 				317C98451CC5517900C28D04 /* AgregarHorarioViewController.swift in Sources */,
 				312734551CBED7E4004BD7ED /* ViewControllerAgregarMedicamentoFoto1.swift in Sources */,
 				34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */,
-				341399611CC73815006D982B /* ViewControllerBienvenida.swift in Sources */,
-				34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */,
 				34D130641CB46C61005E206C /* AppDelegate.swift in Sources */,
-				316712EE1CC995190078211D /* RealmInt.swift in Sources */,
+				317C984D1CC5B37700C28D04 /* RealmInt.swift in Sources */,
 				317C98431CC4793600C28D04 /* AgregarMedicamento4ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,6 +339,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		34D130671CB46C61005E206C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				34D130681CB46C61005E206C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		34D1306C1CB46C61005E206C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
