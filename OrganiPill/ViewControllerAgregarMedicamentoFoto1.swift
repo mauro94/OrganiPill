@@ -10,10 +10,11 @@ import UIKit
 
 class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    // MARK: - Outlets
+    //MARK: - Outlets
     @IBOutlet weak var bttnGaleria: UIButton!
     @IBOutlet weak var bttnCamara: UIButton!
     @IBOutlet weak var imgFoto: UIImageView!
+    @IBOutlet weak var lblTitulo: UILabel!
     
     //MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
@@ -22,7 +23,9 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        decideTitulo()
+        
         // Do any additional setup after loading the view.
     }
 
@@ -40,6 +43,32 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         presentViewController(alerta, animated: true, completion: nil)
     }
 
+    //decide titulo de la vista
+    func decideTitulo(){
+        switch(medMedicina.sViaAdministracion){
+        //pastillas
+        case "Pastilla":
+            lblTitulo.text = "Imágen de la pastilla"
+            break
+        //inyeccion
+        case "Inyección":
+            lblTitulo.text = "Imágen del bote"
+            break
+        //supositorio
+        case "Supositorio":
+            lblTitulo.text = "Imágen del supositorio"
+            break
+        //liquida
+        case "Suspensión":
+            lblTitulo.text = "Imágen del bote"
+            break
+        case "Cápsulas":
+            lblTitulo.text = "Imágen de la cápsula"
+            break
+        default:
+            break
+        }
+    }
     
     @IBAction func abreGaleria(sender: UIButton) {
         let picker = UIImagePickerController()
@@ -73,7 +102,7 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         tieneImagen = true
     }
     
-    // MARK: - Navigation
+    //MARK: - Navigation
     override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
         if(tieneImagen){
             return true
@@ -88,6 +117,7 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
 
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamentoFoto2ViewController
         
+        //guarda los datos del medicamento de esta vista
         medMedicina.sFotoMedicamento = pathImagen.absoluteString
         
         viewSiguiente.medMedicina = medMedicina

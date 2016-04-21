@@ -13,9 +13,10 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     // MARK: - Outlets
     @IBOutlet weak var pickerTipoMedicamentos: UIPickerView!
     @IBOutlet weak var fldNombre: UITextField!
+    @IBOutlet weak var swAlimento: UISwitch!
     
     // MARK: - Global Variables
-    let arrTiposMedicamento = ["Pastilla", "Inyección", "Supositorio", "Liquida"]
+    let arrTiposMedicamento = ["Supositorio", "Inyección", "Cápsulas", "Pastilla", "Suspensión"]
     var medMedicina : Medicamento = Medicamento()
     
     override func viewDidLoad() {
@@ -69,9 +70,11 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let viewSiguiente = segue.destinationViewController as! ViewControllerAgregarMedicamento2
         
-        viewSiguiente.tipoMedicamento = pickerTipoMedicamentos.selectedRowInComponent(0)
-        
+        //guarda los datos del medicamento de esta vista
         medMedicina.sNombre = fldNombre.text!
+        medMedicina.bNecesitaAlimento = swAlimento.on
+        medMedicina.sViaAdministracion = arrTiposMedicamento[pickerTipoMedicamentos.selectedRowInComponent(0)]
+        
         viewSiguiente.medMedicina = medMedicina
     }
 

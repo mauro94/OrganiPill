@@ -156,4 +156,9 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         }
     }
 
+    @IBAction func presionaTerminar(sender: AnyObject) {
+        medMedicina.horario = listaHorarios
+        
+        print(medMedicina)
+    }
 }

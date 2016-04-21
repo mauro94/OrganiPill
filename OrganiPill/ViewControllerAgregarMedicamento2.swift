@@ -13,6 +13,7 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     // MARK: - Outlets
     @IBOutlet weak var pickerMedidas: UIPickerView!
     @IBOutlet weak var lblTitulo: UILabel!
+    @IBOutlet weak var lblSubTitulo: UILabel!
     @IBOutlet weak var fldNumeroPCaja: UITextField!
     @IBOutlet weak var fieldCantidadPCaja: UITextField!
     
@@ -20,7 +21,7 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     //var arrMedidas = NSMutableArray()
     let arrMedidas = ["Miligramos", "Mililitros"]
     var titulo : String!
-    var tipoMedicamento : Int!
+    var subTitulo : String!
     var medMedicina : Medicamento = Medicamento()
 
     override func viewDidLoad() {
@@ -34,6 +35,7 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
         
         decideTitulo()
         lblTitulo.text = titulo
+        lblSubTitulo.text = subTitulo
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,22 +54,26 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     
     func decideTitulo(){
         //decide titulo de la siguiente vista
-        switch(tipoMedicamento){
-        //pastillas
-        case 0:
-            titulo = "Número de pastillas en caja"
+        switch(medMedicina.sViaAdministracion){
+        case "Pastilla":
+            titulo = "Número de pastillas por caja"
+            subTitulo = "Cantidad por pastilla"
             break
-        //inyeccion
-        case 1:
-            titulo = "Número de inyecciones en WHAT?"
+        case "Inyección":
+            titulo = "Número de botes por caja"
+            subTitulo = "Cantidad por bote"
             break
-        //supositorio
-        case 2:
-            titulo = "Número de WHAT en WHAT?"
+        case "Supositorio":
+            titulo = "Número de supositorios por caja"
+            subTitulo = "Cantidad por supositorio"
             break
-        //liquida
-        case 3:
-            titulo = "Número de algo en algo?"
+        case "Suspensión":
+            titulo = "Número de botes por caja"
+            subTitulo = "Cantidad por bote"
+            break
+        case "Cápsulas":
+            titulo = "Número de cápsulas por caja"
+            subTitulo = "Cantidad por cápsula"
             break
         default:
             break
@@ -101,7 +107,9 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let viewSiguiente = segue.destinationViewController as! ViewControllerAgregarMedicamentoFoto1
         
+        //guarda los datos del medicamento de esta vista
         medMedicina.dMiligramosCaja = Double(fldNumeroPCaja.text!)!*Double(fieldCantidadPCaja.text!)!
+        medMedicina.dMiligramosCajaActual = medMedicina.dMiligramosCaja
         
         viewSiguiente.medMedicina = medMedicina
     }

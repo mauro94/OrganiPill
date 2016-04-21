@@ -69,6 +69,7 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
 
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamento3ViewController
         
+        //guarda los datos del medicamento de esta vista
         if(tieneImagen){
             medMedicina.sFotoPastillero = pathImagen.absoluteString
         }

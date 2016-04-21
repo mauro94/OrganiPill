@@ -13,14 +13,13 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     // MARK: - Outlets
     @IBOutlet weak var pickerDosis: UIPickerView!
     @IBOutlet weak var pickerDuracion: UIPickerView!
-    @IBOutlet weak var pickerViaAdmin: UIPickerView!
     @IBOutlet weak var fldDosis: UITextField!
     @IBOutlet weak var fldDuracion: UITextField!
+    @IBOutlet weak var txtvComentarios: UITextView!
     
     // MARK: - Global Variables
     let arrDosis = ["Pastillas", "Cucharadas", ]
     let arrDuracion = ["Dia(s)", "Semana(s)", "Mes(es)"]
-    let arrViaAdmin = ["Oral", "Inyección", "Supositorio"]
     var medMedicina : Medicamento = Medicamento()
 
     override func viewDidLoad() {
@@ -34,10 +33,6 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         self.pickerDuracion.delegate = self
         self.pickerDuracion.selectRow(1, inComponent: 0, animated: true)
         
-        self.pickerViaAdmin.dataSource = self
-        self.pickerViaAdmin.delegate = self
-        self.pickerViaAdmin.selectRow(1, inComponent: 0, animated: true)
-        
         self.title = "Información de la receta"
 
 
@@ -49,9 +44,10 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         // Dispose of any resources that can be recreated.
     }
     
-    func emptyField(field : String){
+    //Hace una alerta si falta un dato por llenar
+    func emptyField(){
         //creates popup message
-        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste llenar algun campo!", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         
@@ -63,9 +59,6 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         if(pickerView.tag == 0){
             return 1
         }
-        else if(pickerView.tag == 1){
-            return 1
-        }
         else{
             return 1
         }
@@ -75,11 +68,8 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         if(pickerView.tag == 0){
             return arrDosis.count
         }
-        else if(pickerView.tag == 1){
-            return arrDuracion.count
-        }
         else{
-            return arrViaAdmin.count
+            return arrDuracion.count
         }
     }
     
@@ -87,11 +77,8 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         if(pickerView.tag == 0){
             return arrDosis[row]
         }
-        else if(pickerView.tag == 1){
-            return arrDuracion[row]
-        }
         else{
-            return arrViaAdmin[row]
+            return arrDuracion[row]
         }
     }
 
@@ -101,7 +88,7 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
             return true
         }
         else{
-            emptyField("algun campo")
+            emptyField()
             return false
         }
     }
@@ -109,11 +96,27 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamento4ViewController
         
+        //guarda los datos del medicamento de esta vista
         medMedicina.dDosis = Double(fldDosis.text!)!
         medMedicina.iDuracion = Int(fldDuracion.text!)!
-        medMedicina.sViaAdministracion = arrViaAdmin[pickerViaAdmin.selectedRowInComponent(0)]
+        medMedicina.sComentario = txtvComentarios.text!
+        medMedicina.sTipoDuracion = getTipoDuracion()
         
         viewSiguiente.medMedicina = medMedicina
+    }
+    
+    //funcion que regresa un tipo caracter indicando la unidad de duracion
+    func getTipoDuracion() -> String{
+        switch(pickerDuracion.selectedRowInComponent(0)){
+            case 0:
+                return "d"
+            case 1:
+                return "s"
+            case 2:
+                return "m"
+            default:
+                return "x"
+        }
     }
 
 }

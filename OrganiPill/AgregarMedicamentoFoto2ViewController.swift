@@ -84,6 +84,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamentoFoto3ViewController
         
+        //guarda los datos del medicamento de esta vista
         medMedicina.sFotoCaja = pathImagen.absoluteString
         
         viewSiguiente.medMedicina = medMedicina

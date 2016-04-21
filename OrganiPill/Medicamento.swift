@@ -17,7 +17,7 @@ class Medicamento: Object {
 	dynamic var sViaAdministracion: String = ""
 	dynamic var iDuracion: Int = 0
     dynamic var sTipoDuracion: String = ""
-	let horario = List<CustomDate>()
+	var horario = List<CustomDate>()
 	dynamic var bNecesitaAlimento: Bool = false
 	dynamic var sComentario: String = ""
 	dynamic var sFotoCaja: String = ""
