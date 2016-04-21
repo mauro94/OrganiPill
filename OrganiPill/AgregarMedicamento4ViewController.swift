@@ -158,7 +158,16 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
 
     @IBAction func presionaTerminar(sender: AnyObject) {
         medMedicina.horario = listaHorarios
-        
+        guardaRealm()
         print(medMedicina)
+    }
+    
+    //guarda la medicina a la base de datos REALM
+    func guardaRealm(){
+        let realm = try! Realm()
+        
+        try! realm.write {
+            realm.add(medMedicina)
+        }
     }
 }
