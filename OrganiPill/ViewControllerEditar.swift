@@ -124,7 +124,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
             try! realm.write {
                 indMedicamento.sNombre = tfNombre.text!
                 indMedicamento.dDosis = Double(tfDosis.text!)!
-                indMedicamento.iDias = Int(tfDuracion.text!)!
+              
                 indMedicamento.sViaAdministracion = pickerData[pcPicker.selectedRowInComponent(0)]
             }
             

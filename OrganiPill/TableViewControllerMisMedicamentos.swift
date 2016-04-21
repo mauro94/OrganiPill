@@ -36,6 +36,9 @@ class TableViewControllerMisMedicamentos: UITableViewController {
        
         
         
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -59,6 +62,7 @@ class TableViewControllerMisMedicamentos: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  
         let realm = try! Realm()
         
         
@@ -71,8 +75,64 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         
         cell.lbNombreMedicamento.text =  current.sNombre
         
+    
+       
+        let medicamentos = realm.objects(Medicamento)
+        
+        
+        
+    
+        
+        for index in 1...7 {
+            
+            
+            
+       let aux = medicamentos.filter("ANY horario.listaDias.dia = %@ AND sNombre = %@", index, cell.lbNombreMedicamento.text! )
+            
+            if(!aux.isEmpty){
+                
+                if(index == 1){
+                  cell.lblLunes.textColor = UIColor.redColor()
+                }
+                else if(index == 2){
+                  cell.lblMartes.textColor = UIColor.redColor()
+                }
+                else if(index == 3){
+                 cell.lblMiercoles.textColor = UIColor.redColor()
+                }
+                else if(index == 4){
+                 cell.lblJueves.textColor = UIColor.redColor()
+                }
+                else if(index == 5){
+                 cell.lblViernes.textColor = UIColor.redColor()
+                }
+                else if(index == 6){
+                 cell.lblSabado.textColor = UIColor.redColor()
+                }
+                else if(index == 7){
+                 cell.lblDomingo.textColor = UIColor.redColor()
+                }
+                
+                
+              
+            }
+            
+        }
+        
+        
+        
+        
+        
         return cell
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     /*

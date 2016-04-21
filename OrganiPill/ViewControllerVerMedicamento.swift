@@ -33,7 +33,7 @@ class ViewControllerVerMedicamento: UIViewController {
         lblNombre.text = indexMedicamento.sNombre
         lblDosis.text = String(indexMedicamento.dDosis)
         lblVia.text = indexMedicamento.sViaAdministracion
-        lblDuracion.text = String(indexMedicamento.iDias)
+       
         lblHorario.text = ""
         
         
