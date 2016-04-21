@@ -33,7 +33,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	@IBOutlet weak var lbNombreDia: UILabel!
 	
 	//reloj
-	@IBOutlet weak var lbReloj: UILabel!
+	//@IBOutlet weak var lbReloj: UILabel!
 	
 	//tabla medicamentos
 	@IBOutlet weak var tbvMedicamentosPendientes: UITableView!
@@ -46,14 +46,14 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	let nombreDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabádo"]
 	var timer = NSTimer()
 	
-	let animals: [String] = ["Horse", "Cow", "Camel", "Sheep", "Goat"]
+	var infoTabla = ["DS"]
 	
 	let realm = try! Realm()
 	var medicamentos: Results<Medicamento>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+		
 		self.title = "Calendario"
 		
 		//realm
@@ -111,15 +111,30 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		agregarUIBoton()
 		
 		//reloj
-		self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0,
+		/*self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0,
 			target: self,
 			selector: Selector("tick"),
 			userInfo: nil,
-			repeats: true)
+			repeats: true)*/
 		
 		//confirgurar tabla de medicamentos pendientes
 		tbvMedicamentosPendientes.delegate = self
 		tbvMedicamentosPendientes.dataSource = self
+		
+		//vista vacia
+		if (infoTabla.count == 0) {
+			var lbMensaje: UILabel = UILabel.init(frame: CGRectMake(0, 0, tbvMedicamentosPendientes.bounds.size.width, tbvMedicamentosPendientes.bounds.size.height))
+			lbMensaje.text = "¡No más medicamentos hoy!"
+			lbMensaje.textAlignment = NSTextAlignment.Center
+			
+			
+			//UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, yourTableView.bounds.size.width, yourTableView.bounds.size.height)];
+			//noDataLabel.text             = @"No data available";
+			//noDataLabel.textColor        = [UIColor blackColor];
+			//noDataLabel.textAlignment    = NSTextAlignmentCenter;
+			tbvMedicamentosPendientes.backgroundView = lbMensaje;
+			tbvMedicamentosPendientes.separatorStyle = UITableViewCellSeparatorStyle.None
+		}
     }
 	
 	
@@ -132,6 +147,9 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	//Presionar boton del calendario
 	@IBAction func btPresionarBotonDia(sender: AnyObject) {
+		//variables
+		var iNumeroDiaListaBotones: Int!
+		
 		//cambair todos los botones a blanco
 		for boton in botonesDias {
 			boton.layer.backgroundColor = UIColor.whiteColor().CGColor
@@ -151,6 +169,30 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		
 		//cambiar nombre del dia
 		lbNombreDia.text = nombreDias[iUbicacionArreglo!]
+		
+		//cargar informacion a la tabla
+		//definie dia de boton presionado
+		switch sender as! UIButton {
+		case btDomingo:
+			iNumeroDiaListaBotones = 1
+		case btLunes:
+			iNumeroDiaListaBotones = 2
+		case btMartes:
+			iNumeroDiaListaBotones = 3
+		case btMiercoles:
+			iNumeroDiaListaBotones = 4
+		case btJueves:
+			iNumeroDiaListaBotones = 5
+		case btViernes:
+			iNumeroDiaListaBotones = 6
+		case btSabado:
+			iNumeroDiaListaBotones = 7
+		default:
+			iNumeroDiaListaBotones = 0
+		}
+		
+		//filtro de query realm
+		let fechasMedicamentos = medicamentos.filter("ANY horario.listaDias.dia = %@", iNumeroDiaListaBotones)
 	}
 	
 	
@@ -189,7 +231,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	//funcion que agregar bordes a los botones
 	func agregaBorderButton(sender: UIButton) {
 		sender.layer.borderWidth = 0.5
-		sender.layer.borderColor = UIColor.blackColor().CGColor
+		sender.layer.borderColor = clBoton.CGColor
 	}
 	
 	
@@ -257,11 +299,11 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	
 	//funcion que crea qle reloj
-	@objc func tick() {
+	/*@objc func tick() {
 		lbReloj.text = NSDateFormatter.localizedStringFromDate(NSDate(),
 		                        dateStyle: .NoStyle,
 		                        timeStyle: .MediumStyle)
-	}
+	}*/
 	
 	
 	
@@ -269,7 +311,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 
 	// numero de filas de la table
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return animals.count
+		return infoTabla.count
 	}
 	
 	
@@ -279,14 +321,14 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		
 		let cell: tbcMedicamentoInfo = self.tbvMedicamentosPendientes.dequeueReusableCellWithIdentifier("cell") as! tbcMedicamentoInfo
 		
-		cell.lbNombreMedicamento.text = self.animals[indexPath.row]
+		cell.lbNombreMedicamento.text = infoTabla[indexPath.row]
 		
-		if (animals[indexPath.row] == animals[0]) {
+		if (infoTabla[indexPath.row] == infoTabla[0]) {
 			cell.bPrimerCelda = true
 			cell.bUltimaCelda = false
 		}
 		
-		else if (animals[indexPath.row] == animals[animals.count-1]) {
+		else if (infoTabla[indexPath.row] == infoTabla[infoTabla.count-1]) {
 			cell.bPrimerCelda = false
 			cell.bUltimaCelda = true
 		}
@@ -294,6 +336,10 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			cell.bPrimerCelda = false
 			cell.bUltimaCelda = false
 		}
+		
+		let backgroundView = UIView()
+		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
+		cell.selectedBackgroundView = backgroundView
 		
 		cell.setNeedsDisplay()
 		
