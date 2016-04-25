@@ -9,17 +9,22 @@
 import UIKit
 import RealmSwift
 class ViewControllerVerMedicamento: UIViewController {
-	//variables
+    //variables
     @IBOutlet weak var lblNombre: UILabel!
-
+    
+    @IBOutlet weak var lblTipoduracion: UILabel!
     @IBOutlet weak var lblDuracion: UILabel!
-	
+    
+    @IBOutlet weak var txvComentario: UITextView!
     @IBOutlet weak var lblHorario: UILabel!
     @IBOutlet weak var lblDosis: UILabel!
-	
+    
+    @IBOutlet weak var lblAlimento: UILabel!
     @IBOutlet weak var lblVia: UILabel!
     @IBOutlet weak var scScrollView: UIScrollView!
-	
+    
+    @IBOutlet weak var lblcajaactual: UILabel!
+    @IBOutlet weak var lblcajamiligramo: UILabel!
     @IBOutlet weak var imImage: UIImageView!
     
     
@@ -33,8 +38,32 @@ class ViewControllerVerMedicamento: UIViewController {
         lblNombre.text = indexMedicamento.sNombre
         lblDosis.text = String(indexMedicamento.dDosis)
         lblVia.text = indexMedicamento.sViaAdministracion
-       
+        
+        if(indexMedicamento.sTipoDuracion == "s"){
+            
+            lblTipoduracion.text = "Semana(s)"
+        }
+        else if(indexMedicamento.sTipoDuracion == "d"){
+            
+            lblTipoduracion.text = "Dia(s)"
+        }
+        else{
+            lblTipoduracion.text = "Mes(es)"
+        }
+        
+        
+        
+        lblDuracion.text = String(indexMedicamento.iDuracion)
+        lblcajaactual.text = String(indexMedicamento.dMiligramosCajaActual)
+        lblcajamiligramo.text = String(indexMedicamento.dMiligramosCaja)
         lblHorario.text = ""
+        txvComentario.text = indexMedicamento.sComentario
+        if (indexMedicamento.bNecesitaAlimento)  {
+            lblAlimento.text = "Si"
+        }
+        else{
+            lblAlimento.text = "No"
+        }
         
         
     }
@@ -44,7 +73,7 @@ class ViewControllerVerMedicamento: UIViewController {
         recargardatos()
     }
     
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,16 +83,16 @@ class ViewControllerVerMedicamento: UIViewController {
         
         recargardatos()
         
-       
         
         
-		
+        
+        
         // Do any additional setup after loading the view.
-		self.title = "Medicina"
-		
-	
-		
-       
+        self.title = "Medicina"
+        
+        
+        
+        
         let editButton : UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(""))
         
         self.navigationItem.rightBarButtonItem = editButton
@@ -72,27 +101,27 @@ class ViewControllerVerMedicamento: UIViewController {
         editButton.target = self
         editButton.action = "editbottonpress:"
         
-		var viewSize = self.view.frame.size
-		viewSize.height = 700
+        var viewSize = self.view.frame.size
+        viewSize.height = 1000
         viewSize.width = 100
         scScrollView.scrollEnabled = true;
         scScrollView.contentSize = viewSize
         scScrollView.showsVerticalScrollIndicator = false
-		
         
         
         
         
-		
-		
-		
+        
+        
+        
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-	
+    
     var cambFoto:Bool = true
     @IBAction func CambiarFoto(sender: AnyObject) {
         if(cambFoto){
@@ -105,13 +134,13 @@ class ViewControllerVerMedicamento: UIViewController {
         }
         
     }
-	
-	
     
-
+    
+    
+    
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -120,21 +149,11 @@ class ViewControllerVerMedicamento: UIViewController {
             
             let view = segue.destinationViewController as! ViewControllerEditar
             
-            
-            
-            view.nombres = lblNombre.text
-            
-            view.Duracion = lblDuracion.text
-            
-            view.Dosis = lblDosis.text
-            
-            view.imagg = imImage.image
-            
             view.indMedicamento = indexMedicamento
             
         }
         
-       
+        
         
         
         
@@ -144,17 +163,17 @@ class ViewControllerVerMedicamento: UIViewController {
         // Pass the selected object to the new view controller.
     }
     
-
-
+    
+    
     @IBAction func unwindToMenu(segue: UIStoryboardSegue) {
-    
-    
-    
-    
-    
+        
+        
+        
+        
+        
     }
     
-        
+    
     func editbottonpress(sender:AnyObject){
         
         
@@ -164,6 +183,6 @@ class ViewControllerVerMedicamento: UIViewController {
         
         
     }
- 
-
+    
+    
 }
