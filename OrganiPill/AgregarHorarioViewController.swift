@@ -67,7 +67,6 @@ class AgregarHorarioViewController: UIViewController{
         dateFormatter.dateFormat =  "HH:mm"
         let date = dateFormatter.dateFromString(horaEdit)
         datePicker.date = date!
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,8 +108,52 @@ class AgregarHorarioViewController: UIViewController{
         navigationController?.popViewControllerAnimated(true)
     }
     
+//    func guardarButtonPressed(sender: AnyObject){
+//        //hace la lista de dias programados
+//        for i in 0...6{
+//            if(bttnDias[i].selected){
+//                let dia : RealmInt = RealmInt()
+//                dia.dia = i+1
+//                horario.listaDias.append(dia)
+//            }
+//        }
+//        
+//        if(horario.listaDias.count == 0){
+//            noDayAlert()
+//            return
+//        }
+//        
+//        //saca la hora del picker
+//        let components = datePicker.calendar.components([.Hour, .Minute], fromDate: datePicker.date)
+//        
+//        horario.minutos = components.minute
+//        
+//        if(components.hour >= 12 && components.hour < 24){
+//            horario.meridiano = "PM"
+//        }
+//        else{
+//            horario.meridiano = "AM"
+//        }
+//        
+//        horario.horas = components.hour%12
+//        
+//        if(horario.horas == 0){
+//            horario.horas = 12
+//        }
+//
+//        //llama al metodo adecuado para generar o editar horario
+//        if(!editing){
+//            delegado.agregarHorario(horario)
+//        }
+//        else{
+//            delegado.editarHorario(horario)
+//            editing = false
+//        }
+//        
+//        delegado.quitaVista()
+//    }
+    
     func guardarButtonPressed(sender: AnyObject){
-        
         //hace la lista de dias programados
         for i in 0...6{
             if(bttnDias[i].selected){
@@ -129,20 +172,9 @@ class AgregarHorarioViewController: UIViewController{
         let components = datePicker.calendar.components([.Hour, .Minute], fromDate: datePicker.date)
         
         horario.minutos = components.minute
+        horario.horas = components.hour
         
-        if(components.hour >= 12 && components.hour < 24){
-            horario.meridiano = "PM"
-        }
-        else{
-            horario.meridiano = "AM"
-        }
         
-        horario.horas = components.hour%12
-        
-        if(horario.horas == 0){
-            horario.horas = 12
-        }
-
         //llama al metodo adecuado para generar o editar horario
         if(!editing){
             delegado.agregarHorario(horario)
@@ -154,6 +186,7 @@ class AgregarHorarioViewController: UIViewController{
         
         delegado.quitaVista()
     }
+
     
 
     /*

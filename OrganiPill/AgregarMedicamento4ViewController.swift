@@ -17,6 +17,9 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     // MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
     var listaHorarios = List<CustomDate>()
+    var notificaciones = Notificaciones()
+    let calendar = NSCalendar.currentCalendar()
+    var listaNotificaciones = NSMutableArray()
     var index : Int!
     let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
 
@@ -26,15 +29,6 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         self.title = "Horario"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AgregarMedicamento4ViewController.newButtonPressed(_:)))
-
-        //print(medMedicina.dDosis)
-        //print(medMedicina.dMiligramosCaja)
-        //print(medMedicina.iDias)
-        //print(medMedicina.sFotoCaja)
-        //print(medMedicina.sFotoPastillero)
-        //print(medMedicina.sFotoMedicamento)
-        //print(medMedicina.sNombre)
-        //print(medMedicina.sViaAdministracion)
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,20 +67,21 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         let cell = tableView.dequeueReusableCellWithIdentifier(
             "cell", forIndexPath: indexPath) as! CustomTableViewCell
         
-        var hora = "\(listaHorarios[indexPath.row].horas):"
+        //formatea la hora a 1-12 xM y la muestra
+        let formatoHoraConMeridiano = NSDateFormatter()
+        formatoHoraConMeridiano.dateFormat = "h:mm a"
+        let units: NSCalendarUnit = [.Hour, .Minute]
+        let myComponents = calendar.components(units, fromDate: NSDate())
+        myComponents.hour = listaHorarios[indexPath.row].horas
+        myComponents.minute = listaHorarios[indexPath.row].minutos
         
-        if(listaHorarios[indexPath.row].minutos < 10){
-            hora = hora + "0"
-        }
-        
-        hora = hora + "\(listaHorarios[indexPath.row].minutos) \(listaHorarios[indexPath.row].meridiano)"
-        
-        cell.lblHora?.text = hora
+        let hora = calendar.dateFromComponents(myComponents)
+        cell.lblHora?.text = formatoHoraConMeridiano.stringFromDate(hora!)
 
         //colorea los botones
         let numElementos = listaHorarios[indexPath.row].listaDias.count
         for i in 0...(numElementos-1){
-            var dia = listaHorarios[indexPath.row].listaDias[i]
+            let dia = listaHorarios[indexPath.row].listaDias[i]
             cell.bttnDias?[(dia.dia - 1)].backgroundColor = onBttnColor
         }
         
@@ -122,31 +117,11 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
             index = indexPath!.row
 
             //se formatea un string con la hora seleccionada
-            var sHoraActual = ""
-            
-            //agrega horas al string
-            if(listaHorarios[index].meridiano == "AM"){
-                if(listaHorarios[index].horas == 12){
-                    sHoraActual = sHoraActual + "00:"
-
-                }
-                else{
-                    sHoraActual = sHoraActual + "\(listaHorarios[index].horas):"
-                }
-            }
-            else{
-                if(listaHorarios[index].horas == 12){
-                    sHoraActual = sHoraActual + "12:"
-                }
-                else{
-                    sHoraActual = sHoraActual + "\(listaHorarios[index].horas + 12):"
-                }
-            }
-            
-            //agrega minutos al string
-            sHoraActual = sHoraActual + "\(listaHorarios[index].minutos)"
-            
-            viewAgregar.horaEdit = sHoraActual
+            let units: NSCalendarUnit = [.Hour, .Minute]
+            let myComponents = calendar.components(units, fromDate: NSDate())
+            myComponents.hour = listaHorarios[index].horas
+            myComponents.minute = listaHorarios[index].minutos
+            viewAgregar.horaEdit = getHourAsString(myComponents)
             
             for i in listaHorarios[index].listaDias{
                 viewAgregar.diasEdit.append(i.dia)
@@ -173,19 +148,39 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         else{
             medMedicina.horario = listaHorarios
             guardaRealm()
-            //print(medMedicina)
             navigationController?.popToRootViewControllerAnimated(true)
         }
     }
     
-    
-    
-    //guarda la medicina a la base de datos REALM
+    //guarda la medicina y notificaciones a la base de datos REALM
     func guardaRealm(){
         let realm = try! Realm()
         
         try! realm.write {
             realm.add(medMedicina)
         }
+        
+        let notif : HandlerNotificaciones = HandlerNotificaciones(medMedicamento: medMedicina)
+        
+        notif.generarNotificaciones()
+    }
+    
+    //genera un string en formato "HH:MM" a partir de componentes
+    func getHourAsString(components : NSDateComponents) -> String{
+        var hour : String = ""
+        
+        if(components.hour < 10){
+            hour += "0"
+        }
+        
+        hour += "\(components.hour):"
+        
+        if(components.minute < 10){
+            hour += "0"
+        }
+        
+        hour += "\(components.minute)"
+        
+        return hour
     }
 }
