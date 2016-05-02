@@ -11,20 +11,23 @@ import RealmSwift
 
 class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    @IBOutlet weak var swAlimentos: UISwitch!
+    @IBOutlet weak var txCajaActual: UITextField!
+    @IBOutlet weak var txMiligramosCaja: UITextField!
+    @IBOutlet weak var pickDuracion: UIPickerView!
+    @IBOutlet weak var txDuracion: UITextField!
     @IBOutlet weak var imImage: UIImageView!
     
     @IBOutlet weak var scScrollView: UIScrollView!
     
     @IBOutlet weak var pcPicker: UIPickerView!
     @IBOutlet weak var tfNombre: UITextField!
-    @IBOutlet weak var tfDuracion: UITextField!
+   
     @IBOutlet weak var tfDosis: UITextField!
     
     let pickerData = ["Injeccion","Comestible","Supositorio", "Tomable"]
-    var nombres : String!
-    var Dosis : String!
-    var Duracion : String!
-    var imagg: UIImage!
+    let pickerDataDuracion = ["Dia(s)","Semana(s)","Mes(es)"]
+    
     
     var indMedicamento : Medicamento!
     
@@ -48,6 +51,18 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    func checarPosicionPickerDuracion() -> Int{
+        if(indMedicamento.sTipoDuracion == "d"){
+            return 0
+        }
+        else if(indMedicamento.sTipoDuracion == "s"){
+            return 1
+        }
+        else{
+            return 2
+        }
+    }
+    
     
     
     override func viewDidLoad() {
@@ -64,11 +79,18 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         
         
         
+        if(indMedicamento.bNecesitaAlimento){
+            swAlimentos.on = true
+        }
         
-        imImage.image = imagg
-        tfNombre.text = nombres
-        tfDosis.text = Dosis
-        tfDuracion.text = Duracion
+        
+        tfNombre.text = indMedicamento.sNombre
+        tfDosis.text = String( indMedicamento.dDosis)
+        
+        txDuracion.text = String(indMedicamento.iDuracion)
+        
+        txCajaActual.text = String(indMedicamento.dMiligramosCajaActual)
+        txMiligramosCaja.text = String(indMedicamento.dMiligramosCaja)
         
         
         
@@ -76,10 +98,10 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         
         
         pcPicker.selectRow(checarPosicionPicker(), inComponent: 0, animated: true)
-        
+        pickDuracion.selectRow(checarPosicionPickerDuracion(), inComponent: 0, animated: true)
         
         var viewSize = self.view.frame.size
-        viewSize.height = 800
+        viewSize.height = 2000
         viewSize.width = 100
         scScrollView.scrollEnabled = true;
         scScrollView.contentSize = viewSize
@@ -98,11 +120,32 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+        
+        if(pickerView.tag == 1){
+            return pickerData[row]
+        }
+        else if(pickerView.tag == 2){
+            return pickerDataDuracion[row]
+        }
+        else{
+            return "hola"
+        }
+        
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        if(pickerView.tag == 1){
+            return pickerData.count
+        }
+        else if(pickerView.tag == 2){
+            return pickerDataDuracion.count
+        }
+        else{
+            return 1
+        }
+        
+        
+        
     }
     
     
@@ -116,7 +159,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         
         
         
-        if(tfDuracion.text != "" && tfDosis.text != "" && tfNombre.text != "" ){
+        if(txDuracion.text != "" && tfDosis.text != "" && tfNombre.text != "" ){
             
             
             let realm = try! Realm()
@@ -124,8 +167,34 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
             try! realm.write {
                 indMedicamento.sNombre = tfNombre.text!
                 indMedicamento.dDosis = Double(tfDosis.text!)!
+                
+                indMedicamento.dMiligramosCaja = Double(txMiligramosCaja.text!)!
               
+                indMedicamento.dMiligramosCajaActual = Double(txCajaActual.text!)!
+                
                 indMedicamento.sViaAdministracion = pickerData[pcPicker.selectedRowInComponent(0)]
+                
+                if(pickerDataDuracion[pickDuracion.selectedRowInComponent(0)] == "Dia(s)"){
+                    indMedicamento.sTipoDuracion = "d"
+                }
+                else if(pickerDataDuracion[pickDuracion.selectedRowInComponent(0)] == "Semana(s)"){
+                    indMedicamento.sTipoDuracion = "s"
+                }
+                
+                else{
+                    indMedicamento.sTipoDuracion = "m"
+                }
+                
+               
+                
+                if(swAlimentos.on){
+                    indMedicamento.bNecesitaAlimento = true
+                }
+                else{
+                    indMedicamento.bNecesitaAlimento = false
+                }
+                
+                
             }
             
             
