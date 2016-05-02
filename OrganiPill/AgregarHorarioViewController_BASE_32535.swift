@@ -43,9 +43,7 @@ class AgregarHorarioViewController: UIViewController{
         self.title = "Agregar Horario"
         
         //Agrega boton derecho a la barra de navegacion
-		if (editing) {
-			navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
-		}
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Guardar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
         
         //Agrega boton izquierdo a la barra de navegacion
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancelar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.cancelarButtonPressed(_:)))
@@ -69,6 +67,7 @@ class AgregarHorarioViewController: UIViewController{
         dateFormatter.dateFormat =  "HH:mm"
         let date = dateFormatter.dateFromString(horaEdit)
         datePicker.date = date!
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -110,7 +109,7 @@ class AgregarHorarioViewController: UIViewController{
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func guardarButtonPressed(sender: AnyObject){
+    func guardarButtonPressed(sender: AnyObject){
         
         //hace la lista de dias programados
         for i in 0...6{
@@ -130,9 +129,20 @@ class AgregarHorarioViewController: UIViewController{
         let components = datePicker.calendar.components([.Hour, .Minute], fromDate: datePicker.date)
         
         horario.minutos = components.minute
-        horario.horas = components.hour
         
+        if(components.hour >= 12 && components.hour < 24){
+            horario.meridiano = "PM"
+        }
+        else{
+            horario.meridiano = "AM"
+        }
         
+        horario.horas = components.hour%12
+        
+        if(horario.horas == 0){
+            horario.horas = 12
+        }
+
         //llama al metodo adecuado para generar o editar horario
         if(!editing){
             delegado.agregarHorario(horario)
@@ -144,7 +154,6 @@ class AgregarHorarioViewController: UIViewController{
         
         delegado.quitaVista()
     }
-
     
 
     /*

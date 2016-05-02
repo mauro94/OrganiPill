@@ -69,6 +69,7 @@ class AgregarHorarioViewController: UIViewController{
         dateFormatter.dateFormat =  "HH:mm"
         let date = dateFormatter.dateFromString(horaEdit)
         datePicker.date = date!
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -130,9 +131,20 @@ class AgregarHorarioViewController: UIViewController{
         let components = datePicker.calendar.components([.Hour, .Minute], fromDate: datePicker.date)
         
         horario.minutos = components.minute
-        horario.horas = components.hour
         
+        if(components.hour >= 12 && components.hour < 24){
+            horario.meridiano = "PM"
+        }
+        else{
+            horario.meridiano = "AM"
+        }
         
+        horario.horas = components.hour%12
+        
+        if(horario.horas == 0){
+            horario.horas = 12
+        }
+
         //llama al metodo adecuado para generar o editar horario
         if(!editing){
             delegado.agregarHorario(horario)
@@ -144,7 +156,6 @@ class AgregarHorarioViewController: UIViewController{
         
         delegado.quitaVista()
     }
-
     
 
     /*

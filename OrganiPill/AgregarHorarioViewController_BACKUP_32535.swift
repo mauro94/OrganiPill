@@ -110,8 +110,8 @@ class AgregarHorarioViewController: UIViewController{
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func guardarButtonPressed(sender: AnyObject){
-        
+    
+    func guardarButtonPressed(sender: AnyObject){
         //hace la lista de dias programados
         for i in 0...6{
             if(bttnDias[i].selected){

@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
 		storyboard()
+        
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        
 		return true
 	}
 
@@ -49,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.setInitialScreen(storyboard)
 	}
 	
-	//funcion que decide que sotry board es el inicial
+	//funcion que decide que storyboard es el inicial
 	func grabStoryboard() -> UIStoryboard {
 		var storyboard: UIStoryboard
 		
@@ -78,6 +82,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.window?.rootViewController = initViewController
 		self.window?.makeKeyAndVisible()
 	}
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        let nombreMed = userInfo["nombre"] as! String
+        let fecha = userInfo["fecha"] as! NSDate
+        
+        
+        if application.applicationState == .Active {
+            print("App was active: \(nombreMed)")
+        } else {
+            
+            let storyboard = UIStoryboard(name: "sbNotificacion", bundle: nil)
+            
+            let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion") as! NotificacionViewController
+            notifViewController.sNombre = nombreMed
+            notifViewController.fechaNotif = fecha
+
+            
+            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+            self.window?.rootViewController = notifViewController
+            self.window?.makeKeyAndVisible()
+        }
+    }
 
 }
 

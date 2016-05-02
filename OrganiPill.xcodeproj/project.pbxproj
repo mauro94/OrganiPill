@@ -12,6 +12,11 @@
 		312734571CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312734561CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift */; };
 		312734591CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312734581CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift */; };
 		3127345B1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127345A1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift */; };
+		313E9A471CD2871800669B9F /* Notificaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313E9A461CD2871800669B9F /* Notificaciones.swift */; };
+		313E9A491CD28D5100669B9F /* CustomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313E9A481CD28D5100669B9F /* CustomString.swift */; };
+		316962001CD67DBA00B167DD /* HandlerNotificaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316961FF1CD67DBA00B167DD /* HandlerNotificaciones.swift */; };
+		316962021CD6D52B00B167DD /* sbNotificacion.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 316962011CD6D52B00B167DD /* sbNotificacion.storyboard */; };
+		316962041CD6D58900B167DD /* NotificacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316962031CD6D58900B167DD /* NotificacionViewController.swift */; };
 		317C98431CC4793600C28D04 /* AgregarMedicamento4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */; };
 		317C98451CC5517900C28D04 /* AgregarHorarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */; };
 		317C984F1CC689A900C28D04 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */; };
@@ -44,6 +49,8 @@
 		34E569CD1CC9A3C300B6DE13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34E569CB1CC9A3C300B6DE13 /* Main.storyboard */; };
 		EA3E43451CC99F690031BEEF /* CustomDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3E43441CC99F690031BEEF /* CustomDate.swift */; };
 		EA3E43471CC99FE10031BEEF /* RealmInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3E43461CC99FE10031BEEF /* RealmInt.swift */; };
+		EA3E43491CC9A05D0031BEEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E43481CC9A05D0031BEEF /* LaunchScreen.storyboard */; };
+		EA3E434B1CC9A0630031BEEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434A1CC9A0630031BEEF /* Main.storyboard */; };
 		EA3E434D1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */; };
 		EA3E434F1CC9A06E0031BEEF /* sbCalendario.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434E1CC9A06E0031BEEF /* sbCalendario.storyboard */; };
 		EA3E43511CC9A07B0031BEEF /* setupInicial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E43501CC9A07B0031BEEF /* setupInicial.storyboard */; };
@@ -71,6 +78,11 @@
 		312734561CBF1310004BD7ED /* AgregarMedicamentoFoto2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamentoFoto2ViewController.swift; sourceTree = "<group>"; };
 		312734581CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamentoFoto3ViewController.swift; sourceTree = "<group>"; };
 		3127345A1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento3ViewController.swift; sourceTree = "<group>"; };
+		313E9A461CD2871800669B9F /* Notificaciones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notificaciones.swift; sourceTree = "<group>"; };
+		313E9A481CD28D5100669B9F /* CustomString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomString.swift; sourceTree = "<group>"; };
+		316961FF1CD67DBA00B167DD /* HandlerNotificaciones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandlerNotificaciones.swift; sourceTree = "<group>"; };
+		316962011CD6D52B00B167DD /* sbNotificacion.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbNotificacion.storyboard; sourceTree = "<group>"; };
+		316962031CD6D58900B167DD /* NotificacionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificacionViewController.swift; sourceTree = "<group>"; };
 		317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento4ViewController.swift; sourceTree = "<group>"; };
 		317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarHorarioViewController.swift; sourceTree = "<group>"; };
 		317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -103,6 +115,8 @@
 		34E569CC1CC9A3C300B6DE13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA3E43441CC99F690031BEEF /* CustomDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDate.swift; sourceTree = "<group>"; };
 		EA3E43461CC99FE10031BEEF /* RealmInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmInt.swift; sourceTree = "<group>"; };
+		EA3E43481CC9A05D0031BEEF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EA3E434A1CC9A0630031BEEF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
 		EA3E434E1CC9A06E0031BEEF /* sbCalendario.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbCalendario.storyboard; sourceTree = "<group>"; };
 		EA3E43501CC9A07B0031BEEF /* setupInicial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setupInicial.storyboard; sourceTree = "<group>"; };
@@ -206,6 +220,8 @@
 				EA3E43461CC99FE10031BEEF /* RealmInt.swift */,
 				342801071CBDBBBE0061BE49 /* Persona.swift */,
 				34630BEA1CBEABA600914FD0 /* Paciente.swift */,
+				313E9A461CD2871800669B9F /* Notificaciones.swift */,
+				313E9A481CD28D5100669B9F /* CustomString.swift */,
 			);
 			name = RealmFIles;
 			sourceTree = "<group>";
@@ -213,6 +229,8 @@
 		34BCD1AE1CBE06A70078F162 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				EA3E434A1CC9A0630031BEEF /* Main.storyboard */,
+				EA3E43481CC9A05D0031BEEF /* LaunchScreen.storyboard */,
 				34E569CB1CC9A3C300B6DE13 /* Main.storyboard */,
 				346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */,
 			);
@@ -222,6 +240,9 @@
 		34D130571CB46C61005E206C = {
 			isa = PBXGroup;
 			children = (
+				316962011CD6D52B00B167DD /* sbNotificacion.storyboard */,
+				316962031CD6D58900B167DD /* NotificacionViewController.swift */,
+				316961FF1CD67DBA00B167DD /* HandlerNotificaciones.swift */,
 				346F3FCA1CB5800700A48626 /* RealmSwift.framework */,
 				346F3FC61CB57FFF00A48626 /* Realm.framework */,
 				34D130621CB46C61005E206C /* OrganiPill */,
@@ -320,9 +341,11 @@
 			files = (
 				EA3E43511CC9A07B0031BEEF /* setupInicial.storyboard in Resources */,
 				34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */,
+				EA3E434B1CC9A0630031BEEF /* Main.storyboard in Resources */,
+				EA3E43491CC9A05D0031BEEF /* LaunchScreen.storyboard in Resources */,
 				34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */,
 				EA3E434F1CC9A06E0031BEEF /* sbCalendario.storyboard in Resources */,
-				34E569CD1CC9A3C300B6DE13 /* Main.storyboard in Resources */,
+				316962021CD6D52B00B167DD /* sbNotificacion.storyboard in Resources */,
 				EA3E434D1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard in Resources */,
 				344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */,
 			);
@@ -354,8 +377,10 @@
 				345A1FF11CCDDAE600F6FE76 /* ViewControllerSetupInicial3.swift in Sources */,
 				3413995F1CC72C6F006D982B /* ViewControllerSetupInicial1.swift in Sources */,
 				EA3E43471CC99FE10031BEEF /* RealmInt.swift in Sources */,
+				316962001CD67DBA00B167DD /* HandlerNotificaciones.swift in Sources */,
 				343E047E1CD6BB3700900284 /* TEMP.swift in Sources */,
 				3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */,
+				316962041CD6D58900B167DD /* NotificacionViewController.swift in Sources */,
 				34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */,
 				342801081CBDBBBE0061BE49 /* Persona.swift in Sources */,
 				34630BF51CC03DE400914FD0 /* tbcMedicamentoInfo.swift in Sources */,
@@ -369,12 +394,14 @@
 				346F3FBE1CB5733900A48626 /* ViewControllerMenu.swift in Sources */,
 				312734531CBEC9BE004BD7ED /* ViewControllerAgregarMedicamento2.swift in Sources */,
 				34DBD7B31CB5C32E00DA952C /* TableViewCellMedicamento.swift in Sources */,
+				313E9A471CD2871800669B9F /* Notificaciones.swift in Sources */,
 				312734591CBF1477004BD7ED /* AgregarMedicamentoFoto3ViewController.swift in Sources */,
 				34630BED1CBEACD800914FD0 /* Fecha.swift in Sources */,
 				317C98451CC5517900C28D04 /* AgregarHorarioViewController.swift in Sources */,
 				312734551CBED7E4004BD7ED /* ViewControllerAgregarMedicamentoFoto1.swift in Sources */,
 				EAFBBBD21CC516E700686148 /* ViewControllerEditar.swift in Sources */,
 				34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */,
+				313E9A491CD28D5100669B9F /* CustomString.swift in Sources */,
 				341399611CC73815006D982B /* ViewControllerBienvenida.swift in Sources */,
 				34C347BD1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift in Sources */,
 				34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */,

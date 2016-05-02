@@ -43,9 +43,7 @@ class AgregarHorarioViewController: UIViewController{
         self.title = "Agregar Horario"
         
         //Agrega boton derecho a la barra de navegacion
-		if (editing) {
-			navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
-		}
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Guardar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
         
         //Agrega boton izquierdo a la barra de navegacion
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancelar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.cancelarButtonPressed(_:)))
@@ -110,8 +108,52 @@ class AgregarHorarioViewController: UIViewController{
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func guardarButtonPressed(sender: AnyObject){
-        
+//    func guardarButtonPressed(sender: AnyObject){
+//        //hace la lista de dias programados
+//        for i in 0...6{
+//            if(bttnDias[i].selected){
+//                let dia : RealmInt = RealmInt()
+//                dia.dia = i+1
+//                horario.listaDias.append(dia)
+//            }
+//        }
+//        
+//        if(horario.listaDias.count == 0){
+//            noDayAlert()
+//            return
+//        }
+//        
+//        //saca la hora del picker
+//        let components = datePicker.calendar.components([.Hour, .Minute], fromDate: datePicker.date)
+//        
+//        horario.minutos = components.minute
+//        
+//        if(components.hour >= 12 && components.hour < 24){
+//            horario.meridiano = "PM"
+//        }
+//        else{
+//            horario.meridiano = "AM"
+//        }
+//        
+//        horario.horas = components.hour%12
+//        
+//        if(horario.horas == 0){
+//            horario.horas = 12
+//        }
+//
+//        //llama al metodo adecuado para generar o editar horario
+//        if(!editing){
+//            delegado.agregarHorario(horario)
+//        }
+//        else{
+//            delegado.editarHorario(horario)
+//            editing = false
+//        }
+//        
+//        delegado.quitaVista()
+//    }
+    
+    func guardarButtonPressed(sender: AnyObject){
         //hace la lista de dias programados
         for i in 0...6{
             if(bttnDias[i].selected){

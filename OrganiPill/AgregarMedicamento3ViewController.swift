@@ -15,6 +15,8 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var pickerDuracion: UIPickerView!
     @IBOutlet weak var fldDosis: UITextField!
     @IBOutlet weak var fldDuracion: UITextField!
+    @IBOutlet weak var segmentedControlTipoDuracion: UISegmentedControl!
+    
     
     // MARK: - Global Variables
     let arrDosis = ["Pastillas", "Cucharadas", ]
@@ -110,7 +112,7 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     
     //funcion que regresa un tipo caracter indicando la unidad de duracion
     func getTipoDuracion() -> String{
-        switch(pickerDuracion.selectedRowInComponent(0)){
+    switch(segmentedControlTipoDuracion.selectedSegmentIndex){
             case 0:
                 return "d"
             case 1:
@@ -121,5 +123,9 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
                 return "x"
         }
     }
+    
+    
+    
+    
 
 }
