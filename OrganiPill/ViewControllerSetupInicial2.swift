@@ -1,38 +1,31 @@
 //
-//  ViewControllerSetupInicial1.swift
+//  ViewControllerSetupInicial2.swift
 //  OrganiPill
 //
-//  Created by Mauro Amarante on 4/19/16.
+//  Created by Mauro Amarante on 4/24/16.
 //  Copyright © 2016 Mauro Amarante. All rights reserved.
 //
 
 import UIKit
-import RealmSwift
 
-class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationControllerDelegate, UITextFieldDelegate {
+class ViewControllerSetupInicial2: UIViewController, UIPopoverPresentationControllerDelegate {
 	//outlets
 	@IBOutlet weak var tfNombre: UITextField!
-	@IBOutlet weak var tfTelefono: UITextField!
-	@IBOutlet weak var tfTelefono2: UITextField!
+	@IBOutlet weak var tfTelefonoConsultorio: UITextField!
+	@IBOutlet weak var tfTelefonoPersonal: UITextField!
 	@IBOutlet weak var tfCorreoElectronico: UITextField!
 	@IBOutlet weak var scroll: UIScrollView!
 	
 	//variables
-	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
-	var paciente: Persona = Persona()
+	var doctor: Persona = Persona()
+	var paciente: Persona!
 	var activeField : UITextField?
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-		self.title = "Información Personal"
-		
-		self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-		self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-		self.navigationController?.navigationBar.barTintColor = color
-		self.navigationController?.navigationBar.translucent = false
-		self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+		self.title = "Información Doctor"
 		
 		let tap = UITapGestureRecognizer(target: self, action: #selector(quitaTeclado))
 		
@@ -85,10 +78,6 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
 		activeField = nil
 	}
 	
-	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-		return UIModalPresentationStyle.None
-	}
-	
 	func emptyField(field : String){
 		//creates popup message
 		let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
@@ -98,17 +87,14 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
 		presentViewController(alerta, animated: true, completion: nil)
 	}
 	
-
-
-	
-    // MARK: - Navigation
+	// MARK: - Navigation
 	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
 		if (identifier == "seguePopOver") {
 			quitaTeclado()
 			return true
 		}
 		
-		if(tfNombre.text != "" && tfTelefono.text != "" && tfCorreoElectronico.text != ""){
+		if(tfNombre.text != "" && tfTelefonoConsultorio.text != "" && tfCorreoElectronico.text != ""){
 			return true
 		}
 		else{
@@ -123,19 +109,35 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
 			popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
 			popoverViewController.popoverPresentationController!.delegate = self
 		}
-		
-		else {
-			let viewSiguiente = segue.destinationViewController as! ViewControllerSetupInicial2
-			//guarda los datos de esta vista
-			paciente.sNombre = tfNombre.text!
-			paciente.sTelefono = tfTelefono.text!
-			if (tfTelefono2 != "") {
-				paciente.sTelefonoSecundario = tfTelefono2.text!
-			}
-			paciente.sCorreoElectronico = tfCorreoElectronico.text!
 			
+		else {
+			let viewSiguiente = segue.destinationViewController as! ViewControllerSetupInicial3
+			//guarda los datos de esta vista
+			doctor.sNombre = tfNombre.text!
+			doctor.sTelefono = tfTelefonoConsultorio.text!
+			if (tfTelefonoPersonal != "") {
+				doctor.sTelefonoSecundario = tfTelefonoPersonal.text!
+			}
+			doctor.sCorreoElectronico = tfCorreoElectronico.text!
+			
+			viewSiguiente.doctor = doctor
 			viewSiguiente.paciente = paciente
 		}
 	}
+
+	
+	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+		return UIModalPresentationStyle.None
+	}
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }

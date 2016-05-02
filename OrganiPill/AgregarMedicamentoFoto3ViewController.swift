@@ -23,6 +23,7 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+		self.title = "Imágen de Pastillero"
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,8 +63,17 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
         bttnSiguiente.setTitle("Siguiente", forState: UIControlState.Normal)
         
         tieneImagen = true
+		
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarMedicamentoFoto3ViewController.cancelarButtonPressed(_:)))
     }
-    
+	
+	func cancelarButtonPressed(sender: AnyObject){
+		tieneImagen = false
+		imgFoto.image = nil
+		bttnSiguiente.setTitle("Saltar", forState: UIControlState.Normal)
+		navigationItem.rightBarButtonItem = nil
+	}
+	
      // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 

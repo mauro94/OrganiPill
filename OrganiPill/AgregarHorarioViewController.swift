@@ -43,7 +43,9 @@ class AgregarHorarioViewController: UIViewController{
         self.title = "Agregar Horario"
         
         //Agrega boton derecho a la barra de navegacion
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Guardar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
+		if (editing) {
+			navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
+		}
         
         //Agrega boton izquierdo a la barra de navegacion
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancelar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.cancelarButtonPressed(_:)))
@@ -109,7 +111,7 @@ class AgregarHorarioViewController: UIViewController{
         navigationController?.popViewControllerAnimated(true)
     }
     
-    func guardarButtonPressed(sender: AnyObject){
+    @IBAction func guardarButtonPressed(sender: AnyObject){
         
         //hace la lista de dias programados
         for i in 0...6{

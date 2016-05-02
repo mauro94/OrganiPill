@@ -16,10 +16,12 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var lblSubTitulo: UILabel!
     @IBOutlet weak var fldNumeroPCaja: UITextField!
     @IBOutlet weak var fieldCantidadPCaja: UITextField!
+	@IBOutlet weak var pickerCantidadCaja: UIPickerView!
     
     // MARK: - Global Variables
     //var arrMedidas = NSMutableArray()
-    let arrMedidas = ["Miligramos", "Mililitros"]
+    var arrValoresCaja = [Int]()
+	var arrValoresCantidad = [Int]()
     var titulo : String!
     var subTitulo : String!
     var medMedicina : Medicamento = Medicamento()
@@ -30,22 +32,38 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
         self.pickerMedidas.dataSource = self
         self.pickerMedidas.delegate = self
         self.pickerMedidas.selectRow(1, inComponent: 0, animated: true)
-        
-        self.title = "Información del medicamento"
+		self.pickerMedidas.tag = 1
+		
+		self.pickerCantidadCaja.dataSource = self
+		self.pickerCantidadCaja.delegate = self
+		self.pickerCantidadCaja.selectRow(1, inComponent: 0, animated: true)
+		self.pickerCantidadCaja.tag = 2
+		
+        self.title = "Información del Medicamento"
         
         decideTitulo()
         lblTitulo.text = titulo
         lblSubTitulo.text = subTitulo
+		
+		//llenar arreglo con dato numericos
+		for i in 1...100 {
+			arrValoresCaja.append(i)
+			arrValoresCantidad.append(i*10)
+		}
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+	
+	@IBAction func quitarTeclado() {
+		self.view.endEditing(true)
+	}
+	
     func emptyField(field : String){
         //creates popup message
-        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         
@@ -56,24 +74,24 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
         //decide titulo de la siguiente vista
         switch(medMedicina.sViaAdministracion){
         case "Pastilla":
-            titulo = "Número de pastillas por caja"
-            subTitulo = "Cantidad por pastilla"
+            titulo = "Número de pastillas por caja:"
+            subTitulo = "Dosis por pastilla:"
             break
         case "Inyección":
-            titulo = "Número de botes por caja"
-            subTitulo = "Cantidad por bote"
+            titulo = "Número de botes por caja:"
+            subTitulo = "Dosis por bote:"
             break
         case "Supositorio":
-            titulo = "Número de supositorios por caja"
-            subTitulo = "Cantidad por supositorio"
+            titulo = "Número de supositorios por caja:"
+            subTitulo = "Dosis por supositorio:"
             break
         case "Suspensión":
-            titulo = "Número de botes por caja"
-            subTitulo = "Cantidad por bote"
+            titulo = "Número de botes por caja:"
+            subTitulo = "Dosis por bote:"
             break
         case "Cápsulas":
-            titulo = "Número de cápsulas por caja"
-            subTitulo = "Cantidad por cápsula"
+            titulo = "Número de cápsulas por caja:"
+            subTitulo = "Dosis por cápsula:"
             break
         default:
             break
@@ -86,11 +104,25 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return arrMedidas.count;
+		if (pickerView.tag == 1) {
+			return arrValoresCaja.count
+		}
+		else {
+			return arrValoresCantidad.count
+		}
+		
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return arrMedidas[row]
+	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+		if (pickerView.tag == 1) {
+			fieldCantidadPCaja.text = "\((pickerView.selectedRowInComponent(component)+1)*10)"
+			return "\(arrValoresCantidad[row])"
+		}
+		
+		else {
+			fldNumeroPCaja.text = "\(pickerView.selectedRowInComponent(component)+1)"
+			return "\(arrValoresCaja[row])"
+		}
     }
     
     // MARK: - Navigation

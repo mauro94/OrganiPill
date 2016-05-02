@@ -15,12 +15,12 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var pickerDuracion: UIPickerView!
     @IBOutlet weak var fldDosis: UITextField!
     @IBOutlet weak var fldDuracion: UITextField!
-    @IBOutlet weak var txtvComentarios: UITextView!
     
     // MARK: - Global Variables
     let arrDosis = ["Pastillas", "Cucharadas", ]
     let arrDuracion = ["Dia(s)", "Semana(s)", "Mes(es)"]
     var medMedicina : Medicamento = Medicamento()
+	var arrValores = [Int]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +28,19 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         self.pickerDosis.dataSource = self
         self.pickerDosis.delegate = self
         self.pickerDosis.selectRow(1, inComponent: 0, animated: true)
+		self.pickerDosis.tag = 1
         
         self.pickerDuracion.dataSource = self
         self.pickerDuracion.delegate = self
         self.pickerDuracion.selectRow(1, inComponent: 0, animated: true)
+		self.pickerDuracion.tag = 2
         
         self.title = "Información de la receta"
+		
+		//llenar arreglo con dato numericos
+		for i in 1...10 {
+			arrValores.append(i)
+		}
 
 
         // Do any additional setup after loading the view.
@@ -43,6 +50,10 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	@IBAction func quitarTeclado() {
+		self.view.endEditing(true)
+	}
     
     //Hace una alerta si falta un dato por llenar
     func emptyField(){
@@ -56,30 +67,23 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     
     // MARK: - Picker Functions
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        if(pickerView.tag == 0){
-            return 1
-        }
-        else{
-            return 1
-        }
+		return 1
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if(pickerView.tag == 0){
-            return arrDosis.count
-        }
-        else{
-            return arrDuracion.count
-        }
+		return arrValores.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if(pickerView.tag == 0){
-            return arrDosis[row]
-        }
-        else{
-            return arrDuracion[row]
-        }
+		if (pickerView.tag == 1) {
+			fldDosis.text = "\(pickerView.selectedRowInComponent(component)+1)"
+			return "\(arrValores[row])"
+		}
+			
+		else {
+			fldDuracion.text = "\(pickerView.selectedRowInComponent(component)+1)"
+			return "\(arrValores[row])"
+		}
     }
 
     // MARK: - Navigation
@@ -99,7 +103,6 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         //guarda los datos del medicamento de esta vista
         medMedicina.dDosis = Double(fldDosis.text!)!
         medMedicina.iDuracion = Int(fldDuracion.text!)!
-        medMedicina.sComentario = txtvComentarios.text!
         medMedicina.sTipoDuracion = getTipoDuracion()
         
         viewSiguiente.medMedicina = medMedicina

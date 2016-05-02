@@ -18,8 +18,11 @@
 		3413995F1CC72C6F006D982B /* ViewControllerSetupInicial1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3413995E1CC72C6F006D982B /* ViewControllerSetupInicial1.swift */; };
 		341399611CC73815006D982B /* ViewControllerBienvenida.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341399601CC73815006D982B /* ViewControllerBienvenida.swift */; };
 		342801081CBDBBBE0061BE49 /* Persona.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342801071CBDBBBE0061BE49 /* Persona.swift */; };
+		343E047E1CD6BB3700900284 /* TEMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343E047D1CD6BB3700900284 /* TEMP.swift */; };
 		3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3443C50F1CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift */; };
 		344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */; };
+		345A1FEF1CCDD99000F6FE76 /* ViewControllerSetupInicial2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A1FEE1CCDD99000F6FE76 /* ViewControllerSetupInicial2.swift */; };
+		345A1FF11CCDDAE600F6FE76 /* ViewControllerSetupInicial3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A1FF01CCDDAE600F6FE76 /* ViewControllerSetupInicial3.swift */; };
 		34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEA1CBEABA600914FD0 /* Paciente.swift */; };
 		34630BED1CBEACD800914FD0 /* Fecha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEC1CBEACD800914FD0 /* Fecha.swift */; };
 		34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */; };
@@ -32,15 +35,15 @@
 		346F3FCB1CB5800700A48626 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FCA1CB5800700A48626 /* RealmSwift.framework */; };
 		346F3FCC1CB5800700A48626 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FCA1CB5800700A48626 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		349E7F5B1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */; };
+		34C347BD1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C347BC1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift */; };
 		34D130641CB46C61005E206C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D130631CB46C61005E206C /* AppDelegate.swift */; };
 		34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D1306A1CB46C61005E206C /* Assets.xcassets */; };
 		34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34D1306C1CB46C61005E206C /* LaunchScreen.storyboard */; };
 		34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBD7B01CB5B94B00DA952C /* Medicamento.swift */; };
 		34DBD7B31CB5C32E00DA952C /* TableViewCellMedicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */; };
+		34E569CD1CC9A3C300B6DE13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34E569CB1CC9A3C300B6DE13 /* Main.storyboard */; };
 		EA3E43451CC99F690031BEEF /* CustomDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3E43441CC99F690031BEEF /* CustomDate.swift */; };
 		EA3E43471CC99FE10031BEEF /* RealmInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3E43461CC99FE10031BEEF /* RealmInt.swift */; };
-		EA3E43491CC9A05D0031BEEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E43481CC9A05D0031BEEF /* LaunchScreen.storyboard */; };
-		EA3E434B1CC9A0630031BEEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434A1CC9A0630031BEEF /* Main.storyboard */; };
 		EA3E434D1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */; };
 		EA3E434F1CC9A06E0031BEEF /* sbCalendario.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434E1CC9A06E0031BEEF /* sbCalendario.storyboard */; };
 		EA3E43511CC9A07B0031BEEF /* setupInicial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E43501CC9A07B0031BEEF /* setupInicial.storyboard */; };
@@ -74,8 +77,11 @@
 		3413995E1CC72C6F006D982B /* ViewControllerSetupInicial1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerSetupInicial1.swift; sourceTree = "<group>"; };
 		341399601CC73815006D982B /* ViewControllerBienvenida.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerBienvenida.swift; sourceTree = "<group>"; };
 		342801071CBDBBBE0061BE49 /* Persona.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persona.swift; sourceTree = "<group>"; };
+		343E047D1CD6BB3700900284 /* TEMP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEMP.swift; sourceTree = "<group>"; };
 		3443C50F1CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerMedicamentosTomados.swift; sourceTree = "<group>"; };
 		344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbMisMedicamentos.storyboard; sourceTree = "<group>"; };
+		345A1FEE1CCDD99000F6FE76 /* ViewControllerSetupInicial2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerSetupInicial2.swift; sourceTree = "<group>"; };
+		345A1FF01CCDDAE600F6FE76 /* ViewControllerSetupInicial3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerSetupInicial3.swift; sourceTree = "<group>"; };
 		34630BEA1CBEABA600914FD0 /* Paciente.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paciente.swift; sourceTree = "<group>"; };
 		34630BEC1CBEACD800914FD0 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
 		34630BEE1CBEB83D00914FD0 /* ViewControllerCalendario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCalendario.swift; sourceTree = "<group>"; };
@@ -86,6 +92,7 @@
 		346F3FC61CB57FFF00A48626 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		346F3FCA1CB5800700A48626 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAgregarMedicamento1.swift; sourceTree = "<group>"; };
+		34C347BC1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAgregarContacto.swift; sourceTree = "<group>"; };
 		34D130601CB46C61005E206C /* OrganiPill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrganiPill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D130631CB46C61005E206C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34D1306A1CB46C61005E206C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,10 +100,9 @@
 		34D1306F1CB46C61005E206C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34DBD7B01CB5B94B00DA952C /* Medicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medicamento.swift; sourceTree = "<group>"; };
 		34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellMedicamento.swift; sourceTree = "<group>"; };
+		34E569CC1CC9A3C300B6DE13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA3E43441CC99F690031BEEF /* CustomDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDate.swift; sourceTree = "<group>"; };
 		EA3E43461CC99FE10031BEEF /* RealmInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmInt.swift; sourceTree = "<group>"; };
-		EA3E43481CC9A05D0031BEEF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		EA3E434A1CC9A0630031BEEF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
 		EA3E434E1CC9A06E0031BEEF /* sbCalendario.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbCalendario.storyboard; sourceTree = "<group>"; };
 		EA3E43501CC9A07B0031BEEF /* setupInicial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setupInicial.storyboard; sourceTree = "<group>"; };
@@ -152,8 +158,12 @@
 			isa = PBXGroup;
 			children = (
 				EA3E43501CC9A07B0031BEEF /* setupInicial.storyboard */,
+				34C347BC1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift */,
+				345A1FF01CCDDAE600F6FE76 /* ViewControllerSetupInicial3.swift */,
+				343E047D1CD6BB3700900284 /* TEMP.swift */,
 				341399601CC73815006D982B /* ViewControllerBienvenida.swift */,
 				3413995E1CC72C6F006D982B /* ViewControllerSetupInicial1.swift */,
+				345A1FEE1CCDD99000F6FE76 /* ViewControllerSetupInicial2.swift */,
 			);
 			name = "Setup Inicial";
 			sourceTree = "<group>";
@@ -203,8 +213,7 @@
 		34BCD1AE1CBE06A70078F162 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				EA3E434A1CC9A0630031BEEF /* Main.storyboard */,
-				EA3E43481CC9A05D0031BEEF /* LaunchScreen.storyboard */,
+				34E569CB1CC9A3C300B6DE13 /* Main.storyboard */,
 				346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */,
 			);
 			name = Menu;
@@ -311,10 +320,9 @@
 			files = (
 				EA3E43511CC9A07B0031BEEF /* setupInicial.storyboard in Resources */,
 				34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */,
-				EA3E434B1CC9A0630031BEEF /* Main.storyboard in Resources */,
-				EA3E43491CC9A05D0031BEEF /* LaunchScreen.storyboard in Resources */,
 				34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */,
 				EA3E434F1CC9A06E0031BEEF /* sbCalendario.storyboard in Resources */,
+				34E569CD1CC9A3C300B6DE13 /* Main.storyboard in Resources */,
 				EA3E434D1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard in Resources */,
 				344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */,
 			);
@@ -343,8 +351,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				345A1FF11CCDDAE600F6FE76 /* ViewControllerSetupInicial3.swift in Sources */,
 				3413995F1CC72C6F006D982B /* ViewControllerSetupInicial1.swift in Sources */,
 				EA3E43471CC99FE10031BEEF /* RealmInt.swift in Sources */,
+				343E047E1CD6BB3700900284 /* TEMP.swift in Sources */,
 				3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */,
 				34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */,
 				342801081CBDBBBE0061BE49 /* Persona.swift in Sources */,
@@ -366,7 +376,9 @@
 				EAFBBBD21CC516E700686148 /* ViewControllerEditar.swift in Sources */,
 				34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */,
 				341399611CC73815006D982B /* ViewControllerBienvenida.swift in Sources */,
+				34C347BD1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift in Sources */,
 				34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */,
+				345A1FEF1CCDD99000F6FE76 /* ViewControllerSetupInicial2.swift in Sources */,
 				34D130641CB46C61005E206C /* AppDelegate.swift in Sources */,
 				317C98431CC4793600C28D04 /* AgregarMedicamento4ViewController.swift in Sources */,
 			);
@@ -381,6 +393,14 @@
 				34D1306D1CB46C61005E206C /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		34E569CB1CC9A3C300B6DE13 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				34E569CC1CC9A3C300B6DE13 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

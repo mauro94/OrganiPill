@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Realm
 
 class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	//outlets-------------------------------------------
@@ -32,9 +33,6 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	//nombre del dia
 	@IBOutlet weak var lbNombreDia: UILabel!
 	
-	//reloj
-	//@IBOutlet weak var lbReloj: UILabel!
-	
 	//tabla medicamentos
 	@IBOutlet weak var tbvMedicamentosPendientes: UITableView!
 	
@@ -46,10 +44,10 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	let nombreDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabádo"]
 	var timer = NSTimer()
 	
-	var infoTabla = ["DS"]
-	
 	let realm = try! Realm()
 	var medicamentos: Results<Medicamento>!
+	var iNumeroMeds: Int = 0
+	var iNumeroDiaListaBotones: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,19 +108,12 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		//llama funcion que agrega UI a los botones
 		agregarUIBoton()
 		
-		//reloj
-		/*self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0,
-			target: self,
-			selector: Selector("tick"),
-			userInfo: nil,
-			repeats: true)*/
-		
 		//confirgurar tabla de medicamentos pendientes
 		tbvMedicamentosPendientes.delegate = self
 		tbvMedicamentosPendientes.dataSource = self
 		
 		//vista vacia
-		if (infoTabla.count == 0) {
+		if (iNumeroMeds == 0) {
 			var lbMensaje: UILabel = UILabel.init(frame: CGRectMake(0, 0, tbvMedicamentosPendientes.bounds.size.width, tbvMedicamentosPendientes.bounds.size.height))
 			lbMensaje.text = "¡No más medicamentos hoy!"
 			lbMensaje.textAlignment = NSTextAlignment.Center
@@ -147,9 +138,6 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	//Presionar boton del calendario
 	@IBAction func btPresionarBotonDia(sender: AnyObject) {
-		//variables
-		var iNumeroDiaListaBotones: Int!
-		
 		//cambair todos los botones a blanco
 		for boton in botonesDias {
 			boton.layer.backgroundColor = UIColor.whiteColor().CGColor
@@ -192,7 +180,9 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		}
 		
 		//filtro de query realm
-		let fechasMedicamentos = medicamentos.filter("ANY horario.listaDias.dia = %@", iNumeroDiaListaBotones)
+		let infoTabla = medicamentos.filter("ANY horario.listaDias.dia = %@", iNumeroDiaListaBotones)
+		print(infoTabla)
+		//infoTabla = infoTablas as NSArray as! [Results<Medicamento>]
 	}
 	
 	
@@ -311,7 +301,8 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 
 	// numero de filas de la table
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return infoTabla.count
+		let infoTabla = medicamentos.filter("ANY horario.listaDias.dia = %@", iNumeroDiaListaBotones)
+		return 0
 	}
 	
 	
@@ -321,9 +312,12 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		
 		let cell: tbcMedicamentoInfo = self.tbvMedicamentosPendientes.dequeueReusableCellWithIdentifier("cell") as! tbcMedicamentoInfo
 		
-		cell.lbNombreMedicamento.text = infoTabla[indexPath.row]
+		//let data = infoTabla[indexPath.row]
+		//print(data)
 		
-		if (infoTabla[indexPath.row] == infoTabla[0]) {
+		//cell.lbNombreMedicamento.text = data.sNombre
+		
+		/*if (infoTabla[indexPath.row] == infoTabla[0]) {
 			cell.bPrimerCelda = true
 			cell.bUltimaCelda = false
 		}
@@ -335,7 +329,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		else {
 			cell.bPrimerCelda = false
 			cell.bUltimaCelda = false
-		}
+		}*/
 		
 		let backgroundView = UIView()
 		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)

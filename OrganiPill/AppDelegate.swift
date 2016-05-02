@@ -54,10 +54,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		var storyboard: UIStoryboard
 		
 		let realm = try! Realm()
-		let persona = realm.objects(Persona)
+		let paciente = realm.objects(Paciente)
 
 		//si no existe una  instancia de persona pedir datos
-		if (persona.count == 0) {
+		if (paciente.count == 0) {
 			storyboard = UIStoryboard(name: "setupInicial", bundle: nil)
 		}
 		

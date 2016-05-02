@@ -18,6 +18,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     var medMedicina : Medicamento = Medicamento()
     var listaHorarios = List<CustomDate>()
     var index : Int!
+	var indexCell: NSIndexPath!
     let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
 
     override func viewDidLoad() {
@@ -88,16 +89,23 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         for i in 0...(numElementos-1){
             var dia = listaHorarios[indexPath.row].listaDias[i]
             cell.bttnDias?[(dia.dia - 1)].backgroundColor = onBttnColor
+			cell.bttnDias?[(dia.dia - 1)].setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         }
         
         //agrega marcos a los botones
         for i in 0...6{
             agregaBorderButton(cell.bttnDias[i])
         }
-        
+		
+		let backgroundView = UIView()
+		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
+		cell.selectedBackgroundView = backgroundView
+		
+		cell.setNeedsDisplay()
+		
         return cell
     }
-    
+	
     //funcion que agregar bordes a los botones
     func agregaBorderButton(sender: UIButton) {
         sender.layer.borderWidth = 0.5
@@ -120,6 +128,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
             //guarda el indice seleccionado
             let indexPath = self.tableHorarios.indexPathForSelectedRow
             index = indexPath!.row
+			indexCell = indexPath
 
             //se formatea un string con la hora seleccionada
             var sHoraActual = ""
