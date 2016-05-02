@@ -44,7 +44,9 @@
 		EA3E434D1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */; };
 		EA3E434F1CC9A06E0031BEEF /* sbCalendario.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434E1CC9A06E0031BEEF /* sbCalendario.storyboard */; };
 		EA3E43511CC9A07B0031BEEF /* setupInicial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E43501CC9A07B0031BEEF /* setupInicial.storyboard */; };
+		EAF6837E1CD1365D00EA4CDB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF6837D1CD1365D00EA4CDB /* MessageUI.framework */; };
 		EAFBBBD21CC516E700686148 /* ViewControllerEditar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFBBBD11CC516E700686148 /* ViewControllerEditar.swift */; };
+		EAFD7BA91CD6F1FF00B7A4DA /* ViewControllerEditarHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD7BA81CD6F1FF00B7A4DA /* ViewControllerEditarHora.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -100,7 +102,9 @@
 		EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
 		EA3E434E1CC9A06E0031BEEF /* sbCalendario.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbCalendario.storyboard; sourceTree = "<group>"; };
 		EA3E43501CC9A07B0031BEEF /* setupInicial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setupInicial.storyboard; sourceTree = "<group>"; };
+		EAF6837D1CD1365D00EA4CDB /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		EAFBBBD11CC516E700686148 /* ViewControllerEditar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditar.swift; sourceTree = "<group>"; };
+		EAFD7BA81CD6F1FF00B7A4DA /* ViewControllerEditarHora.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditarHora.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAF6837E1CD1365D00EA4CDB /* MessageUI.framework in Frameworks */,
 				346F3FCB1CB5800700A48626 /* RealmSwift.framework in Frameworks */,
 				346F3FC71CB57FFF00A48626 /* Realm.framework in Frameworks */,
 			);
@@ -164,6 +169,7 @@
 				346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */,
 				346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */,
 				344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */,
+				EAFD7BA81CD6F1FF00B7A4DA /* ViewControllerEditarHora.swift */,
 				EAFBBBD11CC516E700686148 /* ViewControllerEditar.swift */,
 				34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */,
 			);
@@ -213,6 +219,7 @@
 		34D130571CB46C61005E206C = {
 			isa = PBXGroup;
 			children = (
+				EAF6837D1CD1365D00EA4CDB /* MessageUI.framework */,
 				346F3FCA1CB5800700A48626 /* RealmSwift.framework */,
 				346F3FC61CB57FFF00A48626 /* Realm.framework */,
 				34D130621CB46C61005E206C /* OrganiPill */,
@@ -282,7 +289,7 @@
 				TargetAttributes = {
 					34D1305F1CB46C61005E206C = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = CPUPH3A362;
+						DevelopmentTeam = 72EHGRYGBP;
 					};
 				};
 			};
@@ -346,6 +353,7 @@
 				3413995F1CC72C6F006D982B /* ViewControllerSetupInicial1.swift in Sources */,
 				EA3E43471CC99FE10031BEEF /* RealmInt.swift in Sources */,
 				3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */,
+				EAFD7BA91CD6F1FF00B7A4DA /* ViewControllerEditarHora.swift in Sources */,
 				34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */,
 				342801081CBDBBBE0061BE49 /* Persona.swift in Sources */,
 				34630BF51CC03DE400914FD0 /* tbcMedicamentoInfo.swift in Sources */,
@@ -473,6 +481,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -480,8 +490,9 @@
 				);
 				INFOPLIST_FILE = OrganiPill/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mx.itesm.OrganiPill;
+				PRODUCT_BUNDLE_IDENTIFIER = mx.itesm.OrganiPilllol;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -490,6 +501,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -497,8 +510,9 @@
 				);
 				INFOPLIST_FILE = OrganiPill/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mx.itesm.OrganiPill;
+				PRODUCT_BUNDLE_IDENTIFIER = mx.itesm.OrganiPilllol;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -23,6 +23,9 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(listaHorarios)
+        
+        
         self.title = "Horario"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AgregarMedicamento4ViewController.newButtonPressed(_:)))

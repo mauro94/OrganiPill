@@ -11,6 +11,7 @@ import RealmSwift
 
 class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    @IBOutlet weak var txviewComentario: UITextView!
     @IBOutlet weak var swAlimentos: UISwitch!
     @IBOutlet weak var txCajaActual: UITextField!
     @IBOutlet weak var txMiligramosCaja: UITextField!
@@ -76,7 +77,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         editButton.target = self
         editButton.action = "guardarbottonpress:"
         
-        
+        txviewComentario.text = indMedicamento.sComentario
         
         
         if(indMedicamento.bNecesitaAlimento){
@@ -195,6 +196,9 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                 }
                 
                 
+                indMedicamento.sComentario = txviewComentario.text
+                
+                
             }
             
             
@@ -233,7 +237,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         if(Guardar()){
             
             
-            var refreshAlert = UIAlertController(title: "Guardar", message: "Los datos se guardaron correctamente ", preferredStyle: UIAlertControllerStyle.Alert)
+            let refreshAlert = UIAlertController(title: "Guardar", message: "Los datos se guardaron correctamente ", preferredStyle: UIAlertControllerStyle.Alert)
             
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
                 
@@ -251,6 +255,33 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
             
         }
         
+        
+        
+        
+    }
+    
+    
+    @IBAction func btnBorrarMedicamento(sender: AnyObject) {
+        
+        let realm = try! Realm()
+        
+        try! realm.write {
+            realm.delete(indMedicamento)
+        }
+        
+        
+        
+        
+        let refreshAlert = UIAlertController(title: "Borrado", message: "El medicamento ha sido borrado correctamente", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            self.navigationController?.popToRootViewControllerAnimated(true)
+            
+        }))
+        
+        
+        presentViewController(refreshAlert, animated: true, completion: nil)
         
         
         

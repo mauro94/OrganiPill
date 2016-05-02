@@ -36,10 +36,56 @@ class TableViewControllerMisMedicamentos: UITableViewController {
        
         
         
+        //--------------------------- PDF --------------------------------------------------
+    
+        let html = "<b>Hello <i>World!</i></b> <p>PENE FOREVER</p>"
+        let fmt = UIMarkupTextPrintFormatter(markupText: html)
+        
+       
+        
+        let render = UIPrintPageRenderer()
+        render.addPrintFormatter(fmt, startingAtPageAtIndex: 0)
+        
+       
+        
+        let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) 
+        let printable = CGRectInset(page, 0, 0)
+        
+        render.setValue(NSValue(CGRect: page), forKey: "paperRect")
+        render.setValue(NSValue(CGRect: printable), forKey: "printableRect")
         
         
+        
+        let pdfData = NSMutableData()
+        UIGraphicsBeginPDFContextToData(pdfData, CGRectZero, nil)
+        
+        for i in 1...render.numberOfPages() {
+            
+            UIGraphicsBeginPDFPage();
+            let bounds = UIGraphicsGetPDFContextBounds()
+            render.drawPageAtIndex(i - 1, inRect: bounds)
+        }
+        
+        UIGraphicsEndPDFContext();
+        
+        
+        
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        
+        pdfData.writeToFile("\(documentsPath)/file.pdf", atomically: true)
+        
+        
+        print(documentsPath);
+        
+        //--------------------------- PDF --------------------------------------------------
         
     }
+    
+    
+    
+    
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -63,6 +109,9 @@ class TableViewControllerMisMedicamentos: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
   
+        
+        let cell: TableViewCellMedicamento = tableView.dequeueReusableCellWithIdentifier("medicamento", forIndexPath: indexPath) as! TableViewCellMedicamento
+        
         let realm = try! Realm()
         
         
@@ -70,54 +119,57 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         let current = realm.objects(Medicamento)[indexPath.row]
         // Configure the cell...
         
+        //var num : Int = current.horario[0].listaDias[3]
         
-        let cell: TableViewCellMedicamento = tableView.dequeueReusableCellWithIdentifier("medicamento", forIndexPath: indexPath) as! TableViewCellMedicamento
-        
-        cell.lbNombreMedicamento.text =  current.sNombre
-        
-    
-       
-        let medicamentos = realm.objects(Medicamento)
-        
-        
-        
-    
-        
-        for index in 1...7 {
+        for h in 0...(current.horario.count - 1) {
             
-            
-            
-       let aux = medicamentos.filter("ANY horario.listaDias.dia = %@ AND sNombre = %@", index, cell.lbNombreMedicamento.text! )
-            
-            if(!aux.isEmpty){
+            for d in 0...(current.horario[h].listaDias.count - 1 ){
                 
-                if(index == 1){
-                  cell.lblLunes.textColor = UIColor.redColor()
-                }
-                else if(index == 2){
-                  cell.lblMartes.textColor = UIColor.redColor()
-                }
-                else if(index == 3){
-                 cell.lblMiercoles.textColor = UIColor.redColor()
-                }
-                else if(index == 4){
-                 cell.lblJueves.textColor = UIColor.redColor()
-                }
-                else if(index == 5){
-                 cell.lblViernes.textColor = UIColor.redColor()
-                }
-                else if(index == 6){
-                 cell.lblSabado.textColor = UIColor.redColor()
-                }
-                else if(index == 7){
-                 cell.lblDomingo.textColor = UIColor.redColor()
-                }
+                let valor = current.horario[h].listaDias[d]
+                let aux1: Int = valor.dia
                 
-                
-              
+                if(aux1 == 2){
+                    cell.lblLunes.textColor = UIColor.redColor()
+                }
+                else if(aux1 == 3){
+                    cell.lblMartes.textColor = UIColor.redColor()
+                }
+                else if(aux1 == 4){
+                    cell.lblMiercoles.textColor = UIColor.redColor()
+                }
+                else if(aux1 == 5){
+                    cell.lblJueves.textColor = UIColor.redColor()
+                }
+                else if(aux1 == 6){
+                    cell.lblViernes.textColor = UIColor.redColor()
+                }
+                else if(aux1 == 7){
+                    cell.lblSabado.textColor = UIColor.redColor()
+                }
+                else if(aux1 == 1){
+                    cell.lblDomingo.textColor = UIColor.redColor()
+                }
             }
             
         }
+        
+        
+        
+        cell.lbNombreMedicamento.text =  current.sNombre
+        
+        cell.imMedicamento.image = UIImage(contentsOfFile: current.sFotoMedicamento)
+        
+        cell.imCaja.image = UIImage(contentsOfFile: current.sFotoCaja)
+        
+        
+        
+        
+        
+        cell.setNeedsDisplay()
+    
+       
+        
+        
         
         
         

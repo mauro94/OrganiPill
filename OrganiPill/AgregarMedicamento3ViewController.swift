@@ -38,6 +38,9 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
 
         // Do any additional setup after loading the view.
     }
+    @IBAction func quitateclado(){
+        view.endEditing(true)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -8,15 +8,22 @@
 
 import UIKit
 import RealmSwift
-class ViewControllerVerMedicamento: UIViewController {
+import MessageUI
+
+
+class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControllerDelegate {
     //variables
+    
+    @IBOutlet weak var lblpunto3: UILabel!
+    @IBOutlet weak var lblpunto2: UILabel!
+    @IBOutlet weak var lblpunto1: UILabel!
     @IBOutlet weak var lblNombre: UILabel!
     
     @IBOutlet weak var lblTipoduracion: UILabel!
     @IBOutlet weak var lblDuracion: UILabel!
     
     @IBOutlet weak var txvComentario: UITextView!
-    @IBOutlet weak var lblHorario: UILabel!
+    
     @IBOutlet weak var lblDosis: UILabel!
     
     @IBOutlet weak var lblAlimento: UILabel!
@@ -35,6 +42,17 @@ class ViewControllerVerMedicamento: UIViewController {
     
     
     func recargardatos(){
+        
+        
+        imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
+        
+        
+        lblpunto1.textColor = UIColor.redColor()
+        
+        
+        
+        
+        
         lblNombre.text = indexMedicamento.sNombre
         lblDosis.text = String(indexMedicamento.dDosis)
         lblVia.text = indexMedicamento.sViaAdministracion
@@ -56,7 +74,7 @@ class ViewControllerVerMedicamento: UIViewController {
         lblDuracion.text = String(indexMedicamento.iDuracion)
         lblcajaactual.text = String(indexMedicamento.dMiligramosCajaActual)
         lblcajamiligramo.text = String(indexMedicamento.dMiligramosCaja)
-        lblHorario.text = ""
+       
         txvComentario.text = indexMedicamento.sComentario
         if (indexMedicamento.bNecesitaAlimento)  {
             lblAlimento.text = "Si"
@@ -67,6 +85,52 @@ class ViewControllerVerMedicamento: UIViewController {
         
         
     }
+    
+    // --------------------------- MAIL --------------------------------------------------
+
+    
+    @IBAction func sendEmailButtonTapped(sender: AnyObject) {
+        
+        let mailComposeViewController = configuredMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+        
+        
+        
+    }
+    
+    
+    
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.setToRecipients(["gonzalogtzs94@gmail.com"])
+        mailComposerVC.setSubject("OrganiPill")
+        mailComposerVC.setMessageBody("<p>Holaaa<p>", isHTML: true)
+        
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
+    }
+    
+    // MARK: MFMailComposeViewControllerDelegate Method
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //--------------------------- MAIL --------------------------------------------------
+    
+    
+    
+    
+    
     
     
     override func viewDidAppear(animated: Bool) {
@@ -102,7 +166,7 @@ class ViewControllerVerMedicamento: UIViewController {
         editButton.action = "editbottonpress:"
         
         var viewSize = self.view.frame.size
-        viewSize.height = 1000
+        viewSize.height = 7000
         viewSize.width = 100
         scScrollView.scrollEnabled = true;
         scScrollView.contentSize = viewSize
@@ -122,15 +186,30 @@ class ViewControllerVerMedicamento: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    var cambFoto:Bool = true
+    var cambFoto:Int = 2
     @IBAction func CambiarFoto(sender: AnyObject) {
-        if(cambFoto){
-            imImage.image = UIImage(named:	"rojo")
-            cambFoto = false
+        if(cambFoto == 1){
+            imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
+            cambFoto = 2
+            
+            lblpunto1.textColor = UIColor.redColor()
+            lblpunto2.textColor = UIColor.blackColor()
+            lblpunto3.textColor = UIColor.blackColor()
+            
+        }
+        else if(cambFoto == 2){
+            imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoCaja)
+            cambFoto = 3
+            lblpunto2.textColor = UIColor.redColor()
+            lblpunto1.textColor = UIColor.blackColor()
+            lblpunto3.textColor = UIColor.blackColor()
         }
         else{
-            imImage.image = UIImage(named:	"negro")
-            cambFoto = true
+            imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoPastillero!)
+            cambFoto = 1
+            lblpunto3.textColor = UIColor.redColor()
+            lblpunto2.textColor = UIColor.blackColor()
+            lblpunto1.textColor = UIColor.blackColor()
         }
         
     }
@@ -151,6 +230,16 @@ class ViewControllerVerMedicamento: UIViewController {
             
             view.indMedicamento = indexMedicamento
             
+        }
+        
+        else{
+        
+            let view = segue.destinationViewController as! AgregarMedicamento4ViewController
+            
+            view.medMedicina = indexMedicamento
+            
+            view.listaHorarios = indexMedicamento.horario
+        
         }
         
         

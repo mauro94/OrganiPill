@@ -10,6 +10,10 @@ import UIKit
 
 class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
+    
+    
+    
+    
     // MARK: - Outlets
     @IBOutlet weak var pickerTipoMedicamentos: UIPickerView!
     @IBOutlet weak var fldNombre: UITextField!
@@ -32,6 +36,10 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func quitateclado(){
+        view.endEditing(true)
     }
     
     func emptyField(field : String){
