@@ -173,6 +173,7 @@ class HandlerNotificaciones{
             let fechaAux = Fecha()
             fechaAux.fecha = listaNSDates[i] as! NSDate
             
+            fechaAux.nombreMed = medMedicina.sNombre
             registrarFecha(fechaAux)
             
             //compara la primera fecha donde se toma la medicina con la actual de la lista para saber si ya pasó una semana
@@ -254,7 +255,10 @@ class HandlerNotificaciones{
         }
 
         //registrar primeros 64 notif
+        
         var i : Int = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
         while(i < 64 && i < listaNotif.listaNotificaciones.count-1){
             scheduleLocal(listaNotif.listaNotificaciones[i])
             i += 1
@@ -263,11 +267,12 @@ class HandlerNotificaciones{
     
     func scheduleLocal(obj : Fecha) {
         let notification = UILocalNotification()
+        
         notification.fireDate = obj.fecha
         notification.alertBody = "Hora de tomar \(obj.nombreMed)"
-        notification.alertAction = "DO IT"
+        notification.alertAction = "Abrir aplicación"
         notification.soundName = UILocalNotificationDefaultSoundName
-        notification.userInfo = ["CustomField1": "w00t"]
+        notification.userInfo = ["fecha": obj.fecha, "nombre": obj.nombreMed]
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }

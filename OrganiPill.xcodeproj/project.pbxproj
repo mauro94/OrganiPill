@@ -15,6 +15,8 @@
 		313E9A471CD2871800669B9F /* Notificaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313E9A461CD2871800669B9F /* Notificaciones.swift */; };
 		313E9A491CD28D5100669B9F /* CustomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313E9A481CD28D5100669B9F /* CustomString.swift */; };
 		316962001CD67DBA00B167DD /* HandlerNotificaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316961FF1CD67DBA00B167DD /* HandlerNotificaciones.swift */; };
+		316962021CD6D52B00B167DD /* sbNotificacion.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 316962011CD6D52B00B167DD /* sbNotificacion.storyboard */; };
+		316962041CD6D58900B167DD /* NotificacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316962031CD6D58900B167DD /* NotificacionViewController.swift */; };
 		317C98431CC4793600C28D04 /* AgregarMedicamento4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */; };
 		317C98451CC5517900C28D04 /* AgregarHorarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */; };
 		317C984F1CC689A900C28D04 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */; };
@@ -74,6 +76,8 @@
 		313E9A461CD2871800669B9F /* Notificaciones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notificaciones.swift; sourceTree = "<group>"; };
 		313E9A481CD28D5100669B9F /* CustomString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomString.swift; sourceTree = "<group>"; };
 		316961FF1CD67DBA00B167DD /* HandlerNotificaciones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandlerNotificaciones.swift; sourceTree = "<group>"; };
+		316962011CD6D52B00B167DD /* sbNotificacion.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbNotificacion.storyboard; sourceTree = "<group>"; };
+		316962031CD6D58900B167DD /* NotificacionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificacionViewController.swift; sourceTree = "<group>"; };
 		317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento4ViewController.swift; sourceTree = "<group>"; };
 		317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarHorarioViewController.swift; sourceTree = "<group>"; };
 		317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 		34D130571CB46C61005E206C = {
 			isa = PBXGroup;
 			children = (
+				316962011CD6D52B00B167DD /* sbNotificacion.storyboard */,
+				316962031CD6D58900B167DD /* NotificacionViewController.swift */,
 				316961FF1CD67DBA00B167DD /* HandlerNotificaciones.swift */,
 				346F3FCA1CB5800700A48626 /* RealmSwift.framework */,
 				346F3FC61CB57FFF00A48626 /* Realm.framework */,
@@ -324,6 +330,7 @@
 				EA3E43491CC9A05D0031BEEF /* LaunchScreen.storyboard in Resources */,
 				34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */,
 				EA3E434F1CC9A06E0031BEEF /* sbCalendario.storyboard in Resources */,
+				316962021CD6D52B00B167DD /* sbNotificacion.storyboard in Resources */,
 				EA3E434D1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard in Resources */,
 				344A220E1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard in Resources */,
 			);
@@ -356,6 +363,7 @@
 				EA3E43471CC99FE10031BEEF /* RealmInt.swift in Sources */,
 				316962001CD67DBA00B167DD /* HandlerNotificaciones.swift in Sources */,
 				3443C5101CC441A400CD0CAD /* TableViewControllerMedicamentosTomados.swift in Sources */,
+				316962041CD6D58900B167DD /* NotificacionViewController.swift in Sources */,
 				34630BEB1CBEABA600914FD0 /* Paciente.swift in Sources */,
 				342801081CBDBBBE0061BE49 /* Persona.swift in Sources */,
 				34630BF51CC03DE400914FD0 /* tbcMedicamentoInfo.swift in Sources */,
