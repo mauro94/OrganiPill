@@ -24,6 +24,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 	@IBOutlet weak var btTomoMedicamento: UIButton!
 	@IBOutlet weak var btPosponer: UIButton!
 	
+	@IBOutlet weak var imgImagen: UIImageView!
 	
 	@IBOutlet weak var constraintSiBoton: NSLayoutConstraint!
 	@IBOutlet weak var contraintNoBoton: NSLayoutConstraint!

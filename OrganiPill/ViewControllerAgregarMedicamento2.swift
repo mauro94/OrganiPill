@@ -18,6 +18,11 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var fieldCantidadPCaja: UITextField!
 	@IBOutlet weak var pickerCantidadCaja: UIPickerView!
     
+    
+    @IBAction func quitateclado(){
+        view.endEditing(true)
+    }
+    
     // MARK: - Global Variables
     //var arrMedidas = NSMutableArray()
     var arrValoresCaja = [Int]()

@@ -84,26 +84,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        guard let userInfo = notification.userInfo else { return }
+        guard let userInfo = notification.userInfo
+            else {
+                return
+        }
+        
         let nombreMed = userInfo["nombre"] as! String
         let fecha = userInfo["fecha"] as! NSDate
         
-        
+        //si la aplicacion recibe notificacion mientras se usa, presentar alerta
         if application.applicationState == .Active {
-            print("App was active: \(nombreMed)")
-        } else {
+            /**let alerta = UIAlertController(title: "Alerta!", message: "Hora de tomar \(nombreMed))", preferredStyle: UIAlertControllerStyle.Alert)
             
-            let storyboard = UIStoryboard(name: "sbNotificacion", bundle: nil)
+            alerta.addAction(UIAlertAction(title: "Recordar más tarde", style: UIAlertActionStyle.Destructive, handler: nil))
             
-            let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion") as! NotificacionViewController
-            notifViewController.sNombre = nombreMed
-            notifViewController.fechaNotif = fecha
-
+            //presionar esto lo lleva a la vista para registrar una medicina como tomada
+            alerta.addAction(UIAlertAction(title: "Tomar medicina", style: UIAlertActionStyle.Default, handler: {action in self.tomarMedicinaController(nombreMed, fecha: fecha, notification: notification)}))
             
-            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-            self.window?.rootViewController = notifViewController
-            self.window?.makeKeyAndVisible()
+            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alerta, animated: true, completion: nil)**/
         }
+        //si abre la notificacion desde fuera, llevarlo directamente a la aplicacion
+        else{
+            tomarMedicinaController(nombreMed, fecha: fecha, notification: notification)
+        }
+    }
+    
+    func tomarMedicinaController(nombreMed : String, fecha : NSDate, notification : UILocalNotification){
+        let storyboard = UIStoryboard(name: "sbNotificacion", bundle: nil)
+        
+        let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion") as! NotificacionViewController
+        
+        notifViewController.sNombre = nombreMed
+        notifViewController.fechaNotif = fecha
+        notifViewController.notificacion = notification
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window?.rootViewController = notifViewController
+        self.window?.makeKeyAndVisible()
     }
 
 }

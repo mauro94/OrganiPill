@@ -10,6 +10,10 @@ import UIKit
 
 class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
+    
+    
+    
+    
     // MARK: - Outlets
     @IBOutlet weak var pickerTipoMedicamentos: UIPickerView!
     @IBOutlet weak var fldNombre: UITextField!

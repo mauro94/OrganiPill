@@ -166,26 +166,27 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		//llenar de datos la tabla
 		medicamentosTabla.removeAll()
 		medicamentosTablaHoras.removeAll()
-		
-		let medicamentosHoy = tomaDeMedicmanetos.filter("id = 1").first!.listaNotificaciones
-		
-		for med in medicamentosHoy {
-			let fechaMed = med.fecha
-			let units: NSCalendarUnit = [.Weekday, .Day]
-			let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
-			let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iUbicacionArreglo!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
-			let diaMed = calendar.components(units, fromDate: fechaMed)
-			
-			let diaHoy = calendar.components(units, fromDate: fechaBoton!)
-			
-			if (diaMed.day == diaHoy.day) {
-				let nombreMed = med.nombreMed
-				let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
-				medicamentosTabla.append(medicamento.first!)
-				medicamentosTablaHoras.append(med.fecha)
+	
+		let medicamentosHoy = tomaDeMedicmanetos.filter("id = 1").first?.listaNotificaciones
+		if (medicamentosHoy != nil) {
+			for med in medicamentosHoy! {
+				let fechaMed = med.fecha
+				let units: NSCalendarUnit = [.Weekday, .Day]
+				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iUbicacionArreglo!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
+				let diaMed = calendar.components(units, fromDate: fechaMed)
+				
+				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
+				
+				if (diaMed.day == diaHoy.day) {
+					let nombreMed = med.nombreMed
+					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
+					medicamentosTabla.append(medicamento.first!)
+					medicamentosTablaHoras.append(med.fecha)
+				}
 			}
+			tbvMedicamentosPendientes.reloadData()
 		}
-		tbvMedicamentosPendientes.reloadData()
 		
 		//vista vacia
 		if (medicamentosTabla.count > 0) {

@@ -11,6 +11,8 @@ import UIKit
 class TableViewCellMedicamento: UITableViewCell {
 	//variables
 	
+    @IBOutlet weak var imCaja: UIImageView!
+    @IBOutlet weak var imMedicamento: UIImageView!
     @IBOutlet weak var lblDomingo: UILabel!
     @IBOutlet weak var lblSabado: UILabel!
     @IBOutlet weak var lblViernes: UILabel!

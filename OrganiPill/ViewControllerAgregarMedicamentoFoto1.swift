@@ -19,7 +19,7 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
     
     //MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
-    var pathImagen : NSURL!
+    var pathImagen : String!
     var tieneImagen : Bool = false
 
     override func viewDidLoad() {
@@ -88,14 +88,29 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    func getDocumentsDirectory() -> NSString {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
+    
+    var filename:String!
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        let foto = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let foto = info[UIImagePickerControllerOriginalImage] as? UIImage;
         
-        //guarda el path de la imagen seleccionada/tomada
-        let imageURL = info[UIImagePickerControllerReferenceURL] as! NSURL
-        let imagePath =  imageURL.path!
-        pathImagen = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(imagePath)
+        if let image = foto {
+            if let data = UIImagePNGRepresentation(image) {
+                filename = getDocumentsDirectory().stringByAppendingPathComponent("\(medMedicina.sNombre)1.png")
+                data.writeToFile(filename, atomically: true)
+                
+            }
+        }
+        
+        
+        pathImagen = filename
+        
+        
         
         imgFoto.image = foto
         dismissViewControllerAnimated(true, completion: nil)
@@ -123,7 +138,7 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamentoFoto2ViewController
         
         //guarda los datos del medicamento de esta vista
-        medMedicina.sFotoMedicamento = pathImagen.absoluteString
+        medMedicina.sFotoMedicamento = pathImagen
         
         viewSiguiente.medMedicina = medMedicina
     }

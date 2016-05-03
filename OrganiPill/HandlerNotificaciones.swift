@@ -20,6 +20,10 @@ class HandlerNotificaciones{
         medMedicina = medMedicamento
     }
     
+    init(){
+        
+    }
+    
     //controlador para generar notificaciones
     func generarNotificaciones(){
         let fechaActual = NSDate.init()
@@ -187,6 +191,7 @@ class HandlerNotificaciones{
         }
     }
     
+    //TODO arreglar porque los primeros tienen el mismo dia
     //genera una lista con notificaciones para iDuracion dias
     func finalizarListaNotif_D(){
         var i : Int = 0
@@ -227,13 +232,23 @@ class HandlerNotificaciones{
         listaNotif.id = 1
         
         //leer lista actual guardada
-        let notif = realm.objects(Notificaciones)
-        print(notif)
+        let notif = realm.objects(Notificaciones).filter("id == 1")
+        //print(notif)
 
         //escribe nueva lista
         if(notif.count == 0){
+            //creo la lista de (fechas de) medicinas tomadas
+            let listaTomadas = Notificaciones()
+            listaTomadas.id = 2
+            
+            //creo la lista de (fechas de) medicinas que no se tomaron
+            let listaPasadas = Notificaciones()
+            listaPasadas.id = 3
+            
             try! realm.write{
                 realm.add(listaNotif)
+                realm.add(listaTomadas)
+                realm.add(listaPasadas)
             }
             
         }
@@ -266,6 +281,72 @@ class HandlerNotificaciones{
             scheduleLocal(listaNotif.listaNotificaciones[i])
             i += 1
         }
+    }
+    
+    func rescheduleNotificaciones(){
+        let realm = try! Realm()
+        
+        
+        //print("lista snooze")
+        //print(listaPendientes.listaNotificaciones)
+        //ordena la lista actualizada
+        //listaPendientes.listaNotificaciones = sortNotifDates(listaPendientes.listaNotificaciones)
+        try! realm.write{
+            let listaPendientes = realm.objects(Notificaciones).filter("id == 1").first!
+            var listaOrdenada = sortNotifDates(listaPendientes.listaNotificaciones)
+            
+            //print(listaOrdenada)
+        
+            /**for i in 0...listaPendientes.listaNotificaciones.count-1{
+                var fechaAux = Fecha()
+                fechaAux = listaOrdenada.indexat
+                print(i)
+                
+                print(fechaAux.fecha)
+                
+                listaPendientes.listaNotificaciones[i].fecha = fechaAux.fecha
+                listaPendientes.listaNotificaciones[i].nombreMed = fechaAux.nombreMed
+                
+                listaOrdenada.first
+                
+                //listaOrdenada.
+                print(listaOrdenada[i].fecha)
+            }**/
+            
+            //listaPendientes.listaNotificaciones = listaOrdenada
+            
+            //print(listaPendientes.listaNotificaciones)
+        
+            //escribe la lista ordenada
+        
+            realm.delete(listaPendientes)
+            print("delete")
+            
+            var notifNuevo = Notificaciones()
+            print("var")
+
+            notifNuevo.id = 1
+            print("id")
+
+            notifNuevo.listaNotificaciones = listaOrdenada
+            print("lista")
+
+            
+            realm.add(notifNuevo, update: true)
+            print("notifnuevo")
+
+        }
+        
+        let listaPendientes = realm.objects(Notificaciones).filter("id == 1").first!
+        
+        var i : Int = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
+        while(i < 64 && i < listaPendientes.listaNotificaciones.count-1){
+            scheduleLocal(listaPendientes.listaNotificaciones[i])
+            i += 1
+        }
+
     }
     
     func scheduleLocal(obj : Fecha) {

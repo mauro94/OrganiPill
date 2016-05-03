@@ -9,14 +9,15 @@
 import UIKit
 
 //Delegado para agregar o editar un horario
-protocol ProtocoloAgregarHorario{
+protocol ProtocoloAgregarHorario1{
     func agregarHorario(horario : CustomDate)
     func editarHorario(horario : CustomDate)
+    func borrarHorario(horario : CustomDate)
     func quitaVista()
 }
 
-class AgregarHorarioViewController: UIViewController{
-
+class MisMedicamentosEditarHorario: UIViewController{
+    
     //MARK: - Outlets
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var bttnD: UIButton!
@@ -28,7 +29,7 @@ class AgregarHorarioViewController: UIViewController{
     @IBOutlet weak var bttnS: UIButton!
     
     //Mark: - Global Variables
-    var delegado = ProtocoloAgregarHorario!(nil)
+    var delegado = ProtocoloAgregarHorario1!(nil)
     var horario : CustomDate = CustomDate()
     let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
     var bEditing : Bool = false
@@ -43,12 +44,12 @@ class AgregarHorarioViewController: UIViewController{
         self.title = "Agregar Horario"
         
         //Agrega boton derecho a la barra de navegacion
-		if (editing) {
-			navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
-		}
+        if (editing) {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(MisMedicamentosEditarHorario.borrarButtonPressed(_:)))
+        }
         
         //Agrega boton izquierdo a la barra de navegacion
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancelar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AgregarHorarioViewController.cancelarButtonPressed(_:)))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancelar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MisMedicamentosEditarHorario.cancelarButtonPressed(_:)))
         
         bttnDias = [bttnD, bttnL, bttnMa, bttnMi, bttnJ, bttnV, bttnS]
         
@@ -70,7 +71,7 @@ class AgregarHorarioViewController: UIViewController{
         let date = dateFormatter.dateFromString(horaEdit)
         datePicker.date = date!
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -84,7 +85,7 @@ class AgregarHorarioViewController: UIViewController{
         
         presentViewController(alerta, animated: true, completion: nil)
     }
-
+    
     
     // MARK: - Button functions
     func agregaBorderButton(sender: UIButton) {
@@ -97,7 +98,7 @@ class AgregarHorarioViewController: UIViewController{
         if(!sender.selected){
             sender.backgroundColor = onBttnColor
         }
-        //color de apagado
+            //color de apagado
         else{
             sender.backgroundColor = UIColor.whiteColor()
         }
@@ -109,6 +110,23 @@ class AgregarHorarioViewController: UIViewController{
     func cancelarButtonPressed(sender: AnyObject){
         navigationController?.popViewControllerAnimated(true)
     }
+    
+    
+    func borrarButtonPressed(sender: AnyObject){
+       
+        
+        
+        
+        delegado.borrarHorario(horario)
+        
+        self.navigationController?.popViewControllerAnimated(true);
+        
+        
+    }
+    
+    
+    
+    
     
     @IBAction func guardarButtonPressed(sender: AnyObject){
         
@@ -147,17 +165,17 @@ class AgregarHorarioViewController: UIViewController{
         
         
     }
-
     
-
+    
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
