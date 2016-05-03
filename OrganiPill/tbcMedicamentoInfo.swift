@@ -12,10 +12,11 @@ class tbcMedicamentoInfo: UITableViewCell {
 	//outlets
 	@IBOutlet weak var lbHora: UILabel!
 	@IBOutlet weak var lbNombreMedicamento: UILabel!
-	@IBOutlet weak var lbViaAdministracion: UILabel!
+	@IBOutlet weak var imgIcono: UIImageView!
 	
 	var bPrimerCelda: Bool = false
 	var bUltimaCelda: Bool = false
+	var bUnicaCelda: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,6 +45,10 @@ class tbcMedicamentoInfo: UITableViewCell {
 		else if (bUltimaCelda) {
 			CGContextMoveToPoint(contexto, 20, 0)
 			CGContextAddLineToPoint(contexto, 20, 14)
+		}
+			
+		else if (bUnicaCelda) {
+			//no hace nada, no hay linea
 		}
 		
 		//no es primer celda

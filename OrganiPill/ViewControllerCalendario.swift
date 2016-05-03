@@ -11,7 +11,7 @@ import RealmSwift
 import Realm
 
 class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableViewDataSource {
-	//outlets-------------------------------------------
+	//OUTLETS-------------------------------------------
 	//botones de cada dia
 	@IBOutlet weak var btDomingo: UIButton!
 	@IBOutlet weak var btLunes: UIButton!
@@ -36,25 +36,33 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	//tabla medicamentos
 	@IBOutlet weak var tbvMedicamentosPendientes: UITableView!
 	
+	//Vista no medicamentos
+	@IBOutlet weak var viewNoMeds: UIView!
 	//-----------------------------------------------------
-	//variables
+	//VARIABLES
 	let clBoton: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 	var botonesDias = [UIButton]()
 	var lbNumeroDias = [UILabel]()
 	let nombreDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabádo"]
 	var timer = NSTimer()
+	let dateFechaHoy = NSDate()
+	let calendar = NSCalendar.currentCalendar()
 	
 	let realm = try! Realm()
+	var tomaDeMedicmanetos: Results<Notificaciones>!
 	var medicamentos: Results<Medicamento>!
-	var iNumeroMeds: Int = 0
-	var iNumeroDiaListaBotones: Int!
+	var medicamentosTabla = [Medicamento]()
+	var medicamentosTablaHoras = [NSDate]()
 
+	
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
 		self.title = "Calendario"
 		
-		//realm
+		//obtener datos de realm
+		tomaDeMedicmanetos = realm.objects(Notificaciones)
 		medicamentos = realm.objects(Medicamento)
 		
 		//crear arreglo de botones de dias
@@ -76,33 +84,32 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		lbNumeroDias.append(lbSabado)
 		
 		//obtener el nombre del dia de hoy
-		let dateFechaHoy = NSDate()
-		let dateFormatter = NSDateFormatter()
-		dateFormatter.locale = NSLocale(localeIdentifier: "es")
-		dateFormatter.dateFormat = "EEEE"
-		let diaDeLaSemana = dateFormatter.stringFromDate(dateFechaHoy)
+		var units: NSCalendarUnit = [.Weekday]
+		let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
 		
 		//actualizar numero de los dias
-		actualizaNumeroDias(diaDeLaSemana, dateFechaHoy: dateFechaHoy, dateFormatter: dateFormatter)
+		units = [.Day]
+		let diaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+		actualizaNumeroDias(diaDeLaSemana.day, idDiaDeLaSemana: idDiaDeLaSemana.weekday)
 		
 		//encender boton del dia de hoy
-		switch diaDeLaSemana {
-		case "domingo":
-			btPresionarBotonDia(btDomingo)
-		case "lunes":
-			btPresionarBotonDia(btLunes)
-		case "martes":
-			btPresionarBotonDia(btMartes)
-		case "miércoles":
-			btPresionarBotonDia(btMiercoles)
-		case "jueves":
-			btPresionarBotonDia(btJueves)
-		case "viernes":
-			btPresionarBotonDia(btViernes)
-		case "sabádo":
-			btPresionarBotonDia(btSabado)
-		default:
-			print("ERROR")
+		switch idDiaDeLaSemana.weekday {
+			case 1:
+				btPresionarBotonDia(btDomingo)
+			case 2:
+				btPresionarBotonDia(btLunes)
+			case 3:
+				btPresionarBotonDia(btMartes)
+			case 4:
+				btPresionarBotonDia(btMiercoles)
+			case 5:
+				btPresionarBotonDia(btJueves)
+			case 6:
+				btPresionarBotonDia(btViernes)
+			case 7:
+				btPresionarBotonDia(btSabado)
+			default:
+				print("ERROR")
 		}
 		
 		//llama funcion que agrega UI a los botones
@@ -111,22 +118,20 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		//confirgurar tabla de medicamentos pendientes
 		tbvMedicamentosPendientes.delegate = self
 		tbvMedicamentosPendientes.dataSource = self
-		
-		//vista vacia
-		if (iNumeroMeds == 0) {
-			var lbMensaje: UILabel = UILabel.init(frame: CGRectMake(0, 0, tbvMedicamentosPendientes.bounds.size.width, tbvMedicamentosPendientes.bounds.size.height))
-			lbMensaje.text = "¡No más medicamentos hoy!"
-			lbMensaje.textAlignment = NSTextAlignment.Center
-			
-			
-			//UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, yourTableView.bounds.size.width, yourTableView.bounds.size.height)];
-			//noDataLabel.text             = @"No data available";
-			//noDataLabel.textColor        = [UIColor blackColor];
-			//noDataLabel.textAlignment    = NSTextAlignmentCenter;
-			tbvMedicamentosPendientes.backgroundView = lbMensaje;
-			tbvMedicamentosPendientes.separatorStyle = UITableViewCellSeparatorStyle.None
-		}
     }
+	
+	
+	override func viewWillAppear(animated: Bool) {
+		//vista vacia
+		if (medicamentosTabla.count > 0) {
+			tbvMedicamentosPendientes.hidden = false
+			viewNoMeds.hidden = true
+		}
+		else {
+			tbvMedicamentosPendientes.hidden = true
+			viewNoMeds.hidden = false
+		}
+	}
 	
 	
 
@@ -138,7 +143,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	//Presionar boton del calendario
 	@IBAction func btPresionarBotonDia(sender: AnyObject) {
-		//cambair todos los botones a blanco
+		//cambiar todos los botones a blanco
 		for boton in botonesDias {
 			boton.layer.backgroundColor = UIColor.whiteColor().CGColor
 			boton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -158,31 +163,39 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		//cambiar nombre del dia
 		lbNombreDia.text = nombreDias[iUbicacionArreglo!]
 		
-		//cargar informacion a la tabla
-		//definie dia de boton presionado
-		switch sender as! UIButton {
-		case btDomingo:
-			iNumeroDiaListaBotones = 1
-		case btLunes:
-			iNumeroDiaListaBotones = 2
-		case btMartes:
-			iNumeroDiaListaBotones = 3
-		case btMiercoles:
-			iNumeroDiaListaBotones = 4
-		case btJueves:
-			iNumeroDiaListaBotones = 5
-		case btViernes:
-			iNumeroDiaListaBotones = 6
-		case btSabado:
-			iNumeroDiaListaBotones = 7
-		default:
-			iNumeroDiaListaBotones = 0
-		}
+		//llenar de datos la tabla
+		medicamentosTabla.removeAll()
+		medicamentosTablaHoras.removeAll()
 		
-		//filtro de query realm
-		let infoTabla = medicamentos.filter("ANY horario.listaDias.dia = %@", iNumeroDiaListaBotones)
-		print(infoTabla)
-		//infoTabla = infoTablas as NSArray as! [Results<Medicamento>]
+		let medicamentosHoy = tomaDeMedicmanetos.filter("id = 1").first!.listaNotificaciones
+		
+		for med in medicamentosHoy {
+			let fechaMed = med.fecha
+			let units: NSCalendarUnit = [.Weekday, .Day]
+			let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+			let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iUbicacionArreglo!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
+			let diaMed = calendar.components(units, fromDate: fechaMed)
+			
+			let diaHoy = calendar.components(units, fromDate: fechaBoton!)
+			
+			if (diaMed.day == diaHoy.day) {
+				let nombreMed = med.nombreMed
+				let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
+				medicamentosTabla.append(medicamento.first!)
+				medicamentosTablaHoras.append(med.fecha)
+			}
+		}
+		tbvMedicamentosPendientes.reloadData()
+		
+		//vista vacia
+		if (medicamentosTabla.count > 0) {
+			tbvMedicamentosPendientes.hidden = false
+			viewNoMeds.hidden = true
+		}
+		else {
+			tbvMedicamentosPendientes.hidden = true
+			viewNoMeds.hidden = false
+		}
 	}
 	
 	
@@ -227,73 +240,46 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	
 	//funcion que actualiza los numeros de los dias de la semana
-	func actualizaNumeroDias(diaDeLaSemana: String, dateFechaHoy: NSDate, dateFormatter: NSDateFormatter) {
+	func actualizaNumeroDias(diaDeLaSemana: Int, idDiaDeLaSemana: Int) {
 		//variables
-		var iUbicacionArreglo: Int = 0
 		var i: Int = 0
-		var numeroDiaHoy: String
-		
-		//formato de dias
-		dateFormatter.dateFormat = "dd"
-		
-		//definir ubicacion actual en el arreglo de dias
-		switch diaDeLaSemana {
-			case "domingo":
-				iUbicacionArreglo = 0
-			case "lunes":
-				iUbicacionArreglo = 1
-			case "martes":
-				iUbicacionArreglo = 2
-			case "miércoles":
-				iUbicacionArreglo = 3
-			case "jueves":
-				iUbicacionArreglo = 4
-			case "viernes":
-				iUbicacionArreglo = 5
-			case "sabádo":
-				iUbicacionArreglo = 6
-			default:
-				print("ERROR")
-		}
+		var numeroDiaHoy: Int
 		
 		//almacenar numero de dia hoy
-		numeroDiaHoy = dateFormatter.stringFromDate(dateFechaHoy)
-		lbNumeroDias[iUbicacionArreglo].text = numeroDiaHoy
+		lbNumeroDias[idDiaDeLaSemana-1].text = "\(diaDeLaSemana)"
 		
 		//inicir un dia despues
-		i = iUbicacionArreglo + 1
+		i = idDiaDeLaSemana
 		
 		//sumar dias
-		while (i <= 6) {
-			let dateTemp = NSDate(timeIntervalSinceNow: Double(i - iUbicacionArreglo)*24*60*60)
+		while (i <= 7) {
+			let dateTemp = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: i - idDiaDeLaSemana, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
 			
-			numeroDiaHoy = dateFormatter.stringFromDate(dateTemp)
+			let units: NSCalendarUnit = [.Day]
+			let componentesTemp = calendar.components(units, fromDate: dateTemp!)
 			
-			lbNumeroDias[i].text = numeroDiaHoy
+			numeroDiaHoy = componentesTemp.day
+			
+			lbNumeroDias[i-1].text = "\(numeroDiaHoy)"
 			i += 1
 		}
 		
-		i = iUbicacionArreglo
+		i = idDiaDeLaSemana - 1
 		
 		//restar dias
-		while (i >= 0) {
-			let dateTemp = NSDate(timeIntervalSinceNow: Double(iUbicacionArreglo - i)*(-24)*60*60)
+		while (i > 0) {
+			let dateTemp = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: -(idDiaDeLaSemana - i), toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
 			
-			numeroDiaHoy = dateFormatter.stringFromDate(dateTemp)
+			let units: NSCalendarUnit = [.Day]
+			let componentesTemp = calendar.components(units, fromDate: dateTemp!)
 			
-			lbNumeroDias[i].text = numeroDiaHoy
+			numeroDiaHoy = componentesTemp.day
+			
+			lbNumeroDias[i-1].text = "\(numeroDiaHoy)"
 			i -= 1
 		}
 	}
 	
-	
-	
-	//funcion que crea qle reloj
-	/*@objc func tick() {
-		lbReloj.text = NSDateFormatter.localizedStringFromDate(NSDate(),
-		                        dateStyle: .NoStyle,
-		                        timeStyle: .MediumStyle)
-	}*/
 	
 	
 	
@@ -301,8 +287,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 
 	// numero de filas de la table
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let infoTabla = medicamentos.filter("ANY horario.listaDias.dia = %@", iNumeroDiaListaBotones)
-		return 0
+		return medicamentosTabla.count
 	}
 	
 	
@@ -312,24 +297,44 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		
 		let cell: tbcMedicamentoInfo = self.tbvMedicamentosPendientes.dequeueReusableCellWithIdentifier("cell") as! tbcMedicamentoInfo
 		
-		//let data = infoTabla[indexPath.row]
-		//print(data)
+		let data = medicamentosTabla[indexPath.row]
+		let hora = medicamentosTablaHoras[indexPath.row]
 		
-		//cell.lbNombreMedicamento.text = data.sNombre
+		let formatoHoraConMeridiano = NSDateFormatter()
+		formatoHoraConMeridiano.dateFormat = "h:mm a"
 		
-		/*if (infoTabla[indexPath.row] == infoTabla[0]) {
-			cell.bPrimerCelda = true
-			cell.bUltimaCelda = false
+		cell.lbHora.text = formatoHoraConMeridiano.stringFromDate(hora)
+		cell.lbNombreMedicamento.text = data.sNombre
+		if (data.bNecesitaAlimento) {
+			cell.imgIcono.image = UIImage(named: "checkIcon")
+		}
+		else {
+			cell.imgIcono.image = UIImage(named: "crossIcon")
 		}
 		
-		else if (infoTabla[indexPath.row] == infoTabla[infoTabla.count-1]) {
+		if (medicamentosTabla[indexPath.row] == medicamentosTabla[0]) {
+			if (medicamentosTabla.count == 1) {
+				cell.bUnicaCelda = true
+				cell.bPrimerCelda = false
+				cell.bUltimaCelda = false
+			}
+			else {
+				cell.bPrimerCelda = true
+				cell.bUltimaCelda = false
+				cell.bUnicaCelda = false
+			}
+		}
+		
+		else if (medicamentosTabla[indexPath.row] == medicamentosTabla[medicamentosTabla.count-1]) {
 			cell.bPrimerCelda = false
 			cell.bUltimaCelda = true
+			cell.bUnicaCelda = false
 		}
 		else {
 			cell.bPrimerCelda = false
 			cell.bUltimaCelda = false
-		}*/
+			cell.bUnicaCelda = false
+		}
 		
 		let backgroundView = UIView()
 		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
@@ -339,22 +344,30 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		
 		return cell
 	}
-
-
-	/*override func viewDidAppear(animated: Bool) {
-		super.viewWillAppear(animated)
-		tbvMedicamentosPendientes.deselectRowAtIndexPath(tbvMedicamentosPendientes.indexPathForSelectedRow!, animated: true)
-	}*/
 	
 
-    /*
+	
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let viewVerMed = segue.destinationViewController as! ViewControllerMedicamentoCalendario
+		let indexPath = tbvMedicamentosPendientes.indexPathForSelectedRow
+		
+		let hora = medicamentosTablaHoras[indexPath!.row]
+		let medicamento = medicamentosTabla[indexPath!.row]
+		
+		let formatoHoraConMeridiano = NSDateFormatter()
+		formatoHoraConMeridiano.dateFormat = "h:mm a"
+		
+		viewVerMed.sHora = formatoHoraConMeridiano.stringFromDate(hora)
+		viewVerMed.bAlimento = medicamento.bNecesitaAlimento
+		viewVerMed.sViaAdministracion = medicamento.sViaAdministracion
+		viewVerMed.sDosis = "\(Int(medicamento.dDosis))"
+		viewVerMed.sNombre = medicamento.sNombre
+		viewVerMed.sTipoMed = medicamento.sViaAdministracion
+		viewVerMed.horaMedicina = hora
     }
-    */
+
 
 }
