@@ -82,6 +82,19 @@ class ViewControllerMenu: UIViewController {
 	@IBAction func highlightBoton(sender: UIButton) {
 		sender.setBackgroundImage(UIImage(named: "highlightMenu"), forState: UIControlState.Highlighted)
 	}
+    
+    func alertaNotificacion(nombreMed : String, fecha : NSDate, notification : UILocalNotification){
+        let alerta = UIAlertController(title: "Alerta!", message: "Hora de tomar \(nombreMed))", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alerta.addAction(UIAlertAction(title: "Recordar más tarde", style: UIAlertActionStyle.Destructive, handler: nil))
+        
+        //presionar esto lo lleva a la vista para registrar una medicina como tomada
+        //alerta.addAction(UIAlertAction(title: "Tomar medicina", style: UIAlertActionStyle.Default, handler: {action in self.tomarMedicinaController(nombreMed, fecha: fecha, notification: notification)}))
+        
+        alerta.addAction(UIAlertAction(title: "Tomar medicina", style: UIAlertActionStyle.Default, handler: nil))
+        
+        self.presentViewController(alerta, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation

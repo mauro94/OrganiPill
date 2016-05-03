@@ -13,6 +13,7 @@ class NotificacionViewController: UIViewController {
 
     var sNombre : String!
     var fechaNotif : NSDate!
+    var notificacion : UILocalNotification!
     
     @IBOutlet weak var lblNombre: UILabel!
     @IBOutlet weak var lblTipo: UILabel!
@@ -39,7 +40,7 @@ class NotificacionViewController: UIViewController {
         let medicina = resMedicina.first
         
         let formatoHora = NSDateFormatter()
-        formatoHora.dateFormat = "EEEE, dd de MMMM h:mm a"
+        formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
 
         lblNombre.text = sNombre
         lblTipo.text = medicina?.sViaAdministracion
@@ -55,15 +56,90 @@ class NotificacionViewController: UIViewController {
         lblDosis.text = String(medicina!.dDosis)
         
     }
-    
-    /*
-    // MARK: - Navigation
+// MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if(segue.identifier == "tomarMedicina"){
+            var fechaAux = Fecha()
+            
+            //se cancela la notificacion que mandó a esta vista
+            UIApplication.sharedApplication().cancelLocalNotification(notificacion)
+            
+            //saca las listas de notificaciones
+            let realm = try! Realm()
+            let listasNotif = realm.objects(Notificaciones)
+            
+            try! realm.write{
+                var listaPendientes = listasNotif.filter("id == 1").first!
+                var listaTomadas = listasNotif.filter("id == 2").first!
+                
+                //borrar notificacion actual de la lista de notificaciones
+                for i in 0...listaPendientes.listaNotificaciones.count-1{
+                    //found a match
+                    if(listaPendientes.listaNotificaciones[i].fecha == fechaNotif && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                        //guarda la fecha para usarla en la lista de tomadas
+                        fechaAux = listaPendientes.listaNotificaciones[i]
+                        
+                        //la borra de las pendientes
+                        listaPendientes.listaNotificaciones.removeAtIndex(i)
+                        break
+                    }
+                }
+                
+                //guardar en lista tomadas
+                listaTomadas.listaNotificaciones.append(fechaAux)
+                
+                //actualiza ambas listas
+                realm.add(listaPendientes, update: true)
+                realm.add(listaTomadas, update: true)
+                
+                //notif.rescheduleNotificaciones()
+            }
+            //hace un reschedule de las notificaciones
+            let notif : HandlerNotificaciones = HandlerNotificaciones()
+            notif.rescheduleNotificaciones()
+        }
+        else if(segue.identifier == "snoozeMedicina"){
+            var fechaAux = Fecha()
+            
+            //se cancela la notificacion que mandó a esta vista
+            UIApplication.sharedApplication().cancelLocalNotification(notificacion)
+            
+            //saca las listas de notificaciones
+            let realm = try! Realm()
+            let listasNotif = realm.objects(Notificaciones)
+            
+            try! realm.write{
+                let listaPendientes = listasNotif.filter("id == 1").first!
+                
+                //borrar notificacion actual de la lista de notificaciones
+                for i in 0...listaPendientes.listaNotificaciones.count-1{
+                    //found a match
+                    if(listaPendientes.listaNotificaciones[i].fecha == fechaNotif && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                        //guarda la fecha para usarla despues
+                        fechaAux = listaPendientes.listaNotificaciones[i]
+                        
+                        //la borra de las pendientes
+                        listaPendientes.listaNotificaciones.removeAtIndex(i)
+                        break
+                    }
+                }
+                
+                //genera la nueva fecha y la agrega a la lista
+                let nuevaFecha = NSDate(timeInterval: 5*60, sinceDate: fechaAux.fecha)
+                fechaAux.fecha = nuevaFecha
+                listaPendientes.listaNotificaciones.append(fechaAux)
+                
+                //actualiza la lista de notificaciones en REALM
+                realm.add(listaPendientes, update: true)
+                
+            }
+            //hace un reschedule de las notificaciones
+            let notif : HandlerNotificaciones = HandlerNotificaciones()
+            
+            notif.rescheduleNotificaciones()
+        }
     }
-    */
 
 }
