@@ -14,7 +14,8 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
     @IBOutlet weak var bttnGaleria: UIButton!
     @IBOutlet weak var bttnCamara: UIButton!
     @IBOutlet weak var imgFoto: UIImageView!
-    @IBOutlet weak var lblTitulo: UILabel!
+	@IBOutlet weak var viewNoImagen: UIView!
+
     
     //MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
@@ -36,7 +37,7 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
     
     func emptyImage(){
         //creates popup message
-        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste elegir una foto", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste elegir una foto", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         
@@ -48,22 +49,22 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         switch(medMedicina.sViaAdministracion){
         //pastillas
         case "Pastilla":
-            lblTitulo.text = "Imágen de la pastilla"
+            self.title = "Imágen de la Pastilla"
             break
         //inyeccion
         case "Inyección":
-            lblTitulo.text = "Imágen del bote"
+            self.title = "Imágen del Bote"
             break
         //supositorio
         case "Supositorio":
-            lblTitulo.text = "Imágen del supositorio"
+            self.title = "Imágen del Supositorio"
             break
         //liquida
         case "Suspensión":
-            lblTitulo.text = "Imágen del bote"
+            self.title = "Imágen del Bote"
             break
         case "Cápsulas":
-            lblTitulo.text = "Imágen de la cápsula"
+            self.title = "Imágen de la Cápsula"
             break
         default:
             break
@@ -115,6 +116,10 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         dismissViewControllerAnimated(true, completion: nil)
         
         tieneImagen = true
+		
+		//esconder vista y demostrar imagen
+		imgFoto.hidden = false
+		viewNoImagen.hidden = true
     }
     
     //MARK: - Navigation
@@ -137,5 +142,4 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         
         viewSiguiente.medMedicina = medMedicina
     }
-
 }

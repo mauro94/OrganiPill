@@ -24,7 +24,6 @@ class Medicamento: Object {
 	dynamic var sFotoMedicamento: String = ""
 	dynamic var sFotoPastillero: String? = nil
 	
-	override static func indexedProperties() -> [String] {
-		return ["sNombre"]
-	}
+	
+    
 }

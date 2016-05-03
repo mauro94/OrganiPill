@@ -12,6 +12,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
     
     // MARK: - Outlets
     @IBOutlet weak var imgFoto: UIImageView!
+	@IBOutlet weak var viewNoImagen: UIView!
     
     //MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
@@ -22,6 +23,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+		self.title = "Imágen de Caja del Medicamento"
     }
     
     override func didReceiveMemoryWarning() {
@@ -31,7 +33,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
     
     func emptyImage(){
         //creates popup message
-        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste elegir una foto", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste elegir una foto", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         
@@ -84,6 +86,10 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
         dismissViewControllerAnimated(true, completion: nil)
         
         tieneImagen = true
+		
+		//esconder vista y demostrar imagen
+		imgFoto.hidden = false
+		viewNoImagen.hidden = true
     }
     
      // MARK: - Navigation

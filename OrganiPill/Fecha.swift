@@ -11,4 +11,5 @@ import RealmSwift
 
 class Fecha: Object {
 	dynamic var fecha = NSDate()
+    dynamic var nombreMed = ""
 }

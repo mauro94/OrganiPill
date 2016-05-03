@@ -17,6 +17,16 @@ class ViewControllerMenu: UIViewController {
 	@IBOutlet weak var btReportes: UIButton!
 	@IBOutlet weak var btActividadDelDia: UIButton!
 	
+	@IBOutlet weak var lbMisMedicamentos: UILabel!
+	@IBOutlet weak var lbCalendario: UILabel!
+	@IBOutlet weak var lbAgregarMedicamento: UILabel!
+	@IBOutlet weak var lbRegistrarDato: UILabel!
+	@IBOutlet weak var lbReportes: UILabel!
+	@IBOutlet weak var lbActividadDelDia: UILabel!
+
+	
+	var tamanoFont: CGFloat = 28.0
+	
 	//variables
 	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 
@@ -35,16 +45,27 @@ class ViewControllerMenu: UIViewController {
 		self.navigationController?.navigationBar.translucent = false
 		self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
 		
-		//botones
-		let dValueHeight = btMisMedicamentos.frame.size.height * 0.25
-		let dValueWidth = btMisMedicamentos.frame.size.width * 0.25
+		//arreglar texto dependiendo de iphone
+		if (self.view.frame.size.width == 320) {
+			tamanoFont = 20.0
+		}
 		
+		if (self.view.frame.size.width == 375) {
+			tamanoFont = 25.0
+		}
 		
-		btMisMedicamentos.imageEdgeInsets.top = dValueHeight
-		btMisMedicamentos.imageEdgeInsets.bottom = dValueHeight
-		btMisMedicamentos.imageEdgeInsets.left = dValueWidth
-		btMisMedicamentos.imageEdgeInsets.right = dValueWidth
+		if (self.view.frame.size.width == 414) {
+			tamanoFont = 28.0
+		}
 		
+		lbMisMedicamentos.font = UIFont(name: lbMisMedicamentos.font.fontName, size: tamanoFont)
+		lbCalendario.font = UIFont(name: lbMisMedicamentos.font.fontName, size: tamanoFont)
+		lbAgregarMedicamento.font = UIFont(name: lbMisMedicamentos.font.fontName, size: tamanoFont)
+		lbRegistrarDato.font = UIFont(name: lbMisMedicamentos.font.fontName, size: tamanoFont)
+		lbReportes.font = UIFont(name: lbMisMedicamentos.font.fontName, size: tamanoFont)
+		lbActividadDelDia.font = UIFont(name: lbMisMedicamentos.font.fontName, size: tamanoFont)!
+		
+		//ajustar imagenes de botones a aspect fit
 		btMisMedicamentos.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
 		btCalendario.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
 		btAgregarMedicamento.imageView?.contentMode = UIViewContentMode.ScaleAspectFit

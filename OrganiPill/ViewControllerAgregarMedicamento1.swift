@@ -20,7 +20,7 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var swAlimento: UISwitch!
     
     // MARK: - Global Variables
-    let arrTiposMedicamento = ["Supositorio", "Inyección", "Cápsulas", "Pastilla", "Suspensión"]
+    let arrTiposMedicamento = ["Supositorio", "Inyección", "Cápsulas", "Pastilla", "Tabletas", "Suspensión"]
     var medMedicina : Medicamento = Medicamento()
     
     override func viewDidLoad() {
@@ -30,21 +30,21 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
         self.pickerTipoMedicamentos.delegate = self
         self.pickerTipoMedicamentos.selectRow(2, inComponent: 0, animated: true)
         
-		self.title = "Información del medicamento"
+		self.title = "Agregar Medicamento"
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func quitateclado(){
-        view.endEditing(true)
-    }
-    
+	
+	@IBAction func quitarTeclado() {
+		self.view.endEditing(true)
+	}
+	
     func emptyField(field : String){
         //creates popup message
-        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste llenar el \(field)", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste llenar el \(field)", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         

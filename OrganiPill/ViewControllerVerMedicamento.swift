@@ -234,9 +234,17 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         
         else{
         
-            let view = segue.destinationViewController as! AgregarMedicamento4ViewController
+            print("gonzalo")
+            print(indexMedicamento.horario)
+            
+            let view = segue.destinationViewController as! MisMedicamentosVerHorario
             
             view.medMedicina = indexMedicamento
+            
+            
+            
+            
+            
             
             view.listaHorarios = indexMedicamento.horario
         
