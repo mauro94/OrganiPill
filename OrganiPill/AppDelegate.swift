@@ -90,7 +90,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let nombreMed = userInfo["nombre"] as! String
-        let fecha = userInfo["fecha"] as! NSDate
+        let fechaAlerta = userInfo["fechaAlerta"] as! NSDate
+        let fechaOriginal = userInfo["fechaOriginal"] as! NSDate
+        
+        //let nombreMed = userInfo["nombre"] as! String
+        //let fecha = userInfo["fecha"] as! NSDate
         
         //si la aplicacion recibe notificacion mientras se usa, presentar alerta
         if application.applicationState == .Active {
@@ -105,17 +109,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         //si abre la notificacion desde fuera, llevarlo directamente a la aplicacion
         else{
-            tomarMedicinaController(nombreMed, fecha: fecha, notification: notification)
+            tomarMedicinaController(nombreMed, fechaAlerta: fechaAlerta, fechaOriginal: fechaOriginal, notification: notification)
         }
     }
     
-    func tomarMedicinaController(nombreMed : String, fecha : NSDate, notification : UILocalNotification){
+    func tomarMedicinaController(nombreMed : String, fechaAlerta : NSDate, fechaOriginal : NSDate, notification : UILocalNotification){
         let storyboard = UIStoryboard(name: "sbNotificacion", bundle: nil)
         
         let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion") as! NotificacionViewController
         
         notifViewController.sNombre = nombreMed
-        notifViewController.fechaNotif = fecha
+        notifViewController.fechaAlerta = fechaAlerta
+        notifViewController.fechaOriginal = fechaOriginal
         notifViewController.notificacion = notification
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
