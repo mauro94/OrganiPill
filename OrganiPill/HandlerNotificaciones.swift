@@ -165,7 +165,7 @@ class HandlerNotificaciones{
         let primerMinutoMedicina = calendar.components(.Minute, fromDate: listaNSDates[i] as! NSDate)
         
         let fechaAux = Fecha()
-        fechaAux.fecha = listaNSDates[i] as! NSDate
+        fechaAux.fechaOriginal = listaNSDates[i] as! NSDate
         
         fechaAux.nombreMed = medMedicina.sNombre
         registrarFecha(fechaAux)
@@ -175,13 +175,13 @@ class HandlerNotificaciones{
         //registra notificaciones para la cantidad de semanas
         while(semanaCount < semanas && i < listaNSDates.count){
             let fechaAux = Fecha()
-            fechaAux.fecha = listaNSDates[i] as! NSDate
+            fechaAux.fechaOriginal = listaNSDates[i] as! NSDate
             
             fechaAux.nombreMed = medMedicina.sNombre
             registrarFecha(fechaAux)
             
             //compara la primera fecha donde se toma la medicina con la actual de la lista para saber si ya pasó una semana
-            if(primerWDiaMedicina == calendar.components(.Weekday, fromDate: fechaAux.fecha) && primerHoraMedicina == calendar.components(.Hour, fromDate: fechaAux.fecha) && primerMinutoMedicina == calendar.components(.Minute, fromDate: fechaAux.fecha)){
+            if(primerWDiaMedicina == calendar.components(.Weekday, fromDate: fechaAux.fechaOriginal) && primerHoraMedicina == calendar.components(.Hour, fromDate: fechaAux.fechaOriginal) && primerMinutoMedicina == calendar.components(.Minute, fromDate: fechaAux.fechaOriginal)){
                 
                 semanaCount += 1
             }
@@ -203,12 +203,12 @@ class HandlerNotificaciones{
         //registra notificaciones para la cantidad de dias
         repeat{
             let fechaAux = Fecha()
-            fechaAux.fecha = listaNSDates[i] as! NSDate
-            
+            fechaAux.fechaOriginal = listaNSDates[i] as! NSDate
+
             //compara el numero de dia entre las fechas de la lista
-            if(diaAux != calendar.components(.Day, fromDate: fechaAux.fecha)){
+            if(diaAux != calendar.components(.Day, fromDate: fechaAux.fechaOriginal)){
                 diasCount += 1
-                diaAux = calendar.components(.Day, fromDate: fechaAux.fecha)
+                diaAux = calendar.components(.Day, fromDate: fechaAux.fechaOriginal)
             }
             
             fechaAux.nombreMed = medMedicina.sNombre
@@ -221,7 +221,7 @@ class HandlerNotificaciones{
     
     //agrega un NSDate y el nombre de la medicina a la lista de notificaciones
     func registrarFecha(fecha : Fecha){
-        print(fecha)
+        fecha.fechaAlerta = fecha.fechaOriginal
         listaNotif.listaNotificaciones.append(fecha)
     }
     
@@ -285,55 +285,19 @@ class HandlerNotificaciones{
     
     func rescheduleNotificaciones(){
         let realm = try! Realm()
-        
-        
-        //print("lista snooze")
-        //print(listaPendientes.listaNotificaciones)
-        //ordena la lista actualizada
-        //listaPendientes.listaNotificaciones = sortNotifDates(listaPendientes.listaNotificaciones)
+
         try! realm.write{
             let listaPendientes = realm.objects(Notificaciones).filter("id == 1").first!
             var listaOrdenada = sortNotifDates(listaPendientes.listaNotificaciones)
-            
-            //print(listaOrdenada)
-        
-            /**for i in 0...listaPendientes.listaNotificaciones.count-1{
-                var fechaAux = Fecha()
-                fechaAux = listaOrdenada.indexat
-                print(i)
-                
-                print(fechaAux.fecha)
-                
-                listaPendientes.listaNotificaciones[i].fecha = fechaAux.fecha
-                listaPendientes.listaNotificaciones[i].nombreMed = fechaAux.nombreMed
-                
-                listaOrdenada.first
-                
-                //listaOrdenada.
-                print(listaOrdenada[i].fecha)
-            }**/
-            
-            //listaPendientes.listaNotificaciones = listaOrdenada
-            
-            //print(listaPendientes.listaNotificaciones)
-        
-            //escribe la lista ordenada
+
         
             realm.delete(listaPendientes)
-            print("delete")
             
             var notifNuevo = Notificaciones()
-            print("var")
-
             notifNuevo.id = 1
-            print("id")
-
             notifNuevo.listaNotificaciones = listaOrdenada
-            print("lista")
 
-            
             realm.add(notifNuevo, update: true)
-            print("notifnuevo")
 
         }
         
@@ -352,11 +316,12 @@ class HandlerNotificaciones{
     func scheduleLocal(obj : Fecha) {
         let notification = UILocalNotification()
         
-        notification.fireDate = obj.fecha
+        notification.fireDate = obj.fechaAlerta
         notification.alertBody = "Hora de tomar \(obj.nombreMed)"
         notification.alertAction = "Abrir aplicación"
         notification.soundName = UILocalNotificationDefaultSoundName
-        notification.userInfo = ["fecha": obj.fecha, "nombre": obj.nombreMed]
+        //notification.userInfo = ["fecha": obj.fechaAlerta, "nombre": obj.nombreMed]
+        notification.userInfo = ["fechaAlerta": obj.fechaAlerta, "fechaOriginal": obj.fechaOriginal, "nombre": obj.nombreMed]
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
@@ -380,7 +345,7 @@ class HandlerNotificaciones{
     //ordena una lista de Fecha (NSDate) y su Medicina correspondiente
     func sortNotifDates(lista : List<Fecha>) -> List<Fecha>{
         //ordena la List<> y regresa un Result<>
-        let listaOrdenada = lista.sorted("fecha")
+        let listaOrdenada = lista.sorted("fechaAlerta")
         let listaNueva = List<Fecha>()
         
         //copia Result<> ordenado a arreglo

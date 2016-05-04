@@ -12,7 +12,8 @@ import RealmSwift
 class NotificacionViewController: UIViewController {
 
     var sNombre : String!
-    var fechaNotif : NSDate!
+    var fechaAlerta : NSDate!
+    var fechaOriginal : NSDate!
     var notificacion : UILocalNotification!
     
     @IBOutlet weak var lblNombre: UILabel!
@@ -44,7 +45,7 @@ class NotificacionViewController: UIViewController {
 
         lblNombre.text = sNombre
         lblTipo.text = medicina?.sViaAdministracion
-        lblHora.text = formatoHora.stringFromDate(fechaNotif)
+        lblHora.text = formatoHora.stringFromDate(fechaAlerta)
         
         if(medicina!.bNecesitaAlimento){
             lblComida.text = "Necesita alimento"
@@ -77,7 +78,7 @@ class NotificacionViewController: UIViewController {
                 //borrar notificacion actual de la lista de notificaciones
                 for i in 0...listaPendientes.listaNotificaciones.count-1{
                     //found a match
-                    if(listaPendientes.listaNotificaciones[i].fecha == fechaNotif && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                    if(listaPendientes.listaNotificaciones[i].fechaAlerta == fechaAlerta && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
                         //guarda la fecha para usarla en la lista de tomadas
                         fechaAux = listaPendientes.listaNotificaciones[i]
                         
@@ -86,8 +87,9 @@ class NotificacionViewController: UIViewController {
                         break
                     }
                 }
-                
+
                 //guardar en lista tomadas
+                fechaAux.fechaAlerta = NSDate()
                 listaTomadas.listaNotificaciones.append(fechaAux)
                 
                 //actualiza ambas listas
@@ -116,7 +118,7 @@ class NotificacionViewController: UIViewController {
                 //borrar notificacion actual de la lista de notificaciones
                 for i in 0...listaPendientes.listaNotificaciones.count-1{
                     //found a match
-                    if(listaPendientes.listaNotificaciones[i].fecha == fechaNotif && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                    if(listaPendientes.listaNotificaciones[i].fechaAlerta == fechaAlerta && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
                         //guarda la fecha para usarla despues
                         fechaAux = listaPendientes.listaNotificaciones[i]
                         
@@ -127,8 +129,9 @@ class NotificacionViewController: UIViewController {
                 }
                 
                 //genera la nueva fecha y la agrega a la lista
-                let nuevaFecha = NSDate(timeInterval: 5*60, sinceDate: fechaAux.fecha)
-                fechaAux.fecha = nuevaFecha
+                //let nuevaFecha = NSDate(timeInterval: 1*60, sinceDate: fechaAux.fechaAlerta)
+                let nuevaFecha = NSDate(timeIntervalSinceNow: 1*60)
+                fechaAux.fechaAlerta = nuevaFecha
                 listaPendientes.listaNotificaciones.append(fechaAux)
                 
                 //actualiza la lista de notificaciones en REALM

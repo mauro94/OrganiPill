@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 
 class Fecha: Object {
-	dynamic var fecha = NSDate()
+	dynamic var fechaOriginal = NSDate()
+    dynamic var fechaAlerta = NSDate()
     dynamic var nombreMed = ""
 }

@@ -193,7 +193,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		let medicamentosHoy = tomaDeMedicmanetos.filter("id = 1").first?.listaNotificaciones
 		if (medicamentosHoy != nil) {
 			for med in medicamentosHoy! {
-				let fechaMed = med.fecha
+				let fechaMed = med.fechaAlerta
 				let units: NSCalendarUnit = [.Weekday, .Day]
 				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
 				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iUbicacionArreglo!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
@@ -205,7 +205,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 					let nombreMed = med.nombreMed
 					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
 					medicamentosTabla.append(medicamento.first!)
-					medicamentosTablaHoras.append(med.fecha)
+					medicamentosTablaHoras.append(med.fechaAlerta)
 				}
 			}
 			tbvMedicamentosPendientes.reloadData()

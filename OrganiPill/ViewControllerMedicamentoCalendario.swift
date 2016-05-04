@@ -180,7 +180,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
 		formatoHoraConMeridiano.dateFormat = "MMMM d, h:mm a"
 		
-		cell.lbHora.text = formatoHoraConMeridiano.stringFromDate(siguientesHoras[indexPath.row].fecha)
+		cell.lbHora.text = formatoHoraConMeridiano.stringFromDate(siguientesHoras[indexPath.row].fechaAlerta)
 		
 		if (siguientesHoras[indexPath.row] == siguientesHoras[0]) {
 			if (siguientesHoras.count == 1) {

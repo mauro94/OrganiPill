@@ -17,6 +17,7 @@
 		317C98431CC4793600C28D04 /* AgregarMedicamento4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */; };
 		317C98451CC5517900C28D04 /* AgregarHorarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */; };
 		317C984F1CC689A900C28D04 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */; };
+		31911A801CD87639008663F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31911A7C1CD87639008663F5 /* Main.storyboard */; };
 		31911A811CD87639008663F5 /* HandlerNotificaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31911A7D1CD87639008663F5 /* HandlerNotificaciones.swift */; };
 		31911A821CD87639008663F5 /* sbNotificacion.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31911A7E1CD87639008663F5 /* sbNotificacion.storyboard */; };
 		31911A831CD87639008663F5 /* NotificacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31911A7F1CD87639008663F5 /* NotificacionViewController.swift */; };
@@ -86,6 +87,7 @@
 		317C98421CC4793600C28D04 /* AgregarMedicamento4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento4ViewController.swift; sourceTree = "<group>"; };
 		317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarHorarioViewController.swift; sourceTree = "<group>"; };
 		317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		31911A7C1CD87639008663F5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		31911A7D1CD87639008663F5 /* HandlerNotificaciones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandlerNotificaciones.swift; sourceTree = "<group>"; };
 		31911A7E1CD87639008663F5 /* sbNotificacion.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbNotificacion.storyboard; sourceTree = "<group>"; };
 		31911A7F1CD87639008663F5 /* NotificacionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificacionViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			children = (
 				346F3FBD1CB5733900A48626 /* ViewControllerMenu.swift */,
 				34281E571CD943E30071740F /* Main.storyboard */,
+				31911A7C1CD87639008663F5 /* Main.storyboard */,
 				31911A7D1CD87639008663F5 /* HandlerNotificaciones.swift */,
 				31911A7E1CD87639008663F5 /* sbNotificacion.storyboard */,
 				31911A7F1CD87639008663F5 /* NotificacionViewController.swift */,
@@ -349,6 +352,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31911A801CD87639008663F5 /* Main.storyboard in Resources */,
 				EA3E43511CC9A07B0031BEEF /* setupInicial.storyboard in Resources */,
 				34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */,
 				31911A821CD87639008663F5 /* sbNotificacion.storyboard in Resources */,
