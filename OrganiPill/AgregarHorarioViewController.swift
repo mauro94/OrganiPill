@@ -12,6 +12,9 @@ import UIKit
 protocol ProtocoloAgregarHorario{
     func agregarHorario(horario : CustomDate)
     func editarHorario(horario : CustomDate)
+    func revisarHorario(horario : CustomDate) -> Bool
+    func revisarHorarioEditar(horario : CustomDate) -> Bool
+    func borrarHorario(horario : CustomDate)
     func quitaVista()
 }
 
@@ -44,7 +47,7 @@ class AgregarHorarioViewController: UIViewController{
         
         //Agrega boton derecho a la barra de navegacion
 		if (editing) {
-			navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarHorarioViewController.guardarButtonPressed(_:)))
+			navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarHorarioViewController.borrarButtonPressed(_:)))
 		}
         
         //Agrega boton izquierdo a la barra de navegacion
@@ -78,9 +81,25 @@ class AgregarHorarioViewController: UIViewController{
     
     func noDayAlert(){
         //creates popup message
-        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste seleccionar un día", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste seleccionar un día", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        presentViewController(alerta, animated: true, completion: nil)
+    }
+    
+    func duplicadoAlert(){
+        //creates popup message
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Ya tienes esta hora registrada, puedes editar los días haciendo click en la lista", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let quitarVista = {
+            () -> ((UIAlertAction!) -> ()) in
+            return{
+                _ in
+                self.delegado.quitaVista()
+            }}
+        
+        alerta.addAction(UIAlertAction(title: "Regresar a la lista", style: UIAlertActionStyle.Cancel, handler: quitarVista()))
         
         presentViewController(alerta, animated: true, completion: nil)
     }
@@ -110,6 +129,12 @@ class AgregarHorarioViewController: UIViewController{
         navigationController?.popViewControllerAnimated(true)
     }
     
+    func borrarButtonPressed(sender: AnyObject){
+        let aux = CustomDate()
+        delegado.borrarHorario(aux)
+        delegado.quitaVista()
+    }
+    
     @IBAction func guardarButtonPressed(sender: AnyObject){
         
         //hace la lista de dias programados
@@ -135,17 +160,25 @@ class AgregarHorarioViewController: UIViewController{
         
         //llama al metodo adecuado para generar o editar horario
         if(!editing){
-            delegado.agregarHorario(horario)
+            if(delegado.revisarHorario(horario)){
+                delegado.agregarHorario(horario)
+                delegado.quitaVista()
+            }
+            else{
+                duplicadoAlert()
+            }
             
         }
         else{
-            delegado.editarHorario(horario)
-            editing = false
+            if(delegado.revisarHorarioEditar(horario)){
+                delegado.editarHorario(horario)
+                editing = false
+                delegado.quitaVista()
+            }
+            else{
+                duplicadoAlert()
+            }
         }
-        
-        self.navigationController?.popViewControllerAnimated(true);
-        
-        
     }
 
     

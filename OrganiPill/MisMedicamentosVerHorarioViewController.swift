@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class MisMedicamentosVerHorario: UIViewController, UITableViewDataSource, UITableViewDelegate, ProtocoloAgregarHorario1 {
+class MisMedicamentosVerHorario: UIViewController, UITableViewDataSource, UITableViewDelegate, ProtocoloAgregarHorario {
     
     // MARK: - Outlets
     @IBOutlet weak var tableHorarios: UITableView!
@@ -87,6 +87,27 @@ class MisMedicamentosVerHorario: UIViewController, UITableViewDataSource, UITabl
             tableHorarios.reloadData()
         }
     }
+    
+    func revisarHorario(horario : CustomDate) -> Bool{
+        for i in listaHorarios{
+            if (i.horas == horario.horas && i.minutos == horario.minutos){
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func revisarHorarioEditar(horario : CustomDate) -> Bool{
+        for i in 0...listaHorarios.count-1{
+            if (index != i && listaHorarios[i].horas == horario.horas && listaHorarios[i].minutos == horario.minutos){
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     
     func borrarHorario(horario : CustomDate){
         
