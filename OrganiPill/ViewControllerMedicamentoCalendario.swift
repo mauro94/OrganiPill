@@ -41,6 +41,9 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 	var sNombre: String!
 	var sTipoMed: String!
 	var horaMedicina: NSDate!
+	var sImgMedicamento: String!
+	var sImgCaja: String!
+	var sImgPastillero: String? = nil
 	
 	var siguientesHoras: Results<Fecha>!
 	
@@ -88,6 +91,12 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		viewImagen.addGestureRecognizer(swipeRight)
 		viewImagen.addGestureRecognizer(swipeLeft)
 		cambiarImagen(UISwipeGestureRecognizer())
+		
+		//definir imagenes
+		imgImagen.image = UIImage(contentsOfFile: sImgMedicamento)
+		if (sImgPastillero == nil) {
+			pager.numberOfPages = 2
+		}
     }
 	
 	override func viewWillAppear(animated: Bool) {
@@ -100,15 +109,13 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
     }
 	
 	@IBAction func cambiarVista(sender: UISegmentedControl) {
-		let units: NSCalendarUnit = [.Weekday, .Hour]
-		let hora = calendar.components(units, fromDate: NSDate())
-		let horaLimite = calendar.components(units, fromDate: horaMedicina)
+		let fechaActual = NSDate()
 		
 		if (sender.selectedSegmentIndex == 0) {
 			viewInformacion.hidden = false
 			viewImagen.hidden = true
 			
-			if (hora.hour > horaLimite.hour && hora.weekday >= horaLimite.weekday) {
+			if (fechaActual.earlierDate(horaMedicina) == horaMedicina) {
 				btPosponer.hidden = false
 				btTomoMedicamento.hidden = false
 				contraintNoBoton.priority = 1
@@ -123,7 +130,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 			viewInformacion.hidden = true
 			viewImagen.hidden = false
 			
-			if (hora.hour > horaLimite.hour && hora.weekday >= horaLimite.weekday) {
+			if (fechaActual.earlierDate(horaMedicina) == horaMedicina) {
 				btPosponer.hidden = false
 				btTomoMedicamento.hidden = false
 				constraintNoBotonImg.priority = 1
@@ -146,17 +153,22 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 			imgCounter -= 1
 		}
 		
-		imgCounter %= 3
+		if (sImgPastillero != nil) {
+			imgCounter %= 3
+		}
+		else {
+			imgCounter %= 2
+		}
 		
 		pager.currentPage = abs(imgCounter)
 		
 		switch abs(imgCounter) {
 		case 0:
-			imgImagen.image = UIImage(named: "rojo")
+			imgImagen.image = UIImage(contentsOfFile: sImgMedicamento)
 		case 1:
-			imgImagen.image = UIImage(named: "negro")
+			imgImagen.image = UIImage(contentsOfFile: sImgCaja)
 		case 2:
-			imgImagen.image = UIImage(named: "amarillo")
+			imgImagen.image = UIImage(contentsOfFile: sImgPastillero!)
 		default:
 			print("ERROR")
 		}

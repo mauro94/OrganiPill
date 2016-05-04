@@ -7,13 +7,72 @@
 //
 
 import UIKit
+import RealmSwift
 
 class TableViewControllerMedicamentosTomados: UITableViewController {
+	//OUTLETS
+	@IBOutlet var tbvTable: UITableView!
+	
+	
+	//VARIABLES
+	var iDiaSemanaActual: Int!
 
+	var medicamentosTabla = [Medicamento]()
+	var medicamentosTablaHoras = [NSDate?]()
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		self.title = "Medicamentoa Tomados"
+		self.title = "Medicamentos Tomados"
+		
+		//obtner datos de realm
+		let realm = try! Realm()
+		let medicamentos = realm.objects(Medicamento)
+		let medicamentosTomadosAlertas = realm.objects(Notificaciones)
+		
+		//obtener datos para tabla
+		let calendar = NSCalendar.currentCalendar()
+		let dateFechaHoy = NSDate()
+		let medicamentosTomados = medicamentosTomadosAlertas.filter("id = 2").first?.listaNotificaciones
+		let medicamentosAnulados = medicamentosTomadosAlertas.filter("id = 3").first?.listaNotificaciones
+		if (medicamentosTomados != nil) {
+			for med in medicamentosTomados! {
+				let fechaMed = med.fechaAlerta
+				let units: NSCalendarUnit = [.Weekday, .Day]
+				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iDiaSemanaActual!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
+				
+				let diaMed = calendar.components(units, fromDate: fechaMed)
+				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
+				
+				if (diaMed.day == diaHoy.day) {
+					let nombreMed = med.nombreMed
+					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
+					medicamentosTabla.append(medicamento.first!)
+					medicamentosTablaHoras.append(med.fechaAlerta)
+				}
+			}
+		}
+		
+		if (medicamentosAnulados != nil) {
+			for med in medicamentosAnulados! {
+				let fechaMed = med.fechaAlerta
+				let units: NSCalendarUnit = [.Weekday, .Day]
+				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iDiaSemanaActual!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
+				
+				let diaMed = calendar.components(units, fromDate: fechaMed)
+				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
+				
+				if (diaMed.day == diaHoy.day) {
+					let nombreMed = med.nombreMed
+					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
+					medicamentosTabla.append(medicamento.first!)
+					medicamentosTablaHoras.append(nil)
+				}
+			}
+		}
+		tbvTable.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,23 +84,59 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return medicamentosTabla.count
     }
 
-    /*
+	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell: tbcMedicamentoInfo = self.tbvTable.dequeueReusableCellWithIdentifier("cell") as! tbcMedicamentoInfo
+		
+		let lugar = medicamentosTabla.count - 1 - indexPath.row
+		
+		let formatoHoraConMeridiano = NSDateFormatter()
+		formatoHoraConMeridiano.dateFormat = "h:mm a"
+		
+		if (medicamentosTablaHoras[lugar] != nil) {
+			cell.lbHora.text = formatoHoraConMeridiano.stringFromDate(medicamentosTablaHoras[lugar]!)
+		}
+		else {
+			cell.lbHora.text = "NO TOMADO"
+		}
+		cell.lbNombreMedicamento.text = medicamentosTabla[lugar].sNombre
+		
+		if (medicamentosTabla[lugar] == medicamentosTabla[medicamentosTabla.count-1] && lugar == medicamentosTabla.count-1) {
+			if (medicamentosTabla.count == 1) {
+				cell.bUnicaCelda = true
+				cell.bPrimerCelda = false
+				cell.bUltimaCelda = false
+			}
+			else {
+				cell.bPrimerCelda = true
+				cell.bUltimaCelda = false
+				cell.bUnicaCelda = false
+			}
+		}
+			
+		else if (medicamentosTabla[lugar] == medicamentosTabla[0] && lugar == 0) {
+			cell.bPrimerCelda = false
+			cell.bUltimaCelda = true
+			cell.bUnicaCelda = false
+		}
+		else {
+			cell.bPrimerCelda = false
+			cell.bUltimaCelda = false
+			cell.bUnicaCelda = false
+		}
 
-        // Configure the cell...
-
+		
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.

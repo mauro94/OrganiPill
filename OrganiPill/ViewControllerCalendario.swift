@@ -47,6 +47,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	var fechasCal = [NSDate(), NSDate(), NSDate(), NSDate(), NSDate(), NSDate(), NSDate()]
 	let nombreDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabádo"]
 	var timer = NSTimer()
+	var iBotonActivado: Int!
 	let dateFechaHoy = NSDate()
 	let calendar = NSCalendar.currentCalendar()
 	
@@ -64,6 +65,8 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
 		
 		self.title = "Calendario"
+		
+		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 		
 		//obtener datos de realm
 		tomaDeMedicmanetos = realm.objects(Notificaciones)
@@ -175,6 +178,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		sender.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
 		
 		let iUbicacionArreglo = botonesDias.indexOf(sender as! UIButton)
+		iBotonActivado = iUbicacionArreglo
 		lbNumeroDias[iUbicacionArreglo!].textColor = UIColor.whiteColor()
 		
 		//cambiar nombre del dia
@@ -206,6 +210,12 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
 					medicamentosTabla.append(medicamento.first!)
 					medicamentosTablaHoras.append(med.fechaAlerta)
+					
+					//revisar si notificacion ya paso 4 horas de hora original
+					if (revisar4Horas(med)) {
+						//sacar de la lista
+						quitarNotificacionPendiente(fechaMed, sNombre: nombreMed)
+					}
 				}
 			}
 			tbvMedicamentosPendientes.reloadData()
@@ -219,6 +229,58 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		else {
 			tbvMedicamentosPendientes.hidden = true
 			viewNoMeds.hidden = false
+		}
+	}
+	
+	
+	
+	func revisar4Horas(alerta: Fecha) -> Bool {
+		let units: NSCalendarUnit = [.Hour, .Minute]
+		let fechaOriginal = alerta.fechaOriginal
+		
+		let fechaLimite = calendar.dateByAddingUnit(NSCalendarUnit.Hour, value: 4, toDate: fechaOriginal, options: NSCalendarOptions.WrapComponents)
+		let tiempoLimite = calendar.components(units, fromDate: fechaLimite!)
+		let tiempoActual = calendar.components(units, fromDate: NSDate())
+		
+		let fechaActual = NSDate()
+		
+		if (fechaActual.earlierDate(fechaLimite!) == fechaLimite) {
+				return true
+		}
+		return false
+	}
+	
+	
+	func quitarNotificacionPendiente(fechaAlerta: NSDate, sNombre: String) {
+		//saca las listas de notificaciones
+		let realm = try! Realm()
+		let listasNotif = realm.objects(Notificaciones)
+		var fechaAux: Fecha = Fecha()
+		
+		try! realm.write{
+			var listaPendientes = listasNotif.filter("id == 1").first!
+			var listaAnuladas = listasNotif.filter("id == 3").first!
+			
+			//borrar notificacion actual de la lista de notificaciones
+			for i in 0...listaPendientes.listaNotificaciones.count-1{
+				//found a match
+				if(listaPendientes.listaNotificaciones[i].fechaAlerta == fechaAlerta && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+					//guarda la fecha para usarla en la lista de tomadas
+					fechaAux = listaPendientes.listaNotificaciones[i]
+					
+					//la borra de las pendientes
+					listaPendientes.listaNotificaciones.removeAtIndex(i)
+					break
+				}
+			}
+			
+			//guardar en lista tomadas
+			fechaAux.fechaAlerta = NSDate()
+			listaAnuladas.listaNotificaciones.append(fechaAux)
+			
+			//actualiza ambas listas
+			realm.add(listaPendientes, update: true)
+			realm.add(listaAnuladas, update: true)
 		}
 	}
 	
@@ -379,7 +441,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			cell.imgIcono.image = UIImage(named: "crossIcon")
 		}
 		
-		if (medicamentosTabla[indexPath.row] == medicamentosTabla[0]) {
+		if (medicamentosTabla[indexPath.row] == medicamentosTabla[0] && indexPath.row == 0) {
 			if (medicamentosTabla.count == 1) {
 				cell.bUnicaCelda = true
 				cell.bPrimerCelda = false
@@ -392,7 +454,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			}
 		}
 		
-		else if (medicamentosTabla[indexPath.row] == medicamentosTabla[medicamentosTabla.count-1]) {
+		else if (medicamentosTabla[indexPath.row] == medicamentosTabla[medicamentosTabla.count-1] && indexPath.row == medicamentosTabla.count-1) {
 			cell.bPrimerCelda = false
 			cell.bUltimaCelda = true
 			cell.bUnicaCelda = false
@@ -404,11 +466,9 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		}
 		
 		//si ya paso hora de medicamento para ser tomado
-		let units: NSCalendarUnit = [.Weekday, .Hour]
-		let horaActual = calendar.components(units, fromDate: NSDate())
-		let horaLimite = calendar.components(units, fromDate: hora)
+		let fechaActual = NSDate()
 		
-		if (horaActual.hour > horaLimite.hour && horaActual.weekday >= horaLimite.weekday) {
+		if (hora.earlierDate(fechaActual) == hora) {
 			cell.bPasoHora = true
 			cell.lbHora.textColor = colorDark
 			cell.lbHora.font = UIFont(name:"HelveticaNeue-Medium", size: 17.0)
@@ -452,9 +512,13 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			viewVerMed.sNombre = medicamento.sNombre
 			viewVerMed.sTipoMed = medicamento.sViaAdministracion
 			viewVerMed.horaMedicina = hora
+			viewVerMed.sImgMedicamento = medicamento.sFotoMedicamento
+			viewVerMed.sImgCaja = medicamento.sFotoCaja
+			viewVerMed.sImgPastillero = medicamento.sFotoPastillero
 		}
 		else {
-			
+			let viewTomados = segue.destinationViewController as! TableViewControllerMedicamentosTomados
+			viewTomados.iDiaSemanaActual = iBotonActivado
 		}
 		
     }
