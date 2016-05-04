@@ -13,10 +13,7 @@ import MessageUI
 
 class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControllerDelegate {
     //variables
-    
-    @IBOutlet weak var lblpunto3: UILabel!
-    @IBOutlet weak var lblpunto2: UILabel!
-    @IBOutlet weak var lblpunto1: UILabel!
+	
     @IBOutlet weak var lblNombre: UILabel!
     
     @IBOutlet weak var lblTipoduracion: UILabel!
@@ -25,14 +22,13 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     @IBOutlet weak var txvComentario: UITextView!
     
     @IBOutlet weak var lblDosis: UILabel!
-    
-    @IBOutlet weak var lblAlimento: UILabel!
+
     @IBOutlet weak var lblVia: UILabel!
     @IBOutlet weak var scScrollView: UIScrollView!
     
     @IBOutlet weak var lblcajaactual: UILabel!
     @IBOutlet weak var lblcajamiligramo: UILabel!
-    @IBOutlet weak var imImage: UIImageView!
+    //@IBOutlet weak var imImage: UIImageView!
     
     
     var inPath : Int!
@@ -44,10 +40,10 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     func recargardatos(){
         
         
-        imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
+      //  imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
         
         
-        lblpunto1.textColor = UIColor.redColor()
+        //lblpunto1.textColor = UIColor.redColor()
         
         
         
@@ -77,10 +73,10 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
        
         txvComentario.text = indexMedicamento.sComentario
         if (indexMedicamento.bNecesitaAlimento)  {
-            lblAlimento.text = "Si"
+            //lblAlimento.text = "Si"
         }
         else{
-            lblAlimento.text = "No"
+            //lblAlimento.text = "No"
         }
         
         
@@ -142,7 +138,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         super.viewDidLoad()
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        imImage.frame = CGRectMake(0,0, screenSize.height * 100, 350)
+       // imImage.frame = CGRectMake(0,0, screenSize.height * 100, 350)
         
         
         recargardatos()
@@ -165,14 +161,16 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         editButton.target = self
         editButton.action = "editbottonpress:"
         
-        var viewSize = self.view.frame.size
-        viewSize.height = 7000
-        viewSize.width = 100
-        scScrollView.scrollEnabled = true;
-        scScrollView.contentSize = viewSize
-        scScrollView.showsVerticalScrollIndicator = false
-        
-        
+
+		var cosa = self.view.frame.size
+		cosa.width = 100
+		cosa.height = 9000
+		
+		scScrollView.scrollEnabled = true
+		
+        scScrollView.contentSize = cosa
+		scScrollView.showsVerticalScrollIndicator = false
+		
         
         
         
@@ -185,40 +183,46 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+	
+	func scrollViewDidScroll(scrollView: UIScrollView) {
+		if scrollView.contentOffset.x>0 {
+			scrollView.contentOffset.x = 0
+		}
+	}
+	
     var cambFoto:Int = 2
     @IBAction func CambiarFoto(sender: AnyObject) {
         if(cambFoto == 1){
-            imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
+          //  imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
             cambFoto = 2
             
-            lblpunto1.textColor = UIColor.redColor()
-            lblpunto2.textColor = UIColor.blackColor()
-            lblpunto3.textColor = UIColor.blackColor()
+            //lblpunto1.textColor = UIColor.redColor()
+            //lblpunto2.textColor = UIColor.blackColor()
+            //lblpunto3.textColor = UIColor.blackColor()
             
         }
         else if(cambFoto == 2){
-            imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoCaja)
+           // imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoCaja)
             cambFoto = 3
-            lblpunto2.textColor = UIColor.redColor()
-            lblpunto1.textColor = UIColor.blackColor()
-            lblpunto3.textColor = UIColor.blackColor()
+            //lblpunto2.textColor = UIColor.redColor()
+            //lblpunto1.textColor = UIColor.blackColor()
+            //lblpunto3.textColor = UIColor.blackColor()
         }
         else if(indexMedicamento.sFotoPastillero != nil){
-            imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoPastillero!)
+          //  imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoPastillero!)
             cambFoto = 1
-            lblpunto3.textColor = UIColor.redColor()
-            lblpunto2.textColor = UIColor.blackColor()
-            lblpunto1.textColor = UIColor.blackColor()
+            //lblpunto3.textColor = UIColor.redColor()
+            //lblpunto2.textColor = UIColor.blackColor()
+            //lblpunto1.textColor = UIColor.blackColor()
         }
         
         else{
-            imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
+        //    imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
             cambFoto = 2
             
-            lblpunto1.textColor = UIColor.redColor()
-            lblpunto2.textColor = UIColor.blackColor()
-            lblpunto3.textColor = UIColor.blackColor()
+            //lblpunto1.textColor = UIColor.redColor()
+            //lblpunto2.textColor = UIColor.blackColor()
+            //lblpunto3.textColor = UIColor.blackColor()
         }
         
     }

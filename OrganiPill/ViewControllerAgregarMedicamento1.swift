@@ -7,13 +7,9 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-
-    
-    
-    
-    
     // MARK: - Outlets
     @IBOutlet weak var pickerTipoMedicamentos: UIPickerView!
     @IBOutlet weak var fldNombre: UITextField!
@@ -44,7 +40,7 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
 	
     func emptyField(field : String){
         //creates popup message
-        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste llenar el \(field)", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "\(field)", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         
@@ -67,10 +63,21 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     // MARK: - Navigation
     override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
         if(fldNombre.text != ""){
-            return true
+			//obtner datos de realm
+			let realm = try! Realm()
+			let medicamentos = realm.objects(Medicamento)
+			
+			let resultadosMed = medicamentos.filter("sNombre == %@", fldNombre.text!)
+			
+			if (resultadosMed.count == 0) {
+				return true
+			}
+			
+			emptyField("Este medicamento ya existe")
+            return false
         }
         else{
-            emptyField("nombre del medicamento")
+            emptyField("Parece que olvidaste llenar el nombre del medicamento")
             return false
         }
     }

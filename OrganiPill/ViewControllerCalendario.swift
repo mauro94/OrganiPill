@@ -239,8 +239,6 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		let fechaOriginal = alerta.fechaOriginal
 		
 		let fechaLimite = calendar.dateByAddingUnit(NSCalendarUnit.Hour, value: 4, toDate: fechaOriginal, options: NSCalendarOptions.WrapComponents)
-		let tiempoLimite = calendar.components(units, fromDate: fechaLimite!)
-		let tiempoActual = calendar.components(units, fromDate: NSDate())
 		
 		let fechaActual = NSDate()
 		

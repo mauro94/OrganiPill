@@ -34,7 +34,7 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         
         self.title = "Mis Medicamentos"
        
-        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
         //--------------------------- PDF --------------------------------------------------
     
@@ -162,8 +162,10 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         cell.imCaja.image = UIImage(contentsOfFile: current.sFotoCaja)
         
         
-        
-        
+		let backgroundView = UIView()
+		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
+		cell.selectedBackgroundView = backgroundView
+		
         
         cell.setNeedsDisplay()
     
