@@ -45,7 +45,7 @@ class NotificacionViewController: UIViewController {
         formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
 
         lblNombre.text = sNombre
-        lblTipo.text = medicina.sViaAdministracion
+        lblTipo.text = medicina.sTipoMedicina
         lblHora.text = formatoHora.stringFromDate(fechaAlerta)
         
         if(medicina.bNecesitaAlimento){
@@ -55,7 +55,8 @@ class NotificacionViewController: UIViewController {
             lblComida.text = "No necesita alimento"
         }
         
-        lblDosis.text = String(medicina.dDosis)
+        lblDosis.text = String(medicina.dDosisRecetada)
+
         
     }
 // MARK: - Navigation
@@ -98,18 +99,18 @@ class NotificacionViewController: UIViewController {
                 realm.add(listaTomadas, update: true)
                 
                 //se reduce la cantidad de medicina por la dosis tomada
-                medicina.dMiligramosCaja -= medicina.dDosis
+                medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada
                 
                 //se crean alertas para recordar al usuario
                 //si queda menos de un 25% de la cantidad original
-                if(medicina.dMiligramosCajaActual <= medicina.dMiligramosCaja*0.10){
+                if(medicina.dCantidadPorCajaActual <= medicina.dCantidadPorCaja*0.10){
                     let alerta = UIAlertController(title: "¡Alerta!", message: "\(sNombre) está muy cerca de acabarse ", preferredStyle: .Alert)
                     alerta.addAction(UIAlertAction(title: "Avisar a contacto", style: .Default, handler: nil))
                     alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: nil))
                     presentViewController(alerta, animated: true, completion: nil)
                 }
                 //si queda menos de un 10% de la cantidad original
-                else if(medicina.dMiligramosCajaActual <= medicina.dMiligramosCaja*0.25){
+                else if(medicina.dCantidadPorCajaActual <= medicina.dCantidadPorCaja*0.25){
                     let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que pronto se acabará \(sNombre) ", preferredStyle: .Alert)
                     alerta.addAction(UIAlertAction(title: "Avisar a contacto", style: .Default, handler: nil))
                     alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: nil))

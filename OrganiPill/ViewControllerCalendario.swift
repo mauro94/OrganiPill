@@ -200,6 +200,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 				let units: NSCalendarUnit = [.Weekday, .Day]
 				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
 				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iUbicacionArreglo!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
+				
 				let diaMed = calendar.components(units, fromDate: fechaMed)
 				
 				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
@@ -512,10 +513,10 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			
 			viewVerMed.sHora = formatoHoraConMeridiano.stringFromDate(hora)
 			viewVerMed.bAlimento = medicamento.bNecesitaAlimento
-			viewVerMed.sViaAdministracion = medicamento.sViaAdministracion
-			viewVerMed.sDosis = "\(Int(medicamento.dDosis))"
+			viewVerMed.sViaAdministracion = medicamento.sTipoMedicina
+			viewVerMed.sDosis = "\(Int(medicamento.dDosisRecetada))"
 			viewVerMed.sNombre = medicamento.sNombre
-			viewVerMed.sTipoMed = medicamento.sViaAdministracion
+			viewVerMed.sTipoMed = medicamento.sTipoMedicina
 			viewVerMed.horaMedicina = hora
 			viewVerMed.sImgMedicamento = medicamento.sFotoMedicamento
 			viewVerMed.sImgCaja = medicamento.sFotoCaja

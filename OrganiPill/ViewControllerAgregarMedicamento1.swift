@@ -88,7 +88,7 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
         //guarda los datos del medicamento de esta vista
         medMedicina.sNombre = fldNombre.text!
         medMedicina.bNecesitaAlimento = swAlimento.on
-        medMedicina.sViaAdministracion = arrTiposMedicamento[pickerTipoMedicamentos.selectedRowInComponent(0)]
+        medMedicina.sTipoMedicina = arrTiposMedicamento[pickerTipoMedicamentos.selectedRowInComponent(0)]
         
         viewSiguiente.medMedicina = medMedicina
     }

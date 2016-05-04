@@ -106,7 +106,7 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
         let viewSiguiente = segue.destinationViewController as! AgregarMedicamento4ViewController
         
         //guarda los datos del medicamento de esta vista
-        medMedicina.dDosis = Double(fldDosis.text!)!
+        medMedicina.dDosisRecetada = Double(fldDosis.text!)!
         medMedicina.iDuracion = Int(fldDuracion.text!)!
         medMedicina.sTipoDuracion = getTipoDuracion()
         
