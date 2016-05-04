@@ -19,6 +19,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     @IBOutlet weak var txvComentario: UITextView!
     @IBOutlet weak var lblDosis: UILabel!
     @IBOutlet weak var lblVia: UILabel!
+	@IBOutlet weak var lbTipoMed: UILabel!
     @IBOutlet weak var scScrollView: UIScrollView!
     @IBOutlet weak var lblcajaactual: UILabel!
     @IBOutlet weak var lblcajamiligramo: UILabel!
@@ -36,7 +37,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     var inPath : Int!
     
     var delegado = ProtocoloReloadTable!(nil)
-    var indexMedicamento : Medicamento!
+    var indexMedicamento : Medicamento = Medicamento()
 	var imgCounter: Int = -1
 	var swipeRight = UISwipeGestureRecognizer()
 	var swipeLeft = UISwipeGestureRecognizer()
@@ -85,6 +86,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         lblNombre.text = indexMedicamento.sNombre
         lblDosis.text = String(indexMedicamento.dDosisRecetada)
         lblVia.text = indexMedicamento.sTipoMedicina
+		lbTipoMed.text = indexMedicamento.sTipoMedicina
         
         if(indexMedicamento.sTipoDuracion == "s") {
             lblTipoduracion.text = "Semana(s)"
