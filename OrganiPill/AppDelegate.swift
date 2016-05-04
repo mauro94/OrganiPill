@@ -136,6 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     notifViewController.fechaAlerta = fechaAlerta
                     notifViewController.fechaOriginal = fechaOriginal
                     notifViewController.notificacion = notification
+                    //TODO-Snooze
                     notifViewController.snoozeNotif(5)
                 }
             }

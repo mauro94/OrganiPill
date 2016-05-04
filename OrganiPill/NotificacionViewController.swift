@@ -65,7 +65,7 @@ class NotificacionViewController: UIViewController {
             var fechaAux = Fecha()
             
             //se cancela la notificacion que mandó a esta vista
-            UIApplication.sharedApplication().cancelLocalNotification(notificacion)
+            //UIApplication.sharedApplication().cancelLocalNotification(notificacion)
             
             //saca las listas de notificaciones
             let realm = try! Realm()
@@ -102,7 +102,7 @@ class NotificacionViewController: UIViewController {
             notif.rescheduleNotificaciones()
         }
         else if(segue.identifier == "snoozeMedicina"){
-            //TODO cambiar a un picker
+            //TODO-Snooze
             snoozeNotif(1)
         }
     }
@@ -111,7 +111,7 @@ class NotificacionViewController: UIViewController {
         var fechaAux = Fecha()
         
         //se cancela la notificacion que mandó a esta vista
-        UIApplication.sharedApplication().cancelLocalNotification(notificacion)
+        //UIApplication.sharedApplication().cancelLocalNotification(notificacion)
         
         //saca las listas de notificaciones
         let realm = try! Realm()
@@ -134,6 +134,7 @@ class NotificacionViewController: UIViewController {
             }
             
             //genera la nueva fecha y la agrega a la lista
+            //TODO-Snooze
             let nuevaFecha = NSDate(timeIntervalSinceNow: Double(snoozeMins)*60)
             fechaAux.fechaAlerta = nuevaFecha
             listaPendientes.listaNotificaciones.append(fechaAux)

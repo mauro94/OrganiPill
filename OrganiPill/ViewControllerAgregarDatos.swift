@@ -25,6 +25,7 @@ class ViewControllerAgregarDatos: UIViewController {
     var isGlucosa:Bool = true
     var borrar:Bool = false
     var auxMedidaGlucosa: Medidas! = Medidas()
+    var delegado = ProtocoloReloadTable!(nil)
     
     var auxMedidaSys: Medidas! = Medidas()
     var auxMedidaDiac: Medidas! = Medidas()
@@ -46,7 +47,7 @@ class ViewControllerAgregarDatos: UIViewController {
             
             
             editButton.target = self
-            editButton.action = "borrarbottonpress:"
+            editButton.action = #selector(ViewControllerAgregarDatos.borrarbottonpress(_:))
         }
         
         
@@ -177,11 +178,8 @@ class ViewControllerAgregarDatos: UIViewController {
             
         }
         
-        
-        
-        
-        self.navigationController?.popViewControllerAnimated(true)
-        
+        delegado.reloadTable()
+        delegado.quitaVista()
     }
     
     func borrarbottonpress(sender:AnyObject){

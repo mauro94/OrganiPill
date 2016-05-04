@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 
-class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, UITableViewDelegate, ProtocoloReloadTable {
     
     @IBOutlet weak var tbvTable: UITableView!
     
@@ -229,6 +229,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         let viewAgregar = segue.destinationViewController as! ViewControllerAgregarDatos
+        viewAgregar.delegado = self
         
         
         if(segue.identifier == "newDG"){
@@ -285,6 +286,14 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
         }
         
         
+    }
+    
+    func reloadTable() {
+        tbvTable.reloadData()
+    }
+    
+    func quitaVista() {
+        navigationController?.popViewControllerAnimated(true)
     }
     
     

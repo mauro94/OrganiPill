@@ -50,6 +50,10 @@
 		34DBD7B31CB5C32E00DA952C /* TableViewCellMedicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */; };
 		EA18E9511CD80F6D000F8DEE /* MisMedicamentosVerHorarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA18E9501CD80F6D000F8DEE /* MisMedicamentosVerHorarioViewController.swift */; };
 		EA18E9531CD81059000F8DEE /* MisMedicamentosEditarHorarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA18E9521CD81059000F8DEE /* MisMedicamentosEditarHorarioViewController.swift */; };
+		EA3DEE071CD9DDF600AE94F6 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3DEE061CD9DDF600AE94F6 /* SettingsStoryboard.storyboard */; };
+		EA3DEE091CD9E43000AE94F6 /* ViewControllerEscogerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3DEE081CD9E43000AE94F6 /* ViewControllerEscogerSettings.swift */; };
+		EA3DEE0B1CD9E72500AE94F6 /* ViewControllerPacienteSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3DEE0A1CD9E72500AE94F6 /* ViewControllerPacienteSettings.swift */; };
+		EA3DEE0D1CD9EB9200AE94F6 /* ViewControllerDoctorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3DEE0C1CD9EB9200AE94F6 /* ViewControllerDoctorSettings.swift */; };
 		EA3E43451CC99F690031BEEF /* CustomDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3E43441CC99F690031BEEF /* CustomDate.swift */; };
 		EA3E43471CC99FE10031BEEF /* RealmInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3E43461CC99FE10031BEEF /* RealmInt.swift */; };
 		EA3E434D1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */; };
@@ -127,6 +131,10 @@
 		34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellMedicamento.swift; sourceTree = "<group>"; };
 		EA18E9501CD80F6D000F8DEE /* MisMedicamentosVerHorarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisMedicamentosVerHorarioViewController.swift; sourceTree = "<group>"; };
 		EA18E9521CD81059000F8DEE /* MisMedicamentosEditarHorarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisMedicamentosEditarHorarioViewController.swift; sourceTree = "<group>"; };
+		EA3DEE061CD9DDF600AE94F6 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
+		EA3DEE081CD9E43000AE94F6 /* ViewControllerEscogerSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEscogerSettings.swift; sourceTree = "<group>"; };
+		EA3DEE0A1CD9E72500AE94F6 /* ViewControllerPacienteSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerPacienteSettings.swift; sourceTree = "<group>"; };
+		EA3DEE0C1CD9EB9200AE94F6 /* ViewControllerDoctorSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerDoctorSettings.swift; sourceTree = "<group>"; };
 		EA3E43441CC99F690031BEEF /* CustomDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDate.swift; sourceTree = "<group>"; };
 		EA3E43461CC99FE10031BEEF /* RealmInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmInt.swift; sourceTree = "<group>"; };
 		EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = sbAgregarMedicamento.storyboard; sourceTree = "<group>"; };
@@ -193,6 +201,10 @@
 		3403369D1CBBE7240054540E /* Actividad del Dia */ = {
 			isa = PBXGroup;
 			children = (
+				EA3DEE061CD9DDF600AE94F6 /* SettingsStoryboard.storyboard */,
+				EA3DEE0C1CD9EB9200AE94F6 /* ViewControllerDoctorSettings.swift */,
+				EA3DEE0A1CD9E72500AE94F6 /* ViewControllerPacienteSettings.swift */,
+				EA3DEE081CD9E43000AE94F6 /* ViewControllerEscogerSettings.swift */,
 			);
 			name = "Actividad del Dia";
 			sourceTree = "<group>";
@@ -373,6 +385,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA3DEE071CD9DDF600AE94F6 /* SettingsStoryboard.storyboard in Resources */,
 				EA3E43511CC9A07B0031BEEF /* setupInicial.storyboard in Resources */,
 				EAE4AD961CD961DB00F76930 /* RegistrarDatosStoryboard.storyboard in Resources */,
 				34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */,
@@ -438,14 +451,17 @@
 				34630BED1CBEACD800914FD0 /* Fecha.swift in Sources */,
 				EAE4AD9C1CD984F300F76930 /* ViewControllerAgregarDatos.swift in Sources */,
 				317C98451CC5517900C28D04 /* AgregarHorarioViewController.swift in Sources */,
+				EA3DEE091CD9E43000AE94F6 /* ViewControllerEscogerSettings.swift in Sources */,
 				312734551CBED7E4004BD7ED /* ViewControllerAgregarMedicamentoFoto1.swift in Sources */,
 				EAFBBBD21CC516E700686148 /* ViewControllerEditar.swift in Sources */,
 				34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */,
 				313E9A491CD28D5100669B9F /* CustomString.swift in Sources */,
 				341399611CC73815006D982B /* ViewControllerBienvenida.swift in Sources */,
 				34C347BD1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift in Sources */,
+				EA3DEE0B1CD9E72500AE94F6 /* ViewControllerPacienteSettings.swift in Sources */,
 				34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */,
 				345A1FEF1CCDD99000F6FE76 /* ViewControllerSetupInicial2.swift in Sources */,
+				EA3DEE0D1CD9EB9200AE94F6 /* ViewControllerDoctorSettings.swift in Sources */,
 				31911A811CD87639008663F5 /* HandlerNotificaciones.swift in Sources */,
 				34D130641CB46C61005E206C /* AppDelegate.swift in Sources */,
 				EAE4AD9E1CD98DC800F76930 /* TableViewCellDatosGluc.swift in Sources */,

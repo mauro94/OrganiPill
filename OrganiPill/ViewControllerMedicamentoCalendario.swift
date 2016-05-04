@@ -9,6 +9,11 @@
 import UIKit
 import RealmSwift
 
+protocol ProtocoloReloadTable{
+    func reloadTable()
+    func quitaVista()
+}
+
 class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	//OUTLETS
 	@IBOutlet weak var viewInformacion: UIView!
@@ -40,7 +45,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 	var sDosis: String!
 	var sNombre: String!
 	var sTipoMed: String!
-	var horaMedicina: NSDate!
+	var horaMedicina: NSDate! //hora alerta
 	var sImgMedicamento: String!
 	var sImgCaja: String!
 	var sImgPastillero: String? = nil
@@ -52,6 +57,9 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 	var swipeRight = UISwipeGestureRecognizer()
 	var swipeLeft = UISwipeGestureRecognizer()
 	var imgCounter: Int = -1
+    
+    var delegado = ProtocoloReloadTable!(nil)
+
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,13 +81,15 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		tablaSiguientesHoras.delegate = self
 		tablaSiguientesHoras.dataSource = self
 		
-		//obtner datos de realm
-		let realm = try! Realm()
-		let tomaDeMedicmanetos = realm.objects(Notificaciones)
+		//obtener datos de realm
+		//let realm = try! Realm()
+		//let tomaDeMedicamentos = realm.objects(Notificaciones)
 		
-		//obtner lista de alertas de un medicamento
-		let medicamentosPendientes = tomaDeMedicmanetos.filter("id = 1").first!.listaNotificaciones
-		siguientesHoras = medicamentosPendientes.filter("nombreMed = %@", sNombre)
+		//obtener lista de alertas de un medicamento
+		//let medicamentosPendientes = tomaDeMedicamentos.filter("id = 1").first!.listaNotificaciones
+		//siguientesHoras = medicamentosPendientes.filter("nombreMed = %@", sNombre)
+        
+        getSiguientesHoras()
 		
 		//agregar gesture para cambiar imagenes
 		swipeRight.addTarget(self, action: #selector(cambiarImagen))
@@ -97,6 +107,22 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		if (sImgPastillero == nil) {
 			pager.numberOfPages = 2
 		}
+    }
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        if parent == nil {
+            delegado.reloadTable()
+        }
+    }
+    
+    func getSiguientesHoras(){
+        //obtener datos de realm
+        let realm = try! Realm()
+        let tomaDeMedicamentos = realm.objects(Notificaciones)
+        
+        //obtener lista de alertas de un medicamento
+        let medicamentosPendientes = tomaDeMedicamentos.filter("id = 1").first!.listaNotificaciones
+        siguientesHoras = medicamentosPendientes.filter("nombreMed = %@", sNombre)
     }
 	
 	override func viewWillAppear(animated: Bool) {
@@ -226,6 +252,96 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		
 		return cell
 	}
+    
+    @IBAction func presionaTomar(sender: UIButton) {
+        var fechaAux = Fecha()
+        
+        //se cancela la notificacion que mandó a esta vista
+        //UIApplication.sharedApplication().cancelLocalNotification(notificacion)
+        
+        //saca las listas de notificaciones
+        let realm = try! Realm()
+        let listasNotif = realm.objects(Notificaciones)
+        
+        try! realm.write{
+            var listaPendientes = listasNotif.filter("id == 1").first!
+            var listaTomadas = listasNotif.filter("id == 2").first!
+            
+            //borrar notificacion actual de la lista de notificaciones
+            for i in 0...listaPendientes.listaNotificaciones.count-1{
+                //found a match
+                if(listaPendientes.listaNotificaciones[i].fechaAlerta == horaMedicina && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                    //guarda la fecha para usarla en la lista de tomadas
+                    fechaAux = listaPendientes.listaNotificaciones[i]
+                    
+                    //la borra de las pendientes
+                    listaPendientes.listaNotificaciones.removeAtIndex(i)
+                    break
+                }
+            }
+            
+            //guardar en lista tomadas
+            fechaAux.fechaAlerta = NSDate()
+            listaTomadas.listaNotificaciones.append(fechaAux)
+            
+            //actualiza ambas listas
+            realm.add(listaPendientes, update: true)
+            realm.add(listaTomadas, update: true)
+            
+        }
+        //hace un reschedule de las notificaciones
+        let notif : HandlerNotificaciones = HandlerNotificaciones()
+        notif.rescheduleNotificaciones()
+        
+        getSiguientesHoras()
+        tablaSiguientesHoras.reloadData()
+        delegado.reloadTable()
+        delegado.quitaVista()
+    }
+    
+    
+    @IBAction func presionaPosponer(sender: UIButton) {
+        var fechaAux = Fecha()
+        
+        //saca las listas de notificaciones
+        let realm = try! Realm()
+        let listasNotif = realm.objects(Notificaciones)
+        
+        try! realm.write{
+            let listaPendientes = listasNotif.filter("id == 1").first!
+            
+            //borrar notificacion actual de la lista de notificaciones
+            for i in 0...listaPendientes.listaNotificaciones.count-1{
+                //found a match
+                if(listaPendientes.listaNotificaciones[i].fechaAlerta == horaMedicina && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                    //guarda la fecha para usarla despues
+                    fechaAux = listaPendientes.listaNotificaciones[i]
+                    
+                    //la borra de las pendientes
+                    listaPendientes.listaNotificaciones.removeAtIndex(i)
+                    break
+                }
+            }
+            
+            //TODO-Snooze
+            //genera la nueva fecha y la agrega a la lista
+            let nuevaFecha = NSDate(timeIntervalSinceNow: Double(5)*60)
+            fechaAux.fechaAlerta = nuevaFecha
+            listaPendientes.listaNotificaciones.append(fechaAux)
+            
+            //actualiza la lista de notificaciones en REALM
+            realm.add(listaPendientes, update: true)
+            
+        }
+        //hace un reschedule de las notificaciones
+        let notif : HandlerNotificaciones = HandlerNotificaciones()
+        notif.rescheduleNotificaciones()
+        
+        getSiguientesHoras()
+        tablaSiguientesHoras.reloadData()
+        delegado.reloadTable()
+        delegado.quitaVista()
+    }
     
 
     /*
