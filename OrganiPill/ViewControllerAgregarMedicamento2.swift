@@ -94,10 +94,14 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
             titulo = "Número de botes por caja:"
             subTitulo = "Dosis por bote:"
             break
-        case "Cápsulas":
+        case "Cápsula":
             titulo = "Número de cápsulas por caja:"
             subTitulo = "Dosis por cápsula:"
             break
+		case "Tableta":
+			titulo = "Número de tabletas por caja:"
+			subTitulo = "Dosis por tableta:"
+			break
         default:
             break
         }

@@ -20,7 +20,7 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var swAlimento: UISwitch!
     
     // MARK: - Global Variables
-    let arrTiposMedicamento = ["Supositorio", "Inyección", "Cápsulas", "Pastilla", "Tabletas", "Suspensión"]
+    let arrTiposMedicamento = ["Supositorio", "Inyección", "Cápsula", "Pastilla", "Tableta", "Suspensión"]
     var medMedicina : Medicamento = Medicamento()
     
     override func viewDidLoad() {

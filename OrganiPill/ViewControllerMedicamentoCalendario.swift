@@ -25,9 +25,13 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 	@IBOutlet weak var btPosponer: UIButton!
 	
 	@IBOutlet weak var imgImagen: UIImageView!
+	@IBOutlet weak var pager: UIPageControl!
+	@IBOutlet weak var viewImagen: UIView!
 	
 	@IBOutlet weak var constraintSiBoton: NSLayoutConstraint!
 	@IBOutlet weak var contraintNoBoton: NSLayoutConstraint!
+	@IBOutlet weak var constraintSiBotonImg: NSLayoutConstraint!
+	@IBOutlet weak var constraintNoBotonImg: NSLayoutConstraint!
 	
 	//VARIABLES
 	var sHora: String!
@@ -41,6 +45,10 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 	var siguientesHoras: Results<Fecha>!
 	
 	let calendar = NSCalendar.currentCalendar()
+	
+	var swipeRight = UISwipeGestureRecognizer()
+	var swipeLeft = UISwipeGestureRecognizer()
+	var imgCounter: Int = -1
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,30 +77,90 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		//obtner lista de alertas de un medicamento
 		let medicamentosPendientes = tomaDeMedicmanetos.filter("id = 1").first!.listaNotificaciones
 		siguientesHoras = medicamentosPendientes.filter("nombreMed = %@", sNombre)
-		print(siguientesHoras)
+		
+		//agregar gesture para cambiar imagenes
+		swipeRight.addTarget(self, action: #selector(cambiarImagen))
+		swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+		
+		swipeLeft.addTarget(self, action: #selector(cambiarImagen))
+		swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+		
+		viewImagen.addGestureRecognizer(swipeRight)
+		viewImagen.addGestureRecognizer(swipeLeft)
+		cambiarImagen(UISwipeGestureRecognizer())
     }
 	
 	override func viewWillAppear(animated: Bool) {
-		let units: NSCalendarUnit = [.Day, .Hour]
-		let hora = calendar.components(units, fromDate: NSDate())
-		let horaLimite = calendar.components(units, fromDate: horaMedicina)
-		
-		if (hora.hour > horaLimite.hour && hora.day >= horaLimite.day) {
-			btPosponer.hidden = false;
-			btTomoMedicamento.hidden = false
-			contraintNoBoton.active = false
-			constraintSiBoton.active = true
-		}
-		else {
-			contraintNoBoton.active = true
-			constraintSiBoton.active = false
-		}
+		cambiarVista(segSeccion)
 	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	@IBAction func cambiarVista(sender: UISegmentedControl) {
+		let units: NSCalendarUnit = [.Weekday, .Hour]
+		let hora = calendar.components(units, fromDate: NSDate())
+		let horaLimite = calendar.components(units, fromDate: horaMedicina)
+		
+		if (sender.selectedSegmentIndex == 0) {
+			viewInformacion.hidden = false
+			viewImagen.hidden = true
+			
+			if (hora.hour > horaLimite.hour && hora.weekday >= horaLimite.weekday) {
+				btPosponer.hidden = false
+				btTomoMedicamento.hidden = false
+				contraintNoBoton.priority = 1
+				constraintSiBoton.priority = 750
+			}
+			else {
+				contraintNoBoton.priority = 750
+				constraintSiBoton.priority = 1
+			}
+		}
+		else {
+			viewInformacion.hidden = true
+			viewImagen.hidden = false
+			
+			if (hora.hour > horaLimite.hour && hora.weekday >= horaLimite.weekday) {
+				btPosponer.hidden = false
+				btTomoMedicamento.hidden = false
+				constraintNoBotonImg.priority = 1
+				constraintSiBotonImg.priority = 750
+			}
+			else {
+				constraintNoBotonImg.priority = 750
+				constraintSiBotonImg.priority = 1
+			}
+		}
+	}
+	
+	func cambiarImagen(swipe: UIGestureRecognizer) {
+		let swipeGesture = swipe as? UISwipeGestureRecognizer
+		
+		if (swipeGesture!.direction == UISwipeGestureRecognizerDirection.Right) {
+			imgCounter += 1
+		}
+		if (swipeGesture!.direction == UISwipeGestureRecognizerDirection.Left)  {
+			imgCounter -= 1
+		}
+		
+		imgCounter %= 3
+		
+		pager.currentPage = abs(imgCounter)
+		
+		switch abs(imgCounter) {
+		case 0:
+			imgImagen.image = UIImage(named: "rojo")
+		case 1:
+			imgImagen.image = UIImage(named: "negro")
+		case 2:
+			imgImagen.image = UIImage(named: "amarillo")
+		default:
+			print("ERROR")
+		}
+	}
 	
 	// MARK: - UITableView
 	
@@ -109,6 +177,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		let cell: tbcMedicamentoInfo = self.tablaSiguientesHoras.dequeueReusableCellWithIdentifier("cell") as! tbcMedicamentoInfo
 		
 		let formatoHoraConMeridiano = NSDateFormatter()
+		formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
 		formatoHoraConMeridiano.dateFormat = "MMMM d, h:mm a"
 		
 		cell.lbHora.text = formatoHoraConMeridiano.stringFromDate(siguientesHoras[indexPath.row].fecha)

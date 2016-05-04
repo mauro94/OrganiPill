@@ -45,6 +45,8 @@ class ViewControllerMenu: UIViewController {
 		self.navigationController?.navigationBar.translucent = false
 		self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
 		
+		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+		
 		//arreglar texto dependiendo de iphone
 		if (self.view.frame.size.width == 320) {
 			tamanoFont = 20.0

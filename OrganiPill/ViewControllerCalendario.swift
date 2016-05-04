@@ -41,8 +41,10 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	//-----------------------------------------------------
 	//VARIABLES
 	let clBoton: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
+	let colorDark = UIColor(red: 188.0/255.0, green: 53.0/255.0, blue: 73.0/255.0, alpha: 1)
 	var botonesDias = [UIButton]()
 	var lbNumeroDias = [UILabel]()
+	var fechasCal = [NSDate(), NSDate(), NSDate(), NSDate(), NSDate(), NSDate(), NSDate()]
 	let nombreDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabádo"]
 	var timer = NSTimer()
 	let dateFechaHoy = NSDate()
@@ -54,7 +56,9 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	var medicamentosTabla = [Medicamento]()
 	var medicamentosTablaHoras = [NSDate]()
 
-	
+	var swipeRight = UISwipeGestureRecognizer()
+	var swipeLeft = UISwipeGestureRecognizer()
+	var btCounter: Int = -1
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +95,19 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		units = [.Day]
 		let diaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
 		actualizaNumeroDias(diaDeLaSemana.day, idDiaDeLaSemana: idDiaDeLaSemana.weekday)
+		
+		//agregar gesture para cambiar dias
+		swipeRight.addTarget(self, action: #selector(cambiarDiaGesture))
+		swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+		
+		swipeLeft.addTarget(self, action: #selector(cambiarDiaGesture))
+		swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+		
+		self.view.addGestureRecognizer(swipeRight)
+		self.view.addGestureRecognizer(swipeLeft)
+		cambiarDiaGesture(UISwipeGestureRecognizer())
+		
+		btCounter = idDiaDeLaSemana.weekday
 		
 		//encender boton del dia de hoy
 		switch idDiaDeLaSemana.weekday {
@@ -161,7 +178,13 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		lbNumeroDias[iUbicacionArreglo!].textColor = UIColor.whiteColor()
 		
 		//cambiar nombre del dia
-		lbNombreDia.text = nombreDias[iUbicacionArreglo!]
+		let formatoHoraConMeridiano = NSDateFormatter()
+		formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
+		formatoHoraConMeridiano.dateFormat = "EEEE, MMMM dd"
+		
+		lbNombreDia.text = formatoHoraConMeridiano.stringFromDate(fechasCal[iUbicacionArreglo!])
+		
+		btCounter = iUbicacionArreglo!+1
 		
 		//llenar de datos la tabla
 		medicamentosTabla.removeAll()
@@ -248,6 +271,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		
 		//almacenar numero de dia hoy
 		lbNumeroDias[idDiaDeLaSemana-1].text = "\(diaDeLaSemana)"
+		fechasCal[idDiaDeLaSemana-1] = dateFechaHoy
 		
 		//inicir un dia despues
 		i = idDiaDeLaSemana
@@ -262,6 +286,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			numeroDiaHoy = componentesTemp.day
 			
 			lbNumeroDias[i-1].text = "\(numeroDiaHoy)"
+			fechasCal[i-1] = dateTemp!
 			i += 1
 		}
 		
@@ -277,10 +302,51 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			numeroDiaHoy = componentesTemp.day
 			
 			lbNumeroDias[i-1].text = "\(numeroDiaHoy)"
+			fechasCal[i-1] = dateTemp!
 			i -= 1
 		}
 	}
 	
+	
+	
+	func cambiarDiaGesture(swipe: UIGestureRecognizer) {
+		let swipeGesture = swipe as? UISwipeGestureRecognizer
+		
+		if (swipeGesture!.direction == UISwipeGestureRecognizerDirection.Right) {
+			btCounter -= 1
+			if (btCounter == 0) {
+				btCounter = 7
+			}
+		}
+		if (swipeGesture!.direction == UISwipeGestureRecognizerDirection.Left)  {
+			btCounter += 1
+			if (btCounter == 0) {
+				btCounter = 1
+			}
+		}
+		
+		btCounter %= 8
+		
+		//encender boton del dia de hoy
+		switch abs(btCounter) {
+		case 1:
+			btPresionarBotonDia(btDomingo)
+		case 2:
+			btPresionarBotonDia(btLunes)
+		case 3:
+			btPresionarBotonDia(btMartes)
+		case 4:
+			btPresionarBotonDia(btMiercoles)
+		case 5:
+			btPresionarBotonDia(btJueves)
+		case 6:
+			btPresionarBotonDia(btViernes)
+		case 7:
+			btPresionarBotonDia(btSabado)
+		default:
+			print("ERROR")
+		}
+	}
 	
 	
 	
@@ -337,6 +403,23 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			cell.bUnicaCelda = false
 		}
 		
+		//si ya paso hora de medicamento para ser tomado
+		let units: NSCalendarUnit = [.Weekday, .Hour]
+		let horaActual = calendar.components(units, fromDate: NSDate())
+		let horaLimite = calendar.components(units, fromDate: hora)
+		
+		if (horaActual.hour > horaLimite.hour && horaActual.weekday >= horaLimite.weekday) {
+			cell.bPasoHora = true
+			cell.lbHora.textColor = colorDark
+			cell.lbHora.font = UIFont(name:"HelveticaNeue-Medium", size: 17.0)
+			cell.lbHora.text = "TOMAR MEDICAMENTO"
+		}
+		else {
+			cell.bPasoHora = false
+			cell.lbHora.textColor = UIColor.blackColor()
+			cell.lbHora.font = UIFont(name:"HelveticaNeue", size: 17.0)
+		}
+		
 		let backgroundView = UIView()
 		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
 		cell.selectedBackgroundView = backgroundView
@@ -352,22 +435,28 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let viewVerMed = segue.destinationViewController as! ViewControllerMedicamentoCalendario
-		let indexPath = tbvMedicamentosPendientes.indexPathForSelectedRow
+		if (segue.identifier == "verMedicamento") {
+			let viewVerMed = segue.destinationViewController as! ViewControllerMedicamentoCalendario
+			let indexPath = tbvMedicamentosPendientes.indexPathForSelectedRow
+			
+			let hora = medicamentosTablaHoras[indexPath!.row]
+			let medicamento = medicamentosTabla[indexPath!.row]
+			
+			let formatoHoraConMeridiano = NSDateFormatter()
+			formatoHoraConMeridiano.dateFormat = "h:mm a"
+			
+			viewVerMed.sHora = formatoHoraConMeridiano.stringFromDate(hora)
+			viewVerMed.bAlimento = medicamento.bNecesitaAlimento
+			viewVerMed.sViaAdministracion = medicamento.sViaAdministracion
+			viewVerMed.sDosis = "\(Int(medicamento.dDosis))"
+			viewVerMed.sNombre = medicamento.sNombre
+			viewVerMed.sTipoMed = medicamento.sViaAdministracion
+			viewVerMed.horaMedicina = hora
+		}
+		else {
+			
+		}
 		
-		let hora = medicamentosTablaHoras[indexPath!.row]
-		let medicamento = medicamentosTabla[indexPath!.row]
-		
-		let formatoHoraConMeridiano = NSDateFormatter()
-		formatoHoraConMeridiano.dateFormat = "h:mm a"
-		
-		viewVerMed.sHora = formatoHoraConMeridiano.stringFromDate(hora)
-		viewVerMed.bAlimento = medicamento.bNecesitaAlimento
-		viewVerMed.sViaAdministracion = medicamento.sViaAdministracion
-		viewVerMed.sDosis = "\(Int(medicamento.dDosis))"
-		viewVerMed.sNombre = medicamento.sNombre
-		viewVerMed.sTipoMed = medicamento.sViaAdministracion
-		viewVerMed.horaMedicina = hora
     }
 
 
