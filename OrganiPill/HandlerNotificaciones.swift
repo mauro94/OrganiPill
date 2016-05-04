@@ -26,7 +26,7 @@ class HandlerNotificaciones{
     
     //controlador para generar notificaciones
     func generarNotificaciones(){
-        let fechaActual = NSDate.init()
+        let fechaActual = NSDate()
         let units: NSCalendarUnit = [.Hour, .Minute, .Weekday]
         let myComponents = calendar.components(units, fromDate: fechaActual)
         let unidadRestantes = medMedicina.iDuracion
@@ -34,10 +34,11 @@ class HandlerNotificaciones{
         
         //recorre horarios
         for i in 0...medMedicina.horario.count - 1{
-            myComponents.hour = medMedicina.horario[i].horas
-            myComponents.minute = medMedicina.horario[i].minutos
             
             let j = getFirstDay(i, myComponents: myComponents)
+            
+            myComponents.hour = medMedicina.horario[i].horas
+            myComponents.minute = medMedicina.horario[i].minutos
             
             //duracion es en dias
             if(medMedicina.sTipoDuracion == "d"){
@@ -126,7 +127,6 @@ class HandlerNotificaciones{
         var firstDayIndex : Int = 0
         let weekDay = myComponents.weekday
         let cantDias = medMedicina.horario[i].listaDias.count
-        
         
         //busca el dia siguiente en la lista mas cercano a hoy
         for k in 0...cantDias-1{
