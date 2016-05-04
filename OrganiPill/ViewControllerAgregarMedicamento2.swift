@@ -164,6 +164,7 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
 			print("ERROR")
 		}
         
+        medMedicina.dDosisPorTipo = Double(fieldCantidadPCaja.text!)!
         viewSiguiente.medMedicina = medMedicina
     }
 
