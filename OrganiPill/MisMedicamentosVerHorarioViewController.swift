@@ -146,7 +146,13 @@ class MisMedicamentosVerHorario: UIViewController, UITableViewDataSource, UITabl
         let hora = calendar.dateFromComponents(myComponents)
         cell.lblHora?.text = formatoHoraConMeridiano.stringFromDate(hora!)
         
-        //colorea los botones
+        //resetea los colores de los horarios
+        for i in 0...6{
+            cell.bttnDias?[i].backgroundColor = UIColor.whiteColor()
+            cell.bttnDias?[i].setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        }
+        
+        //colorea los botones prendidos
         let numElementos = listaHorarios[indexPath.row].listaDias.count
         for i in 0...(numElementos-1){
             let dia = listaHorarios[indexPath.row].listaDias[i]

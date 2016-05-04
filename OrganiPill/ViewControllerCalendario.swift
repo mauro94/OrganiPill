@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 import Realm
 
-class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableViewDataSource, ProtocoloReloadTable {
 	//OUTLETS-------------------------------------------
 	//botones de cada dia
 	@IBOutlet weak var btDomingo: UIButton!
@@ -52,7 +52,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	let calendar = NSCalendar.currentCalendar()
 	
 	let realm = try! Realm()
-	var tomaDeMedicmanetos: Results<Notificaciones>!
+	var tomaDeMedicamentos: Results<Notificaciones>!
 	var medicamentos: Results<Medicamento>!
 	var medicamentosTabla = [Medicamento]()
 	var medicamentosTablaHoras = [NSDate]()
@@ -69,7 +69,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 		
 		//obtener datos de realm
-		tomaDeMedicmanetos = realm.objects(Notificaciones)
+		tomaDeMedicamentos = realm.objects(Notificaciones)
 		medicamentos = realm.objects(Medicamento)
 		
 		//crear arreglo de botones de dias
@@ -140,7 +140,6 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		tbvMedicamentosPendientes.dataSource = self
     }
 	
-	
 	override func viewWillAppear(animated: Bool) {
 		//vista vacia
 		if (medicamentosTabla.count > 0) {
@@ -194,7 +193,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		medicamentosTabla.removeAll()
 		medicamentosTablaHoras.removeAll()
 	
-		let medicamentosHoy = tomaDeMedicmanetos.filter("id = 1").first?.listaNotificaciones
+		let medicamentosHoy = tomaDeMedicamentos.filter("id = 1").first?.listaNotificaciones
 		if (medicamentosHoy != nil) {
 			for med in medicamentosHoy! {
 				let fechaMed = med.fechaAlerta
@@ -515,12 +514,52 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			viewVerMed.sImgMedicamento = medicamento.sFotoMedicamento
 			viewVerMed.sImgCaja = medicamento.sFotoCaja
 			viewVerMed.sImgPastillero = medicamento.sFotoPastillero
+            viewVerMed.delegado = self
+
 		}
 		else {
 			let viewTomados = segue.destinationViewController as! TableViewControllerMedicamentosTomados
 			viewTomados.iDiaSemanaActual = iBotonActivado
 		}
 		
+    }
+    
+    func reloadTable(){
+        //obtener datos de realm
+        tomaDeMedicamentos = realm.objects(Notificaciones)
+        medicamentos = realm.objects(Medicamento)
+        
+        //obtener el nombre del dia de hoy
+        var units: NSCalendarUnit = [.Weekday]
+        let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+        
+        btCounter = idDiaDeLaSemana.weekday
+        
+        //encender boton del dia de hoy
+        switch idDiaDeLaSemana.weekday {
+        case 1:
+            btPresionarBotonDia(btDomingo)
+        case 2:
+            btPresionarBotonDia(btLunes)
+        case 3:
+            btPresionarBotonDia(btMartes)
+        case 4:
+            btPresionarBotonDia(btMiercoles)
+        case 5:
+            btPresionarBotonDia(btJueves)
+        case 6:
+            btPresionarBotonDia(btViernes)
+        case 7:
+            btPresionarBotonDia(btSabado)
+        default:
+            print("ERROR")
+        }
+        
+        tbvMedicamentosPendientes.reloadData()
+    }
+    
+    func quitaVista(){
+        navigationController?.popViewControllerAnimated(true)
     }
 
 
