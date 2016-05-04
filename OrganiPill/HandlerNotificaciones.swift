@@ -277,7 +277,8 @@ class HandlerNotificaciones{
         var i : Int = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         
-        while(i < 64 && i < listaNotif.listaNotificaciones.count-1){
+        //ALERT: .count-1
+        while(i < 64 && i < listaNotif.listaNotificaciones.count){
             scheduleLocal(listaNotif.listaNotificaciones[i])
             i += 1
         }
@@ -306,7 +307,8 @@ class HandlerNotificaciones{
         var i : Int = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         
-        while(i < 64 && i < listaPendientes.listaNotificaciones.count-1){
+        //ALERT: .count-1
+        while(i < 64 && i < listaPendientes.listaNotificaciones.count){
             scheduleLocal(listaPendientes.listaNotificaciones[i])
             i += 1
         }

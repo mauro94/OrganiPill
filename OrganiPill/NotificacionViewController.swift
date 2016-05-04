@@ -96,7 +96,6 @@ class NotificacionViewController: UIViewController {
                 realm.add(listaPendientes, update: true)
                 realm.add(listaTomadas, update: true)
                 
-                //notif.rescheduleNotificaciones()
             }
             //hace un reschedule de las notificaciones
             let notif : HandlerNotificaciones = HandlerNotificaciones()
@@ -140,7 +139,6 @@ class NotificacionViewController: UIViewController {
             }
             //hace un reschedule de las notificaciones
             let notif : HandlerNotificaciones = HandlerNotificaciones()
-            
             notif.rescheduleNotificaciones()
         }
     }

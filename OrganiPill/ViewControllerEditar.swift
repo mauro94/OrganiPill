@@ -162,6 +162,11 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         
         if(txDuracion.text != "" && tfDosis.text != "" && tfNombre.text != "" ){
             
+            //actualiza las notificaciones al nuevo nombre
+            if(indMedicamento.sNombre != tfNombre.text!){
+                actualizarNotificaciones()
+            }
+            
             
             let realm = try! Realm()
             
@@ -228,6 +233,67 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         
         
         
+    }
+    
+    //cambia los nombres de las medicinas en todas las listas de medicinas
+    func actualizarNotificaciones(){
+        let realm = try! Realm()
+        let listasNotif = realm.objects(Notificaciones)
+        print("0")
+        
+        try! realm.write {
+            print("0.1")
+            var listaPendientes = listasNotif.filter("id == 1").first!
+            print("l1")
+            var listaTomadas = listasNotif.filter("id == 2").first!
+            print("l2")
+
+            var listaAnulada = listasNotif.filter("id == 3").first!
+            
+            print("1")
+            //busca en la lista de medicinas pendientes
+            var i = 0
+            while(i < listaPendientes.listaNotificaciones.count){
+                //encuentra un match
+                if(listaPendientes.listaNotificaciones[i].nombreMed == indMedicamento.sNombre){
+                    listaPendientes.listaNotificaciones[i].nombreMed = tfNombre.text!
+                }
+                i += 1
+            }
+            print("2")
+
+            
+            //busca en la lista de medicinas tomadas
+            i = 0
+            while(i < listaTomadas.listaNotificaciones.count){
+                //encuentra un match
+                if(listaTomadas.listaNotificaciones[i].nombreMed == indMedicamento.sNombre){
+                    listaTomadas.listaNotificaciones[i].nombreMed = tfNombre.text!
+                }
+                i += 1
+            }
+            
+            print("3")
+
+            //busca en la lista de medicinas anuladas
+            i = 0
+            while(i < listaAnulada.listaNotificaciones.count){
+                //encuentra un match
+                if(listaAnulada.listaNotificaciones[i].nombreMed == indMedicamento.sNombre){
+                    listaAnulada.listaNotificaciones[i].nombreMed = tfNombre.text!
+                }
+                i += 1
+            }
+            
+            print("4")
+
+            //actualiza las listas
+            realm.add(listaPendientes, update: true)
+            realm.add(listaTomadas, update: true)
+            realm.add(listaAnulada, update: true)
+            print("5")
+
+        }
     }
     
     
