@@ -204,12 +204,21 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
             lblpunto1.textColor = UIColor.blackColor()
             lblpunto3.textColor = UIColor.blackColor()
         }
-        else{
+        else if(indexMedicamento.sFotoPastillero != nil){
             imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoPastillero!)
             cambFoto = 1
             lblpunto3.textColor = UIColor.redColor()
             lblpunto2.textColor = UIColor.blackColor()
             lblpunto1.textColor = UIColor.blackColor()
+        }
+        
+        else{
+            imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
+            cambFoto = 2
+            
+            lblpunto1.textColor = UIColor.redColor()
+            lblpunto2.textColor = UIColor.blackColor()
+            lblpunto3.textColor = UIColor.blackColor()
         }
         
     }

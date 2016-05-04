@@ -27,7 +27,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(listaHorarios)
+       // print(listaHorarios)
         
         
         self.title = "Horario"
