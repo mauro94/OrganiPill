@@ -38,6 +38,14 @@ class TableViewControllerGlucosaPression: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
+    
+    func reloadTable() {
+        
+    }
+    
+    func quitaVista() {
+        
+    }
 
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

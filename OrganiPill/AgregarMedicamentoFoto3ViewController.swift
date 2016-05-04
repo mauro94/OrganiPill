@@ -13,6 +13,7 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
     // MARK: - Outlets
     @IBOutlet weak var imgFoto: UIImageView!
     @IBOutlet weak var bttnSiguiente: UIButton!
+    @IBOutlet weak var viewNoImagen: UIView!
     
     //MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
@@ -68,22 +69,27 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
             }
         }
         
-        
         pathImagen = filename
         
-        
-        
+        //esconder vista y demostrar imagen
         imgFoto.image = foto
         dismissViewControllerAnimated(true, completion: nil)
-        
         tieneImagen = true
+        imgFoto.hidden = false
+        viewNoImagen.hidden = true
+        
+        //actualizar botones
+        bttnSiguiente.setTitle("Siguiente", forState: UIControlState.Normal)
 		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarMedicamentoFoto3ViewController.cancelarButtonPressed(_:)))
     }
 	
+    //actualiza vistas y botones para cuando no hay imagen
 	func cancelarButtonPressed(sender: AnyObject){
 		tieneImagen = false
 		imgFoto.image = nil
+        imgFoto.hidden = true
+        viewNoImagen.hidden = false
 		bttnSiguiente.setTitle("Saltar", forState: UIControlState.Normal)
 		navigationItem.rightBarButtonItem = nil
 	}
