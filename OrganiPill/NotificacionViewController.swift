@@ -15,6 +15,7 @@ class NotificacionViewController: UIViewController {
     var fechaAlerta : NSDate!
     var fechaOriginal : NSDate!
     var notificacion : UILocalNotification!
+    var medicina = Medicamento()
     
     @IBOutlet weak var lblNombre: UILabel!
     @IBOutlet weak var lblTipo: UILabel!
@@ -38,23 +39,23 @@ class NotificacionViewController: UIViewController {
 
         let realm = try! Realm()
         let resMedicina = realm.objects(Medicamento).filter("sNombre == %@", sNombre)
-        let medicina = resMedicina.first
+        medicina = resMedicina.first!
         
         let formatoHora = NSDateFormatter()
         formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
 
         lblNombre.text = sNombre
-        lblTipo.text = medicina?.sViaAdministracion
+        lblTipo.text = medicina.sViaAdministracion
         lblHora.text = formatoHora.stringFromDate(fechaAlerta)
         
-        if(medicina!.bNecesitaAlimento){
+        if(medicina.bNecesitaAlimento){
             lblComida.text = "Necesita alimento"
         }
         else{
             lblComida.text = "No necesita alimento"
         }
         
-        lblDosis.text = String(medicina!.dDosis)
+        lblDosis.text = String(medicina.dDosis)
         
     }
 // MARK: - Navigation
@@ -95,6 +96,25 @@ class NotificacionViewController: UIViewController {
                 //actualiza ambas listas
                 realm.add(listaPendientes, update: true)
                 realm.add(listaTomadas, update: true)
+                
+                //se reduce la cantidad de medicina por la dosis tomada
+                medicina.dMiligramosCaja -= medicina.dDosis
+                
+                //se crean alertas para recordar al usuario
+                //si queda menos de un 25% de la cantidad original
+                if(medicina.dMiligramosCajaActual <= medicina.dMiligramosCaja*0.10){
+                    let alerta = UIAlertController(title: "¡Alerta!", message: "\(sNombre) está muy cerca de acabarse ", preferredStyle: .Alert)
+                    alerta.addAction(UIAlertAction(title: "Avisar a contacto", style: .Default, handler: nil))
+                    alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: nil))
+                    presentViewController(alerta, animated: true, completion: nil)
+                }
+                //si queda menos de un 10% de la cantidad original
+                else if(medicina.dMiligramosCajaActual <= medicina.dMiligramosCaja*0.25){
+                    let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que pronto se acabará \(sNombre) ", preferredStyle: .Alert)
+                    alerta.addAction(UIAlertAction(title: "Avisar a contacto", style: .Default, handler: nil))
+                    alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: nil))
+                    presentViewController(alerta, animated: true, completion: nil)
+                }
                 
             }
             //hace un reschedule de las notificaciones
