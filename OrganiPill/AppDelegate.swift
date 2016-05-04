@@ -130,12 +130,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return {
                     _ in
                     self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
-                    print("snooze")
+                    let storyboard = UIStoryboard(name: "sbNotificacion", bundle: nil)
+                    let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion") as! NotificacionViewController
+                    notifViewController.sNombre = nombreMed
+                    notifViewController.fechaAlerta = fechaAlerta
+                    notifViewController.fechaOriginal = fechaOriginal
+                    notifViewController.notificacion = notification
+                    notifViewController.snoozeNotif(5)
                 }
             }
             
             alert.addAction(UIAlertAction(title: "Ver medicina", style: .Default, handler: dismissAndAction()))
-            alert.addAction(UIAlertAction(title: "Posponer", style: .Destructive, handler: dismissAndSnooze()))
+            alert.addAction(UIAlertAction(title: "Posponer 5 minutos", style: .Destructive, handler: dismissAndSnooze()))
             window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
 
         }
@@ -147,7 +153,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func tomarMedicinaController(nombreMed : String, fechaAlerta : NSDate, fechaOriginal : NSDate, notification : UILocalNotification){
         let storyboard = UIStoryboard(name: "sbNotificacion", bundle: nil)
-        
         let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion") as! NotificacionViewController
         
         notifViewController.sNombre = nombreMed

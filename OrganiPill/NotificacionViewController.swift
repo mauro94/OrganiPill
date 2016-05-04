@@ -102,45 +102,49 @@ class NotificacionViewController: UIViewController {
             notif.rescheduleNotificaciones()
         }
         else if(segue.identifier == "snoozeMedicina"){
-            var fechaAux = Fecha()
-            
-            //se cancela la notificacion que mandó a esta vista
-            UIApplication.sharedApplication().cancelLocalNotification(notificacion)
-            
-            //saca las listas de notificaciones
-            let realm = try! Realm()
-            let listasNotif = realm.objects(Notificaciones)
-            
-            try! realm.write{
-                let listaPendientes = listasNotif.filter("id == 1").first!
-                
-                //borrar notificacion actual de la lista de notificaciones
-                for i in 0...listaPendientes.listaNotificaciones.count-1{
-                    //found a match
-                    if(listaPendientes.listaNotificaciones[i].fechaAlerta == fechaAlerta && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
-                        //guarda la fecha para usarla despues
-                        fechaAux = listaPendientes.listaNotificaciones[i]
-                        
-                        //la borra de las pendientes
-                        listaPendientes.listaNotificaciones.removeAtIndex(i)
-                        break
-                    }
-                }
-                
-                //genera la nueva fecha y la agrega a la lista
-                //let nuevaFecha = NSDate(timeInterval: 1*60, sinceDate: fechaAux.fechaAlerta)
-                let nuevaFecha = NSDate(timeIntervalSinceNow: 1*60)
-                fechaAux.fechaAlerta = nuevaFecha
-                listaPendientes.listaNotificaciones.append(fechaAux)
-                
-                //actualiza la lista de notificaciones en REALM
-                realm.add(listaPendientes, update: true)
-                
-            }
-            //hace un reschedule de las notificaciones
-            let notif : HandlerNotificaciones = HandlerNotificaciones()
-            notif.rescheduleNotificaciones()
+            //TODO cambiar a un picker
+            snoozeNotif(1)
         }
+    }
+    
+    func snoozeNotif(snoozeMins : Int){
+        var fechaAux = Fecha()
+        
+        //se cancela la notificacion que mandó a esta vista
+        UIApplication.sharedApplication().cancelLocalNotification(notificacion)
+        
+        //saca las listas de notificaciones
+        let realm = try! Realm()
+        let listasNotif = realm.objects(Notificaciones)
+        
+        try! realm.write{
+            let listaPendientes = listasNotif.filter("id == 1").first!
+            
+            //borrar notificacion actual de la lista de notificaciones
+            for i in 0...listaPendientes.listaNotificaciones.count-1{
+                //found a match
+                if(listaPendientes.listaNotificaciones[i].fechaAlerta == fechaAlerta && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                    //guarda la fecha para usarla despues
+                    fechaAux = listaPendientes.listaNotificaciones[i]
+                    
+                    //la borra de las pendientes
+                    listaPendientes.listaNotificaciones.removeAtIndex(i)
+                    break
+                }
+            }
+            
+            //genera la nueva fecha y la agrega a la lista
+            let nuevaFecha = NSDate(timeIntervalSinceNow: Double(snoozeMins)*60)
+            fechaAux.fechaAlerta = nuevaFecha
+            listaPendientes.listaNotificaciones.append(fechaAux)
+            
+            //actualiza la lista de notificaciones en REALM
+            realm.add(listaPendientes, update: true)
+            
+        }
+        //hace un reschedule de las notificaciones
+        let notif : HandlerNotificaciones = HandlerNotificaciones()
+        notif.rescheduleNotificaciones()
     }
 
 }
