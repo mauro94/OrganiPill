@@ -44,7 +44,7 @@ class NotificacionViewController: UIViewController {
         formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
 
         lblNombre.text = sNombre
-        lblTipo.text = medicina?.sViaAdministracion
+        lblTipo.text = medicina?.sTipoMedicina
         lblHora.text = formatoHora.stringFromDate(fechaAlerta)
         
         if(medicina!.bNecesitaAlimento){
@@ -54,7 +54,7 @@ class NotificacionViewController: UIViewController {
             lblComida.text = "No necesita alimento"
         }
         
-        lblDosis.text = String(medicina!.dDosis)
+        lblDosis.text = String(medicina!.dDosisRecetada)
         
     }
 // MARK: - Navigation

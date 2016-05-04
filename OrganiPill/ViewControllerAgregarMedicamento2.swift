@@ -17,6 +17,7 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var fldNumeroPCaja: UITextField!
     @IBOutlet weak var fieldCantidadPCaja: UITextField!
 	@IBOutlet weak var pickerCantidadCaja: UIPickerView!
+	@IBOutlet weak var sgmUnidadDosis: UISegmentedControl!
     
     
     @IBAction func quitateclado(){
@@ -77,7 +78,7 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
     
     func decideTitulo(){
         //decide titulo de la siguiente vista
-        switch(medMedicina.sViaAdministracion){
+        switch(medMedicina.sTipoMedicina){
         case "Pastilla":
             titulo = "Número de pastillas por caja:"
             subTitulo = "Dosis por pastilla:"
@@ -149,8 +150,19 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
         let viewSiguiente = segue.destinationViewController as! ViewControllerAgregarMedicamentoFoto1
         
         //guarda los datos del medicamento de esta vista
-        medMedicina.dMiligramosCaja = Double(fldNumeroPCaja.text!)!*Double(fieldCantidadPCaja.text!)!
-        medMedicina.dMiligramosCajaActual = medMedicina.dMiligramosCaja
+        medMedicina.dCantidadPorCaja = Double(fldNumeroPCaja.text!)!
+		medMedicina.dCantidadPorCajaActual = medMedicina.dCantidadPorCaja
+		
+		switch sgmUnidadDosis.selectedSegmentIndex {
+		case 0:
+			medMedicina.sUnidadesDosis = "Miligramos"
+		case 1:
+			medMedicina.sUnidadesDosis = "Mililitros"
+		case 2:
+			medMedicina.sUnidadesDosis = "Microgramos"
+		default:
+			print("ERROR")
+		}
         
         viewSiguiente.medMedicina = medMedicina
     }

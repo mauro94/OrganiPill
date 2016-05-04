@@ -46,7 +46,7 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
 
     //decide titulo de la vista
     func decideTitulo(){
-        switch(medMedicina.sViaAdministracion){
+        switch(medMedicina.sTipoMedicina){
         //pastillas
         case "Pastilla":
             self.title = "Imágen de la Pastilla"
