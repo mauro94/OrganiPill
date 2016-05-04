@@ -11,7 +11,7 @@ import RealmSwift
 import MessageUI
 
 
-class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControllerDelegate {
+class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControllerDelegate, ProtocoloReloadTable {
     //variables
 	
     @IBOutlet weak var lblNombre: UILabel!
@@ -33,22 +33,16 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     
     var inPath : Int!
     
-    
+    var delegado = ProtocoloReloadTable!(nil)
     var indexMedicamento : Medicamento!
     
     
     func recargardatos(){
-        
-        
-      //  imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
-        
+
+      //imImage.image = UIImage(contentsOfFile: indexMedicamento.sFotoMedicamento)
         
         //lblpunto1.textColor = UIColor.redColor()
-        
-        
-        
-        
-        
+
         lblNombre.text = indexMedicamento.sNombre
         lblDosis.text = String(indexMedicamento.dDosis)
         lblVia.text = indexMedicamento.sViaAdministracion
@@ -65,8 +59,6 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
             lblTipoduracion.text = "Mes(es)"
         }
         
-        
-        
         lblDuracion.text = String(indexMedicamento.iDuracion)
         lblcajaactual.text = String(indexMedicamento.dMiligramosCajaActual)
         lblcajamiligramo.text = String(indexMedicamento.dMiligramosCaja)
@@ -78,8 +70,6 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         else{
             //lblAlimento.text = "No"
         }
-        
-        
     }
     
     // --------------------------- MAIL --------------------------------------------------
@@ -93,9 +83,6 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         } else {
             self.showSendMailErrorAlert()
         }
-        
-        
-        
     }
     
     
@@ -122,37 +109,18 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     }
     
     //--------------------------- MAIL --------------------------------------------------
-    
-    
-    
-    
-    
-    
-    
-    override func viewDidAppear(animated: Bool) {
-        recargardatos()
-    }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
        // imImage.frame = CGRectMake(0,0, screenSize.height * 100, 350)
         
-        
         recargardatos()
-        
-        
-        
-        
-        
+
         // Do any additional setup after loading the view.
         self.title = "Medicina"
-        
-        
-        
-        
+
         let editButton : UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(""))
         
         self.navigationItem.rightBarButtonItem = editButton
@@ -170,13 +138,6 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
 		
         scScrollView.contentSize = cosa
 		scScrollView.showsVerticalScrollIndicator = false
-		
-        
-        
-        
-        
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -226,13 +187,8 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         }
         
     }
-    
-    
-    
-    
-    
+
     // MARK: - Navigation
-    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -242,7 +198,8 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
             let view = segue.destinationViewController as! ViewControllerEditar
             
             view.indMedicamento = indexMedicamento
-            
+            //view.delegado = self
+            view.delegado = delegado
         }
         
         else{
@@ -254,21 +211,10 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
             
             view.medMedicina = indexMedicamento
             
-            
-            
-            
-            
-            
             view.listaHorarios = indexMedicamento.horario
         
         }
-        
-        
-        
-        
-        
-        
-        
+
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
@@ -277,20 +223,19 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     
     @IBAction func unwindToMenu(segue: UIStoryboardSegue) {
         
-        
-        
-        
-        
     }
     
     
     func editbottonpress(sender:AnyObject){
-        
-        
         performSegueWithIdentifier("edit", sender: sender)
         
-        
-        
+    }
+    
+    func reloadTable() {
+        recargardatos()
+    }
+    
+    func quitaVista() {
         
     }
     

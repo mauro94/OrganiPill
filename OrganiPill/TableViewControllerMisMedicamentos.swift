@@ -9,29 +9,21 @@
 import UIKit
 import RealmSwift
 
-class TableViewControllerMisMedicamentos: UITableViewController {
+class TableViewControllerMisMedicamentos: UITableViewController, ProtocoloReloadTable {
     //variables
     @IBOutlet var tableVV: UITableView!
     
     var indice : Int!
     
     var perPersona = Persona()
-    
-    //variable de almacienamiento en realm
-    
+        
     override func viewDidAppear(animated: Bool) {
         tableVV.reloadData()
     }
     
-    
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
+
         self.title = "Mis Medicamentos"
        
         self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -41,21 +33,15 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         let html = "<b>Hello <i>World!</i></b> <p>PENE FOREVER</p>"
         let fmt = UIMarkupTextPrintFormatter(markupText: html)
         
-       
-        
         let render = UIPrintPageRenderer()
         render.addPrintFormatter(fmt, startingAtPageAtIndex: 0)
-        
-       
         
         let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) 
         let printable = CGRectInset(page, 0, 0)
         
         render.setValue(NSValue(CGRect: page), forKey: "paperRect")
         render.setValue(NSValue(CGRect: printable), forKey: "printableRect")
-        
-        
-        
+
         let pdfData = NSMutableData()
         UIGraphicsBeginPDFContextToData(pdfData, CGRectZero, nil)
         
@@ -67,9 +53,7 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         }
         
         UIGraphicsEndPDFContext();
-        
-        
-        
+
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         
         pdfData.writeToFile("\(documentsPath)/file.pdf", atomically: true)
@@ -80,12 +64,6 @@ class TableViewControllerMisMedicamentos: UITableViewController {
         //--------------------------- PDF --------------------------------------------------
         
     }
-    
-    
-    
-    
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -166,29 +144,11 @@ class TableViewControllerMisMedicamentos: UITableViewController {
 		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
 		cell.selectedBackgroundView = backgroundView
 		
-        
         cell.setNeedsDisplay()
-    
-       
-        
-        
-        
-        
-        
-        
         
         return cell
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     /*
      // Override to support conditional editing of the table view.
      override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -229,34 +189,26 @@ class TableViewControllerMisMedicamentos: UITableViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        
-        
         let view = segue.destinationViewController as! ViewControllerVerMedicamento
         
         let indexPath = tableView.indexPathForSelectedRow
         
-        
-        
         let realm = try! Realm()
-        
-        
         
         let current = realm.objects(Medicamento)[indexPath!.row]
         
-        
-        
-        
-        
         view.indexMedicamento = current
         
+        view.delegado = self
         
+    }
+    
+    func reloadTable() {
+        tableVV.reloadData()
+    }
+    
+    func quitaVista() {
         
-        
-        
-        
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
     
     

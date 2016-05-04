@@ -31,7 +31,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     
     
     var indMedicamento : Medicamento!
-    
+    var delegado = ProtocoloReloadTable!(nil)
     
     func checarPosicionPicker() -> Int{
         if(indMedicamento.sViaAdministracion == "Injeccion"){
@@ -73,17 +73,14 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         
         self.navigationItem.rightBarButtonItem = editButton
         
-        
         editButton.target = self
-        editButton.action = "guardarbottonpress:"
+        editButton.action = #selector(ViewControllerEditar.guardarbottonpress(_:))
         
         txviewComentario.text = indMedicamento.sComentario
-        
         
         if(indMedicamento.bNecesitaAlimento){
             swAlimentos.on = true
         }
-        
         
         tfNombre.text = indMedicamento.sNombre
         tfDosis.text = String( indMedicamento.dDosis)
@@ -92,12 +89,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         
         txCajaActual.text = String(indMedicamento.dMiligramosCajaActual)
         txMiligramosCaja.text = String(indMedicamento.dMiligramosCaja)
-        
-        
-        
-        
-        
-        
+
         pcPicker.selectRow(checarPosicionPicker(), inComponent: 0, animated: true)
         pickDuracion.selectRow(checarPosicionPickerDuracion(), inComponent: 0, animated: true)
         
@@ -144,9 +136,6 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
         else{
             return 1
         }
-        
-        
-        
     }
     
     
@@ -157,8 +146,6 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     
     
     func Guardar() -> Bool {
-        
-        
         
         if(txDuracion.text != "" && tfDosis.text != "" && tfNombre.text != "" ){
             
@@ -192,7 +179,6 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                 }
                 
                
-                
                 if(swAlimentos.on){
                     indMedicamento.bNecesitaAlimento = true
                 }
@@ -200,57 +186,33 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                     indMedicamento.bNecesitaAlimento = false
                 }
                 
-                
                 indMedicamento.sComentario = txviewComentario.text
-                
-                
             }
             
-            
-            
-            
+            delegado.reloadTable()
             return true
-            
-            
-            
         }
         else{
             let alerta = UIAlertController(title: "Error", message: "Dejaste casillas en blanco!",preferredStyle:  UIAlertControllerStyle.Alert)
             
             alerta.addAction(UIAlertAction(title: "Ok",style: UIAlertActionStyle.Cancel, handler:nil))
             
-            
             presentViewController(alerta,animated:true, completion:nil)
             
             return false
-            
-            
         }
-        
-        
-        
-        
-        
-        
-        
     }
     
     //cambia los nombres de las medicinas en todas las listas de medicinas
     func actualizarNotificaciones(){
         let realm = try! Realm()
         let listasNotif = realm.objects(Notificaciones)
-        print("0")
         
         try! realm.write {
-            print("0.1")
             var listaPendientes = listasNotif.filter("id == 1").first!
-            print("l1")
             var listaTomadas = listasNotif.filter("id == 2").first!
-            print("l2")
-
             var listaAnulada = listasNotif.filter("id == 3").first!
             
-            print("1")
             //busca en la lista de medicinas pendientes
             var i = 0
             while(i < listaPendientes.listaNotificaciones.count){
@@ -260,9 +222,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                 }
                 i += 1
             }
-            print("2")
 
-            
             //busca en la lista de medicinas tomadas
             i = 0
             while(i < listaTomadas.listaNotificaciones.count){
@@ -273,8 +233,6 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                 i += 1
             }
             
-            print("3")
-
             //busca en la lista de medicinas anuladas
             i = 0
             while(i < listaAnulada.listaNotificaciones.count){
@@ -284,46 +242,33 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                 }
                 i += 1
             }
-            
-            print("4")
 
             //actualiza las listas
             realm.add(listaPendientes, update: true)
             realm.add(listaTomadas, update: true)
             realm.add(listaAnulada, update: true)
-            print("5")
-
         }
     }
     
     
     
     func guardarbottonpress(sender:AnyObject){
-        
         if(Guardar()){
-            
-            
             let refreshAlert = UIAlertController(title: "Guardar", message: "Los datos se guardaron correctamente ", preferredStyle: UIAlertControllerStyle.Alert)
             
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
                 
-                self.performSegueWithIdentifier("unwind", sender: sender)
+                //self.navigationController?.popViewControllerAnimated(true)
+                let switchViewController = self.navigationController?.viewControllers[1] as! TableViewControllerMisMedicamentos
+                
+                
+                self.navigationController?.popToViewController(switchViewController, animated: true)
             }))
             
-            
+            delegado.reloadTable()
             presentViewController(refreshAlert, animated: true, completion: nil)
-            
-            
-            
-            
-            
-            
-            
+  
         }
-        
-        
-        
-        
     }
     
     
@@ -335,27 +280,20 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
             realm.delete(indMedicamento)
         }
         
-        
-        
-        
         let refreshAlert = UIAlertController(title: "Borrado", message: "El medicamento ha sido borrado correctamente", preferredStyle: UIAlertControllerStyle.Alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
             
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            let switchViewController = self.navigationController?.viewControllers[1] as! TableViewControllerMisMedicamentos
             
-        }))
+            //self.delegado.reloadTable()
+            self.navigationController?.popToViewController(switchViewController, animated: true)}))
         
-        
+        delegado.reloadTable()
         presentViewController(refreshAlert, animated: true, completion: nil)
-        
-        
-        
+
     }
-    
-    
-    
-    
+
     /*
      // MARK: - Navigation
      
