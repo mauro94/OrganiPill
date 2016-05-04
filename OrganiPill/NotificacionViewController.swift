@@ -98,8 +98,8 @@ class NotificacionViewController: UIViewController {
                 realm.add(listaPendientes, update: true)
                 realm.add(listaTomadas, update: true)
                 
-                //se reduce la cantidad de medicina por la dosis tomada
-                medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada*medicina.dDosisPorTipo
+                //se reduce la cantidad de medicina (pastillas, cucharadas) por la dosis tomada
+                medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada
                 
                 //se crean alertas para recordar al usuario
                 //si queda menos de un 25% de la cantidad original
