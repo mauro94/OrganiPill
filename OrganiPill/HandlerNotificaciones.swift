@@ -195,7 +195,7 @@ class HandlerNotificaciones{
     //genera una lista con notificaciones para iDuracion dias
     func finalizarListaNotif_D(){
         var i : Int = 0
-        var diasCount : Int = 1
+        var diasCount : Int = 0
         
         //checa el numero del dia de la primera vez a tomar la medicina
         var diaAux = calendar.components(.Day, fromDate: listaNSDates[i] as! NSDate)
@@ -374,4 +374,42 @@ class HandlerNotificaciones{
         
         return hour
     }
+    
+    /**func setupNotificationSettings(){
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+
+        if(notificationSettings.types == UIUserNotificationType.None){
+
+        var notificationTypes = UIUserNotificationType()
+
+        var tomarNotif = UIMutableUserNotificationAction()
+        tomarNotif.identifier = "tomarMed"
+        tomarNotif.title = "Tomar medicina"
+        tomarNotif.activationMode = UIUserNotificationActivationMode.Foreground
+        tomarNotif.destructive = false
+        tomarNotif.authenticationRequired = false
+        
+        var snoozeNotif = UIMutableUserNotificationAction()
+        snoozeNotif.identifier = "snoozeMed"
+        snoozeNotif.title = "Aplazar"
+        snoozeNotif.activationMode = UIUserNotificationActivationMode.Background
+        snoozeNotif.destructive = false
+        snoozeNotif.authenticationRequired = true
+        
+        let actionsArray = NSArray(objects: tomarNotif, snoozeNotif)
+        
+        var medicinaCategory = UIMutableUserNotificationCategory()
+        medicinaCategory.identifier = "medicinaCategory"
+        medicinaCategory.setActions(actionsArray as! [UIUserNotificationAction], forContext: UIUserNotificationActionContext.Minimal)
+        
+        let categoriesForSettings = NSSet(objects: medicinaCategory)
+        
+        let newNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categoriesForSettings as! Set<UIUserNotificationCategory>)
+            
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+
+        }
+        
+        
+    }**/
 }
