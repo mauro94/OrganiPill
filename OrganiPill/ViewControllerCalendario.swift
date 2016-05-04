@@ -207,15 +207,23 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 				
 				if (diaMed.day == diaHoy.day) {
 					let nombreMed = med.nombreMed
+                    print(nombreMed)
 					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
-					medicamentosTabla.append(medicamento.first!)
-					medicamentosTablaHoras.append(med.fechaAlerta)
+                    print(medicamento)
+                    print(medicamentosTabla)
+                    print(medicamento.first)
 					
-					//revisar si notificacion ya paso 4 horas de hora original
-					if (revisar4Horas(med)) {
-						//sacar de la lista
-						quitarNotificacionPendiente(fechaMed, sNombre: nombreMed)
-					}
+                    if(medicamento.count != 0){
+                        medicamentosTabla.append(medicamento.first!)
+                        medicamentosTablaHoras.append(med.fechaAlerta)
+                    
+					
+                        //revisar si notificacion ya paso 4 horas de hora original
+                        if (revisar4Horas(med)) {
+                            //sacar de la lista
+                            quitarNotificacionPendiente(fechaMed, sNombre: nombreMed)
+                        }
+                    }
 				}
 			}
 			tbvMedicamentosPendientes.reloadData()

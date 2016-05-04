@@ -34,6 +34,8 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     
     //VARIABLES
     var inPath : Int!
+    
+    var delegado = ProtocoloReloadTable!(nil)
     var indexMedicamento : Medicamento!
 	var imgCounter: Int = -1
 	var swipeRight = UISwipeGestureRecognizer()
@@ -227,9 +229,10 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         if(segue.identifier == "edit") {
             
             let view = segue.destinationViewController as! ViewControllerEditar
-            print(indexMedicamento)
-            view.indMedicamento = indexMedicamento
             
+            view.indMedicamento = indexMedicamento
+            //view.delegado = self
+            view.delegado = delegado
         }
         
         else {
@@ -239,6 +242,9 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
 			
             view.listaHorarios = indexMedicamento.horario
         }
+
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
 	
 	
@@ -249,5 +255,14 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     
     func editbottonpress(sender:AnyObject){
         performSegueWithIdentifier("edit", sender: sender)
+        
+    }
+    
+    func reloadTable() {
+        recargardatos()
+    }
+    
+    func quitaVista() {
+        
     }
 }

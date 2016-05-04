@@ -27,9 +27,6 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       // print(listaHorarios)
-        
-        
         self.title = "Horario"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AgregarMedicamento4ViewController.newButtonPressed(_:)))
@@ -67,6 +64,31 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     
     func quitaVista() {
         navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func revisarHorario(horario : CustomDate) -> Bool{
+        for i in listaHorarios{
+            if (i.horas == horario.horas && i.minutos == horario.minutos){
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func revisarHorarioEditar(horario : CustomDate) -> Bool{
+        for i in 0...listaHorarios.count-1{
+            if (index != i && listaHorarios[i].horas == horario.horas && listaHorarios[i].minutos == horario.minutos){
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func borrarHorario(horario : CustomDate){
+        listaHorarios.removeAtIndex(index)
+        tableHorarios.reloadData()
     }
     
     //MARK: - Table View Data Source functions

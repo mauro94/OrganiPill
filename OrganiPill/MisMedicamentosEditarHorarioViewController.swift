@@ -8,14 +8,6 @@
 
 import UIKit
 
-//Delegado para agregar o editar un horario
-protocol ProtocoloAgregarHorario1{
-    func agregarHorario(horario : CustomDate)
-    func editarHorario(horario : CustomDate)
-    func borrarHorario(horario : CustomDate)
-    func quitaVista()
-}
-
 class MisMedicamentosEditarHorario: UIViewController{
     
     //MARK: - Outlets
@@ -29,7 +21,7 @@ class MisMedicamentosEditarHorario: UIViewController{
     @IBOutlet weak var bttnS: UIButton!
     
     //Mark: - Global Variables
-    var delegado = ProtocoloAgregarHorario1!(nil)
+    var delegado = ProtocoloAgregarHorario!(nil)
     var horario : CustomDate = CustomDate()
     let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
     var bEditing : Bool = false
@@ -86,6 +78,21 @@ class MisMedicamentosEditarHorario: UIViewController{
         presentViewController(alerta, animated: true, completion: nil)
     }
     
+    func duplicadoAlert(){
+        //creates popup message
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Ya tienes esta hora registrada, puedes editar los días haciendo click en la lista", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let quitarVista = {
+            () -> ((UIAlertAction!) -> ()) in
+            return{
+                _ in
+                self.delegado.quitaVista()
+            }}
+        
+        alerta.addAction(UIAlertAction(title: "Regresar a la lista", style: UIAlertActionStyle.Cancel, handler: quitarVista()))
+        
+        presentViewController(alerta, animated: true, completion: nil)
+    }
     
     // MARK: - Button functions
     func agregaBorderButton(sender: UIButton) {
@@ -153,15 +160,25 @@ class MisMedicamentosEditarHorario: UIViewController{
         
         //llama al metodo adecuado para generar o editar horario
         if(!editing){
-            delegado.agregarHorario(horario)
+            if(delegado.revisarHorario(horario)){
+                delegado.agregarHorario(horario)
+                delegado.quitaVista()
+            }
+            else{
+                duplicadoAlert()
+            }
             
         }
         else{
-            delegado.editarHorario(horario)
-            editing = false
+            if(delegado.revisarHorarioEditar(horario)){
+                delegado.editarHorario(horario)
+                editing = false
+                delegado.quitaVista()
+            }
+            else{
+                duplicadoAlert()
+            }
         }
-        
-        self.navigationController?.popViewControllerAnimated(true);
         
         
     }
