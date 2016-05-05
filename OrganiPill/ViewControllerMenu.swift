@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import RealmSwift
 
 class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
 	//outlet
@@ -31,9 +32,17 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
 	//variables
 	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 
+    let realm = try! Realm()
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
+        
         // Do any additional setup after loading the view.
 		
 		self.title = "OrganiPill"
@@ -106,7 +115,10 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
         
-        mailComposerVC.setToRecipients(["gonzalogtzs94@gmail.com"])
+        
+        var realmAux = realm.objects(Persona)
+        
+        mailComposerVC.setToRecipients([realmAux[1].sCorreoElectronico])
         mailComposerVC.setSubject("OrganiPill")
         mailComposerVC.setMessageBody("<p>Holaaa<p>", isHTML: true)
         
