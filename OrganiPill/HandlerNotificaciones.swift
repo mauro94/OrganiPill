@@ -289,8 +289,12 @@ class HandlerNotificaciones{
 
         try! realm.write{
             let listaPendientes = realm.objects(Notificaciones).filter("id == 1").first!
-            var listaOrdenada = sortNotifDates(listaPendientes.listaNotificaciones)
-
+            //var listaOrdenada = sortNotifDates(listaPendientes.listaNotificaciones)
+            var listaOrdenada = List<Fecha>()
+            
+            if(listaPendientes.listaNotificaciones.count != 0){
+                listaOrdenada = sortNotifDates(listaPendientes.listaNotificaciones)
+            }
         
             realm.delete(listaPendientes)
             

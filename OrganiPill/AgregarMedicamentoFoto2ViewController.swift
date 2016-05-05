@@ -76,6 +76,8 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
                 
             }
         }
+        
+        
       
         
         pathImagen = filename
