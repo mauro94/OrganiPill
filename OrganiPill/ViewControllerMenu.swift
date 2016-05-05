@@ -26,6 +26,8 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
 	@IBOutlet weak var lbReportes: UILabel!
 	@IBOutlet weak var lbActividadDelDia: UILabel!
 
+    
+    var botonSuperiorDerecho : UIBarButtonItem!
 	
 	var tamanoFont: CGFloat = 28.0
 	
@@ -40,8 +42,9 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        botonSuperiorDerecho = UIBarButtonItem(title: "Creditos", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(creditbottonpress))
         
-        
+        self.navigationItem.rightBarButtonItem = botonSuperiorDerecho
         
         // Do any additional setup after loading the view.
 		
@@ -212,6 +215,12 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
         
         self.presentViewController(alerta, animated: true, completion: nil)
     }
+    
+    func creditbottonpress(sender:AnyObject){
+        performSegueWithIdentifier("creditos", sender: sender)
+        
+    }
+    
 
     /*
     // MARK: - Navigation
