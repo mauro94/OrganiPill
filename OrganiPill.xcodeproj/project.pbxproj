@@ -367,7 +367,7 @@
 				TargetAttributes = {
 					34D1305F1CB46C61005E206C = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 72EHGRYGBP;
+						DevelopmentTeam = CPUPH3A362;
 					};
 				};
 			};

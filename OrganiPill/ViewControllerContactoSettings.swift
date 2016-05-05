@@ -11,7 +11,6 @@ import RealmSwift
 
 class ViewControllerContactoSettings: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //outlets
-    @IBOutlet weak var btnhide: UIButton!
     @IBOutlet weak var tbvTabla: UITableView!
     @IBOutlet weak var vwNoContactos: UIView!
     
@@ -24,9 +23,7 @@ class ViewControllerContactoSettings: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        btnhide.hidden = true
-        
+		
         // Do any additional setup after loading the view.
         tbvTabla.delegate = self
         tbvTabla.dataSource = self
