@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import RealmSwift
 
 class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
 	//outlet
@@ -31,9 +32,17 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
 	//variables
 	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 
+    let realm = try! Realm()
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
+        
         // Do any additional setup after loading the view.
 		
 		self.title = "OrganiPill"
@@ -100,15 +109,78 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
         }
     }
     
+    func getBody()->String{
+        
+        
+        
+        
+        let formatoHora = NSDateFormatter()
+        formatoHora.locale = NSLocale.init(localeIdentifier: "ES")
+        formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
+        
+        
+        var mensaje : String = "Hola, les envío mi reporte semanal: \n\n"
+        
+        mensaje += "\nMedicinas que me tomé:\n"
+        
+        var tomadas =  realm.objects(Notificaciones).filter("id == 2").first
+        
+        if(tomadas != nil){
+            for i in tomadas!.listaNotificaciones{
+                mensaje += "\(i.nombreMed) \n"
+                mensaje += "Programada el: \(formatoHora.stringFromDate(i.fechaOriginal)) \n"
+                mensaje += "Tomada el: \(formatoHora.stringFromDate(i.fechaAlerta)) \n\n"
+            }
+        }
+        
+        mensaje += "Medicinas que no me tomé: \n"
+        
+        var pasadas = realm.objects(Notificaciones).filter("id == 3").first
+        
+        if(pasadas != nil){
+            for i in pasadas!.listaNotificaciones{
+                mensaje += "\(i.nombreMed) \n"
+                mensaje += "Programada el: \(formatoHora.stringFromDate(i.fechaOriginal)) \n\n"
+            }
+        }
+        
+        var persona = realm.objects(Persona)
+        
+        var usuario = persona[0]
+        
+        mensaje += "\nEspero les sirva de utilidad esta información para mi bienestar, \n \nSaludos Cordiales :),  \n  \(usuario.sNombre)\n\(usuario.sCorreoElectronico)\n\(usuario.sTelefono)"
+    
+        print(mensaje)
+    
+        return mensaje
+    
+    }
     
     
     func configuredMailComposeViewController() -> MFMailComposeViewController {
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
         
-        mailComposerVC.setToRecipients(["gonzalogtzs94@gmail.com"])
+        
+        var realmAux = realm.objects(Persona)
+        var arrContactos = [String]()
+       
+        
+        for i in realmAux{
+         
+            if(i.sTipo == "c"){
+                arrContactos.append(i.sCorreoElectronico)
+               
+            }
+            
+            
+            
+        }
+        mailComposerVC.setCcRecipients(arrContactos)
+        mailComposerVC.setToRecipients([realmAux[1].sCorreoElectronico])
+        
         mailComposerVC.setSubject("OrganiPill")
-        mailComposerVC.setMessageBody("<p>Holaaa<p>", isHTML: true)
+        mailComposerVC.setMessageBody(getBody(), isHTML: false)
         
         return mailComposerVC
     }

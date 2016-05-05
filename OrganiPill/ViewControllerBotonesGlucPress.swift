@@ -88,6 +88,8 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
                 realm.add(medAux2)
                 
             }
+            let currentGlucosa = realm.objects(DatosGlucosa)[0]
+            desplegaGlucosa = currentGlucosa.historialMedidas
             
         }
         
@@ -114,6 +116,10 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
                 realm.add(medAux3)
                 
             }
+            
+            let currentPressSys = realm.objects(DatosPresion)[0]
+            desplegaPresSys = currentPressSys.historialSystolic
+            desplegaPresDiast = currentPressSys.historialDiastolic
             
         }
         
@@ -151,8 +157,8 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
         let cell = tableView.dequeueReusableCellWithIdentifier(  "cell", forIndexPath: indexPath) as! TableViewCellDatosGluc
         
         let formatoHora = NSDateFormatter()
-        formatoHora.dateFormat = "EEE, dd 'de' MMMM h:mm a"
-		formatoHora.locale = NSLocale.init(localeIdentifier: "ES")
+        formatoHora.locale = NSLocale.init(localeIdentifier: "ES")
+        formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
         
         if(opcionSgm){
             let auxIndex:Int = (desplegaGlucosa.count - indexPath.row - 1)

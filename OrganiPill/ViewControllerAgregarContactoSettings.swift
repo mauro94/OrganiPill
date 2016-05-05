@@ -173,7 +173,7 @@ class ViewControllerAgregarContactoSettings: UIViewController, UIPopoverPresenta
                 auxPersona.sNombre = tfNombre.text!
                 auxPersona.sTelefono = tfTelefono.text!
                 auxPersona.sCorreoElectronico = tfCorreoElectronico.text!
-                
+                auxPersona.sTipo = "c"
             }
             
             

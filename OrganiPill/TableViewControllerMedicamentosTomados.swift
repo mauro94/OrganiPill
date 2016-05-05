@@ -99,6 +99,7 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
 		let lugar = medicamentosTabla.count - 1 - indexPath.row
 		
 		let formatoHoraConMeridiano = NSDateFormatter()
+        formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
 		formatoHoraConMeridiano.dateFormat = "h:mm a"
 		
 		if (medicamentosTablaHoras[lugar] != nil) {

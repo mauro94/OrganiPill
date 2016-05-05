@@ -436,6 +436,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		let hora = medicamentosTablaHoras[indexPath.row]
 		
 		let formatoHoraConMeridiano = NSDateFormatter()
+        formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
 		formatoHoraConMeridiano.dateFormat = "h:mm a"
 		
 		cell.lbHora.text = formatoHoraConMeridiano.stringFromDate(hora)
@@ -509,6 +510,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			let medicamento = medicamentosTabla[indexPath!.row]
 			
 			let formatoHoraConMeridiano = NSDateFormatter()
+            formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
 			formatoHoraConMeridiano.dateFormat = "h:mm a"
 			
 			viewVerMed.sHora = formatoHoraConMeridiano.stringFromDate(hora)
