@@ -109,6 +109,52 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
         }
     }
     
+    func getBody()->String{
+        
+        
+        
+        
+        let formatoHora = NSDateFormatter()
+        formatoHora.locale = NSLocale.init(localeIdentifier: "ES")
+        formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
+        
+        
+        var mensaje : String = "Hola, les envío mi reporte semanal: \n\n"
+        
+        mensaje += "\nMedicinas que me tomé:\n"
+        
+        var tomadas =  realm.objects(Notificaciones).filter("id == 2").first
+        
+        if(tomadas != nil){
+            for i in tomadas!.listaNotificaciones{
+                mensaje += "\(i.nombreMed) \n"
+                mensaje += "Programada el: \(formatoHora.stringFromDate(i.fechaOriginal)) \n"
+                mensaje += "Tomada el: \(formatoHora.stringFromDate(i.fechaAlerta)) \n\n"
+            }
+        }
+        
+        mensaje += "Medicinas que no me tomé: \n"
+        
+        var pasadas = realm.objects(Notificaciones).filter("id == 3").first
+        
+        if(pasadas != nil){
+            for i in pasadas!.listaNotificaciones{
+                mensaje += "\(i.nombreMed) \n"
+                mensaje += "Programada el: \(formatoHora.stringFromDate(i.fechaOriginal)) \n\n"
+            }
+        }
+        
+        var persona = realm.objects(Persona)
+        
+        var usuario = persona[0]
+        
+        mensaje += "\nEspero les sirva de utilidad esta información para mi bienestar, \n \nSaludos Cordiales :),  \n  \(usuario.sNombre)\n\(usuario.sCorreoElectronico)\n\(usuario.sTelefono)"
+    
+        print(mensaje)
+    
+        return mensaje
+    
+    }
     
     
     func configuredMailComposeViewController() -> MFMailComposeViewController {
@@ -117,10 +163,24 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
         
         
         var realmAux = realm.objects(Persona)
+        var arrContactos = [String]()
+       
         
+        for i in realmAux{
+         
+            if(i.sTipo == "c"){
+                arrContactos.append(i.sCorreoElectronico)
+               
+            }
+            
+            
+            
+        }
+        mailComposerVC.setCcRecipients(arrContactos)
         mailComposerVC.setToRecipients([realmAux[1].sCorreoElectronico])
+        
         mailComposerVC.setSubject("OrganiPill")
-        mailComposerVC.setMessageBody("<p>Holaaa<p>", isHTML: true)
+        mailComposerVC.setMessageBody(getBody(), isHTML: false)
         
         return mailComposerVC
     }
