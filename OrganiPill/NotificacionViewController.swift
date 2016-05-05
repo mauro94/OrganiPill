@@ -19,6 +19,7 @@ class NotificacionViewController: UIViewController {
 	var swipeRight = UISwipeGestureRecognizer()
 	var swipeLeft = UISwipeGestureRecognizer()
 	var imgCounter: Int = -1
+	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
     
     @IBOutlet weak var lblNombre: UILabel!
     @IBOutlet weak var lblTipo: UILabel!
@@ -33,10 +34,13 @@ class NotificacionViewController: UIViewController {
 	
 	@IBOutlet weak var sgmSegment: UISegmentedControl!
 	
+	@IBOutlet weak var navBar: UINavigationBar!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setDatos()
+		
+		navBar.topItem?.title = medicina.sNombre
 		
 		//agregar gesture para cambiar imagenes
 		swipeRight.addTarget(self, action: #selector(cambiarFoto))
@@ -48,12 +52,22 @@ class NotificacionViewController: UIViewController {
 		viewImg.addGestureRecognizer(swipeRight)
 		viewImg.addGestureRecognizer(swipeLeft)
 		cambiarFoto(UISwipeGestureRecognizer())
+		
+		navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+		navBar.tintColor = UIColor.whiteColor()
+		navBar.barTintColor = color
+		navBar.translucent = false
+		navBar.barStyle = UIBarStyle.Black
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	override func preferredStatusBarStyle() -> UIStatusBarStyle {
+		return .LightContent
+	}
     
     func setDatos(){
 
