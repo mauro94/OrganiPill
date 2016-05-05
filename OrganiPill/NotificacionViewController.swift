@@ -83,8 +83,50 @@ class NotificacionViewController: UIViewController {
 			pager.numberOfPages = 2
 		}
 
-        
     }
+    
+    @IBAction func presionaTomarMedicina(sender: UIButton) {
+        tomarMed()
+        
+        let realm = try! Realm()
+        
+        try! realm.write{
+            //se reduce la cantidad de medicina (pastillas, cucharadas) por la dosis tomada
+            medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada
+        }
+        
+        let returnTrue = {
+            () -> ((UIAlertAction!) -> ()) in
+            return {
+                _ in
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.performSegueWithIdentifier("tomarMedicina", sender: sender)
+    		}
+		}
+
+        //se crean alertas para recordar al usuario
+        //si queda menos de un 25% de la cantidad original
+        if(medicina.dCantidadPorCajaActual <= medicina.dCantidadPorCaja*0.10){
+            let alerta = UIAlertController(title: "¡Alerta!", message: "\(sNombre) está muy cerca de acabarse ", preferredStyle: .Alert)
+            alerta.addAction(UIAlertAction(title: "Notificar contactos", style: .Default, handler: returnTrue()))
+            alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: returnTrue()))
+            presentViewController(alerta, animated: true, completion: nil)
+        }
+            //si queda menos de un 10% de la cantidad original
+        else if(medicina.dCantidadPorCajaActual <= medicina.dCantidadPorCaja*0.25){
+            let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que pronto se acabará \(sNombre) ", preferredStyle: .Alert)
+            alerta.addAction(UIAlertAction(title: "Notificar contactos", style: .Default, handler: returnTrue()))
+            alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: returnTrue()))
+            presentViewController(alerta, animated: true, completion: nil)
+        }
+    }
+
+    
+    @IBAction func presionaSnooze(sender: AnyObject) {
+        snoozeNotif(1)
+        performSegueWithIdentifier("snoozeMedicina", sender: sender)
+    }
+
 	
 	func cambiarFoto(swipe: UISwipeGestureRecognizer) {
 		let swipeGesture = swipe as? UISwipeGestureRecognizer
@@ -129,75 +171,9 @@ class NotificacionViewController: UIViewController {
 			print("ERROR")
 		}
 	}
-	
-// MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "tomarMedicina"){
-            var fechaAux = Fecha()
-            
-            //se cancela la notificacion que mandó a esta vista
-            //UIApplication.sharedApplication().cancelLocalNotification(notificacion)
-            
-            //saca las listas de notificaciones
-            let realm = try! Realm()
-            let listasNotif = realm.objects(Notificaciones)
-            
-            try! realm.write{
-                var listaPendientes = listasNotif.filter("id == 1").first!
-                var listaTomadas = listasNotif.filter("id == 2").first!
-                
-                //borrar notificacion actual de la lista de notificaciones
-                for i in 0...listaPendientes.listaNotificaciones.count-1{
-                    //found a match
-                    if(listaPendientes.listaNotificaciones[i].fechaAlerta == fechaAlerta && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
-                        //guarda la fecha para usarla en la lista de tomadas
-                        fechaAux = listaPendientes.listaNotificaciones[i]
-                        
-                        //la borra de las pendientes
-                        listaPendientes.listaNotificaciones.removeAtIndex(i)
-                        break
-                    }
-                }
+    
 
-                //guardar en lista tomadas
-                fechaAux.fechaAlerta = NSDate()
-                listaTomadas.listaNotificaciones.append(fechaAux)
-                
-                //actualiza ambas listas
-                realm.add(listaPendientes, update: true)
-                realm.add(listaTomadas, update: true)
-                
-                //se reduce la cantidad de medicina (pastillas, cucharadas) por la dosis tomada
-                medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada
-                
-                //se crean alertas para recordar al usuario
-                //si queda menos de un 25% de la cantidad original
-                if(medicina.dCantidadPorCajaActual <= medicina.dCantidadPorCaja*0.10){
-                    let alerta = UIAlertController(title: "¡Alerta!", message: "\(sNombre) está muy cerca de acabarse ", preferredStyle: .Alert)
-                    alerta.addAction(UIAlertAction(title: "Avisar a contacto", style: .Default, handler: nil))
-                    alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: nil))
-                    presentViewController(alerta, animated: true, completion: nil)
-                }
-                //si queda menos de un 10% de la cantidad original
-                else if(medicina.dCantidadPorCajaActual <= medicina.dCantidadPorCaja*0.25){
-                    let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que pronto se acabará \(sNombre) ", preferredStyle: .Alert)
-                    alerta.addAction(UIAlertAction(title: "Avisar a contacto", style: .Default, handler: nil))
-                    alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: nil))
-                    presentViewController(alerta, animated: true, completion: nil)
-                }
-                
-            }
-            //hace un reschedule de las notificaciones
-            let notif : HandlerNotificaciones = HandlerNotificaciones()
-            notif.rescheduleNotificaciones()
-        }
-        else if(segue.identifier == "snoozeMedicina"){
-            //TODO-Snooze
-            snoozeNotif(1)
-        }
-    }
     
     func snoozeNotif(snoozeMins : Int){
         var fechaAux = Fecha()
@@ -239,5 +215,44 @@ class NotificacionViewController: UIViewController {
         let notif : HandlerNotificaciones = HandlerNotificaciones()
         notif.rescheduleNotificaciones()
     }
+    
+    func tomarMed(){
+        var fechaAux = Fecha()
+        
+        //saca las listas de notificaciones
+        let realm = try! Realm()
+        let listasNotif = realm.objects(Notificaciones)
+        
+        try! realm.write{
+            var listaPendientes = listasNotif.filter("id == 1").first!
+            var listaTomadas = listasNotif.filter("id == 2").first!
+            
+            //borrar notificacion actual de la lista de notificaciones
+            for i in 0...listaPendientes.listaNotificaciones.count-1{
+                //found a match
+                if(listaPendientes.listaNotificaciones[i].fechaAlerta == fechaAlerta && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                    //guarda la fecha para usarla en la lista de tomadas
+                    fechaAux = listaPendientes.listaNotificaciones[i]
+                    
+                    //la borra de las pendientes
+                    listaPendientes.listaNotificaciones.removeAtIndex(i)
+                    break
+                }
+            }
+            
+            //guardar en lista tomadas
+            fechaAux.fechaAlerta = NSDate()
+            listaTomadas.listaNotificaciones.append(fechaAux)
+            
+            //actualiza ambas listas
+            realm.add(listaPendientes, update: true)
+            realm.add(listaTomadas, update: true)
+            
+        }
+        //hace un reschedule de las notificaciones
+        let notif : HandlerNotificaciones = HandlerNotificaciones()
+        notif.rescheduleNotificaciones()
 
+    }
 }
+

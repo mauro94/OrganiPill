@@ -84,7 +84,6 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarMedicamentoFoto3ViewController.cancelarButtonPressed(_:)))
     }
 	
-    //actualiza vistas y botones para cuando no hay imagen
 	func cancelarButtonPressed(sender: AnyObject){
 		tieneImagen = false
 		imgFoto.image = nil

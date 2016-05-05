@@ -77,7 +77,7 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         picker.sourceType = .PhotoLibrary
         
         presentViewController(picker, animated: true, completion: nil)
-            }
+        }
     
     @IBAction func abreCamara(sender: UIButton) {
         
@@ -107,11 +107,8 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
             }
         }
         
-        
         pathImagen = filename
-        
-        
-        
+
         imgFoto.image = foto
         dismissViewControllerAnimated(true, completion: nil)
         
