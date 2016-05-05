@@ -61,6 +61,12 @@ class ViewControllerSetupInicial3: UIViewController, UITableViewDelegate, UITabl
 		// Configure the cell...
 		cell.textLabel?.text = contactos[indexPath.row].sNombre
 		
+		let backgroundView = UIView()
+		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
+		cell.selectedBackgroundView = backgroundView
+		
+		cell.setNeedsDisplay()
+		
 		return cell
 	}
 	
@@ -72,6 +78,11 @@ class ViewControllerSetupInicial3: UIViewController, UITableViewDelegate, UITabl
 	
 	func editarContacto(contacto: Persona) {
 		contactos[filaSeleccionada] = contacto
+		tbvTabla.reloadData()
+	}
+	
+	func borrar(contacto: Persona) {
+		contactos.removeAtIndex(filaSeleccionada)
 		tbvTabla.reloadData()
 	}
 	

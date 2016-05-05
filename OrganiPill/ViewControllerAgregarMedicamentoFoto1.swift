@@ -24,6 +24,8 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
         decideTitulo()
         

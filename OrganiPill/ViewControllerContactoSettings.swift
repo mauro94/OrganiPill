@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ViewControllerContactoSettings: UIViewController, UITableViewDelegate, UITableViewDataSource, ProtocoloGuardarContacto {
+class ViewControllerContactoSettings: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //outlets
     @IBOutlet weak var tbvTabla: UITableView!
     @IBOutlet weak var vwNoContactos: UIView!

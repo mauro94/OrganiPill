@@ -14,6 +14,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     // MARK: - Outlets
     @IBOutlet weak var tableHorarios: UITableView!
     
+	@IBOutlet weak var comentarios: UITextView!
     // MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
     var listaHorarios = List<CustomDate>()
@@ -26,6 +27,8 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
         self.title = "Horario"
         
@@ -189,6 +192,10 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         
         presentViewController(alerta, animated: true, completion: nil)
     }
+	
+	@IBAction func quitaTeclado() {
+		view.endEditing(true)
+	}
 
     @IBAction func presionaTerminar(sender: AnyObject) {
         if(listaHorarios.count == 0){
@@ -197,6 +204,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         }
         else{
             medMedicina.horario = listaHorarios
+			medMedicina.sComentario = comentarios.text
             guardaRealm()
             navigationController?.popToRootViewControllerAnimated(true)
         }

@@ -17,7 +17,7 @@ class ViewControllerEscogerSettings: UIViewController {
     @IBOutlet weak var containerPaciente: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "Ajustes"
 
         // Do any additional setup after loading the view.
     }

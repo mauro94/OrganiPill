@@ -26,6 +26,8 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
         self.pickerDosis.dataSource = self
         self.pickerDosis.delegate = self

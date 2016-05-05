@@ -49,7 +49,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
         
         self.title = "Datos Paraclínicos"
         
-        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
         
         
@@ -151,7 +151,8 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
         let cell = tableView.dequeueReusableCellWithIdentifier(  "cell", forIndexPath: indexPath) as! TableViewCellDatosGluc
         
         let formatoHora = NSDateFormatter()
-        formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
+        formatoHora.dateFormat = "EEE, dd 'de' MMMM h:mm a"
+		formatoHora.locale = NSLocale.init(localeIdentifier: "ES")
         
         if(opcionSgm){
             let auxIndex:Int = (desplegaGlucosa.count - indexPath.row - 1)
@@ -176,7 +177,12 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
             
             cell.lblFecha.text = formatoHora.stringFromDate(desplegaPresSys[auxIndex2].fecha)
         }
-        
+		
+		let backgroundView = UIView()
+		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
+		cell.selectedBackgroundView = backgroundView
+		
+		cell.setNeedsDisplay()
         
         
         return cell

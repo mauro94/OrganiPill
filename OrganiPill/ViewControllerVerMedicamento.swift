@@ -174,13 +174,13 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
 			container.hidden = false
 			viewImagenes.hidden = true
 			
-			botonSuperiorDerecho = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: nil)
+			botonSuperiorDerecho = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
 		case 2:
 			scScrollView.hidden = true
 			container.hidden = true
 			viewImagenes.hidden = false
 			
-			botonSuperiorDerecho = UIBarButtonItem(title: "Editar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(editbottonpress))
+			botonSuperiorDerecho = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
 		default:
 			print("ERROR")
 		}

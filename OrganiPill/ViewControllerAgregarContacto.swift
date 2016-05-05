@@ -11,6 +11,7 @@ import UIKit
 protocol ProtocoloGuardarContacto {
 	func guardaContacto(contacto: Persona)
 	func editarContacto(contacto: Persona)
+	func borrar(contacto: Persona)
 }
 
 class ViewControllerAgregarContacto: UIViewController, UIPopoverPresentationControllerDelegate {
@@ -23,6 +24,7 @@ class ViewControllerAgregarContacto: UIViewController, UIPopoverPresentationCont
 	@IBOutlet weak var navBar: UINavigationBar!
 	@IBOutlet weak var btAgregar: UIButton!
 	
+	@IBOutlet weak var btBorrar: UIBarButtonItem!
 	//variables
 	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 	var contacto: Persona = Persona()
@@ -36,6 +38,7 @@ class ViewControllerAgregarContacto: UIViewController, UIPopoverPresentationCont
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
 
         // Do any additional setup after loading the view.
 		navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
@@ -60,6 +63,7 @@ class ViewControllerAgregarContacto: UIViewController, UIPopoverPresentationCont
 		if (tfNombre.text != "") {
 			editando = true
 			btAgregar.setTitle("Guardar Cambios", forState: UIControlState.Normal)
+			btBorrar.enabled = true
 		}
 		else {
 			editando = false
@@ -78,6 +82,12 @@ class ViewControllerAgregarContacto: UIViewController, UIPopoverPresentationCont
 	func quitaTeclado() {
 		view.endEditing(true)
 	}
+	
+	@IBAction func borrar(sender: UIBarButtonItem) {
+		delegado.borrar(contacto)
+		self.performSegueWithIdentifier("unwindContacto", sender: self)
+	}
+	
 	
 	private func registrarseParaNotificacionesDeTeclado() {
 		NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(keyboardWasShown(_:)),
@@ -120,7 +130,7 @@ class ViewControllerAgregarContacto: UIViewController, UIPopoverPresentationCont
 		//creates popup message
 		let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
 		
-		alerta.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
+		alerta.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
 		
 		presentViewController(alerta, animated: true, completion: nil)
 	}

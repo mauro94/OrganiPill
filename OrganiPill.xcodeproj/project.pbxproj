@@ -42,6 +42,7 @@
 		346F3FCB1CB5800700A48626 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FCA1CB5800700A48626 /* RealmSwift.framework */; };
 		346F3FCC1CB5800700A48626 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 346F3FCA1CB5800700A48626 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		349E7F5B1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */; };
+		34BA69191CDAF9FD00475B16 /* ViewControllerNoTabla.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA69181CDAF9FD00475B16 /* ViewControllerNoTabla.swift */; };
 		34C347BD1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C347BC1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift */; };
 		34D130641CB46C61005E206C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D130631CB46C61005E206C /* AppDelegate.swift */; };
 		34D1306B1CB46C61005E206C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D1306A1CB46C61005E206C /* Assets.xcassets */; };
@@ -123,6 +124,7 @@
 		346F3FC61CB57FFF00A48626 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		346F3FCA1CB5800700A48626 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		349E7F5A1CB7551700BFEB6F /* ViewControllerAgregarMedicamento1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAgregarMedicamento1.swift; sourceTree = "<group>"; };
+		34BA69181CDAF9FD00475B16 /* ViewControllerNoTabla.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerNoTabla.swift; sourceTree = "<group>"; };
 		34C347BC1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAgregarContacto.swift; sourceTree = "<group>"; };
 		34D130601CB46C61005E206C /* OrganiPill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrganiPill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D130631CB46C61005E206C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				346F3FC41CB573FF00A48626 /* ViewControllerVerMedicamento.swift */,
 				346F3FC11CB573AD00A48626 /* TableViewControllerMisMedicamentos.swift */,
 				344A220D1CBDFA91006BE5B0 /* sbMisMedicamentos.storyboard */,
+				34BA69181CDAF9FD00475B16 /* ViewControllerNoTabla.swift */,
 				EA18E9521CD81059000F8DEE /* MisMedicamentosEditarHorarioViewController.swift */,
 				EA18E9501CD80F6D000F8DEE /* MisMedicamentosVerHorarioViewController.swift */,
 				EAFD7BA81CD6F1FF00B7A4DA /* ViewControllerEditarHora.swift */,
@@ -460,6 +463,7 @@
 				EAE4AD9C1CD984F300F76930 /* ViewControllerAgregarDatos.swift in Sources */,
 				317C98451CC5517900C28D04 /* AgregarHorarioViewController.swift in Sources */,
 				EA3DEE091CD9E43000AE94F6 /* ViewControllerEscogerSettings.swift in Sources */,
+				34BA69191CDAF9FD00475B16 /* ViewControllerNoTabla.swift in Sources */,
 				312734551CBED7E4004BD7ED /* ViewControllerAgregarMedicamentoFoto1.swift in Sources */,
 				EAFBBBD21CC516E700686148 /* ViewControllerEditar.swift in Sources */,
 				34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */,

@@ -32,6 +32,8 @@ class ViewControllerAgregarDatos: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		self.title = "Registro Dato"
 
         lblDatoArriba.text = textoArriba
         lbldatoAbajo.text = textoAbajo
@@ -72,6 +74,10 @@ class ViewControllerAgregarDatos: UIViewController {
         
         presentViewController(alerta,animated:true, completion:nil)
     }
+	
+	@IBAction func quitarTeclado() {
+		self.view.endEditing(true)
+	}
     
     
     func checarDatosGlucosa()-> Bool{

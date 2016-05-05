@@ -202,6 +202,10 @@ class TableViewControllerMisMedicamentos: UITableViewController, ProtocoloReload
         view.delegado = self
         
     }
+	
+	@IBAction func unwindView(sender: UIStoryboardSegue) {
+		//en balnco... no se requiere hacer nada al regresar
+	}
     
     func reloadTable() {
         tableVV.reloadData()
