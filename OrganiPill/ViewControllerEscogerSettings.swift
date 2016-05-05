@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewControllerEscogerSettings: UIViewController {
 
@@ -35,18 +36,22 @@ class ViewControllerEscogerSettings: UIViewController {
             containerPaciente.hidden = false
             containerDoctor.hidden = true
             containerContacto.hidden = true
+            navigationItem.rightBarButtonItem = nil
             
             
         case 1:
             containerPaciente.hidden = true
             containerDoctor.hidden = false
             containerContacto.hidden = true
+            navigationItem.rightBarButtonItem = nil
            
             
         case 2:
             containerPaciente.hidden = true
             containerDoctor.hidden = true
             containerContacto.hidden = false
+            
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ViewControllerEscogerSettings.nuevoDato(_:)))
             
         default:
             break;
@@ -57,15 +62,31 @@ class ViewControllerEscogerSettings: UIViewController {
         
         
     }
+    
+    func nuevoDato(sender: AnyObject) {
+        self.performSegueWithIdentifier("addContact", sender: sender)
+    }
+    
+    
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: IStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        
+       
+        
+        
+        
+        
+        
+        
+        
     }
-    */
+    
 
 }
