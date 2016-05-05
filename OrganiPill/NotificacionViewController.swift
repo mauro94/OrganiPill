@@ -109,7 +109,7 @@ class NotificacionViewController: UIViewController {
             medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada
         }
         
-        let returnTrue = {
+        /**let returnTrue = {
             () -> ((UIAlertAction!) -> ()) in
             return {
                 _ in
@@ -132,7 +132,8 @@ class NotificacionViewController: UIViewController {
             alerta.addAction(UIAlertAction(title: "Notificar contactos", style: .Default, handler: returnTrue()))
             alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: returnTrue()))
             presentViewController(alerta, animated: true, completion: nil)
-        }
+        }**/
+        self.performSegueWithIdentifier("tomarMedicina", sender: sender)
     }
 
     
@@ -246,7 +247,10 @@ class NotificacionViewController: UIViewController {
                 //found a match
                 if(listaPendientes.listaNotificaciones[i].fechaAlerta == fechaAlerta && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
                     //guarda la fecha para usarla en la lista de tomadas
-                    fechaAux = listaPendientes.listaNotificaciones[i]
+                    fechaAux.fechaAlerta = listaPendientes.listaNotificaciones[i].fechaAlerta
+                    fechaAux.fechaOriginal = listaPendientes.listaNotificaciones[i].fechaOriginal
+                    fechaAux.nombreMed = listaPendientes.listaNotificaciones[i].nombreMed
+
                     
                     //la borra de las pendientes
                     listaPendientes.listaNotificaciones.removeAtIndex(i)
@@ -257,6 +261,7 @@ class NotificacionViewController: UIViewController {
             //guardar en lista tomadas
             fechaAux.fechaAlerta = NSDate()
             listaTomadas.listaNotificaciones.append(fechaAux)
+            print(fechaAux)
             
             //actualiza ambas listas
             realm.add(listaPendientes, update: true)
