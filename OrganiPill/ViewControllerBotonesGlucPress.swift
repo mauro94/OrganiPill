@@ -88,6 +88,8 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
                 realm.add(medAux2)
                 
             }
+            let currentGlucosa = realm.objects(DatosGlucosa)[0]
+            desplegaGlucosa = currentGlucosa.historialMedidas
             
         }
         
@@ -114,6 +116,10 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
                 realm.add(medAux3)
                 
             }
+            
+            let currentPressSys = realm.objects(DatosPresion)[0]
+            desplegaPresSys = currentPressSys.historialSystolic
+            desplegaPresDiast = currentPressSys.historialDiastolic
             
         }
         
