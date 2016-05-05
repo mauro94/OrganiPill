@@ -158,6 +158,7 @@ class MisMedicamentosVerHorario: UIViewController, UITableViewDataSource, UITabl
         
         //formatea la hora a 1-12 xM y la muestra
         let formatoHoraConMeridiano = NSDateFormatter()
+        //formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
         formatoHoraConMeridiano.dateFormat = "h:mm a"
         let units: NSCalendarUnit = [.Hour, .Minute]
         let myComponents = calendar.components(units, fromDate: NSDate())

@@ -76,6 +76,7 @@ class NotificacionViewController: UIViewController {
         medicina = resMedicina.first!
         
         let formatoHora = NSDateFormatter()
+        formatoHora.locale = NSLocale.init(localeIdentifier: "ES")
         formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
 
         lblNombre.text = sNombre

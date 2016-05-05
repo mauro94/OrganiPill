@@ -59,6 +59,7 @@ class MisMedicamentosEditarHorario: UIViewController{
         
         //muestra la hora default del datePicker
         let dateFormatter = NSDateFormatter()
+        //dateFormatter.locale = NSLocale.init(localeIdentifier: "ES")
         dateFormatter.dateFormat =  "HH:mm"
         let date = dateFormatter.dateFromString(horaEdit)
         datePicker.date = date!

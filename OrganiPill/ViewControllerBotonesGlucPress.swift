@@ -151,6 +151,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
         let cell = tableView.dequeueReusableCellWithIdentifier(  "cell", forIndexPath: indexPath) as! TableViewCellDatosGluc
         
         let formatoHora = NSDateFormatter()
+        formatoHora.locale = NSLocale.init(localeIdentifier: "ES")
         formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
         
         if(opcionSgm){
