@@ -15,10 +15,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var swAlimentos: UISwitch!
     @IBOutlet weak var txCajaActual: UITextField!
     @IBOutlet weak var txMiligramosCaja: UITextField!
-    @IBOutlet weak var pickDuracion: UIPickerView!
-    @IBOutlet weak var txDuracion: UITextField!
 	@IBOutlet weak var sgmTipoCantidad: UISegmentedControl!
-	@IBOutlet weak var sgmTipoDuracion: UISegmentedControl!
 	@IBOutlet weak var pckCantidad: UIPickerView!
 	@IBOutlet weak var pckNumeroCaja: UIPickerView!
     @IBOutlet weak var scScrollView: UIScrollView!
@@ -26,6 +23,8 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var pckTipoMed: UIPickerView!
     @IBOutlet weak var tfNombre: UITextField!
     @IBOutlet weak var tfDosis: UITextField!
+	@IBOutlet weak var lbNumeroMedsEnCaja: UILabel!
+	@IBOutlet weak var lbDosisPorMed: UILabel!
 	
 	//VARIABLES
 	let arrTiposMedicamento = ["Supositorio", "Inyección", "Cápsula", "Pastilla", "Tableta", "Suspensión"]
@@ -35,14 +34,19 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 	var arrValores = [Int]()
 	
     var delegado = ProtocoloReloadTable!(nil)
-    var indMedicamento : Medicamento = Medicamento()
+    var indMedicamento : Medicamento! = Medicamento()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		self.title = "Editar"
+		
 		let editButton : UIBarButtonItem = UIBarButtonItem(title: "Guardar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(guardarbottonpress))
 		
 		self.navigationItem.rightBarButtonItem = editButton
+		
+		var titulo: String! = ""
+		var subTitulo: String! = ""
 		
 		//nombre
 		tfNombre.text = indMedicamento.sNombre
@@ -50,8 +54,40 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		//tipo de medicamento
 		pckTipoMed.delegate = self
 		pckTipoMed.dataSource = self
-		pckTipoMed.selectRow(2, inComponent: 0, animated: true)
+		let ubicacion = arrTiposMedicamento.indexOf(indMedicamento.sTipoMedicina)
+		pckTipoMed.selectRow(ubicacion!, inComponent: 0, animated: true)
 		pckTipoMed.tag = 1
+		
+		switch(indMedicamento.sTipoMedicina){
+		case "Pastilla":
+			titulo = "Número de pastillas restantes:"
+			subTitulo = "Dosis por pastilla:"
+			break
+		case "Inyección":
+			titulo = "Número de botes restantes:"
+			subTitulo = "Dosis por bote:"
+			break
+		case "Supositorio":
+			titulo = "Número de supositorios restantes:"
+			subTitulo = "Dosis por supositorio:"
+			break
+		case "Suspensión":
+			titulo = "Número de botes restantes:"
+			subTitulo = "Dosis por bote:"
+			break
+		case "Cápsula":
+			titulo = "Número de cápsulas restantes:"
+			subTitulo = "Dosis por cápsula:"
+			break
+		case "Tableta":
+			titulo = "Número de tabletas restantes:"
+			subTitulo = "Dosis por tableta:"
+			break
+		default:
+			break
+		}
+		
+		lbNumeroMedsEnCaja.text = titulo
 		
 		//alimento
 		if (indMedicamento.bNecesitaAlimento) {
@@ -59,50 +95,38 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		}
 		
 		//numero de meds en caja
-		txCajaActual.text = String(indMedicamento.dCantidadPorCaja)
+		txCajaActual.text = String(indMedicamento.dCantidadPorCajaActual)
 		
 		pckNumeroCaja.delegate = self
 		pckNumeroCaja.dataSource = self
-		pckNumeroCaja.selectRow(Int(indMedicamento.dCantidadPorCaja), inComponent: 0, animated: true)
 		pckNumeroCaja.tag = 2
 		
 		//cantidad de meds por caja
+		lbDosisPorMed.text = subTitulo
+		
 		txMiligramosCaja.text = String(indMedicamento.dDosisPorTipo)
 		
 		pckCantidad.delegate = self
 		pckCantidad.dataSource = self
-		pckCantidad.selectRow(Int(indMedicamento.dDosisPorTipo/10), inComponent: 0, animated: true)
 		pckCantidad.tag = 3
-		//FALTA SEGMENT CONTROL DEFIIR EL TAMANO
+		
+		switch indMedicamento.sUnidadesDosis {
+		case "Miligramos":
+			sgmTipoCantidad.selectedSegmentIndex = 0
+		case "Mililitros":
+			sgmTipoCantidad.selectedSegmentIndex = 1
+		case "Microgramos":
+			sgmTipoCantidad.selectedSegmentIndex = 2
+		default:
+			print("ERROR")
+		}
 		
 		//dosis
 		tfDosis.text = String( indMedicamento.dDosisRecetada)
 		
 		pckDosis.delegate = self
 		pckDosis.dataSource = self
-		pckDosis.selectRow(Int(indMedicamento.dDosisRecetada), inComponent: 0, animated: true)
 		pckDosis.tag = 4
-		
-		//duracion
-		txDuracion.text = String(indMedicamento.iDuracion)
-		
-		pickDuracion.delegate = self
-		pickDuracion.dataSource = self
-		pickDuracion.selectRow(Int(indMedicamento.iDuracion), inComponent: 0, animated: true)
-		pickDuracion.tag = 5
-		
-		let tipoDuracion = indMedicamento.sTipoDuracion
-		
-		switch tipoDuracion {
-		case "s":
-			sgmTipoDuracion.selectedSegmentIndex = 0
-		case "d":
-			sgmTipoDuracion.selectedSegmentIndex = 1
-		case "m":
-			sgmTipoDuracion.selectedSegmentIndex = 2
-		default:
-			print("ERROR")
-		}
 		
 		//comentarios
 		txviewComentario.text = indMedicamento.sComentario
@@ -119,59 +143,27 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		scScrollView.contentSize = self.view.frame.size
 	}
 	
-    func checarPosicionPicker() -> Int{
-        if(indMedicamento.sTipoMedicina == "Injeccion"){
-            return 0
-        }
-        else if(indMedicamento.sTipoMedicina == "Comestible"){
-            return 1
-        }
-        else if(indMedicamento.sTipoMedicina == "Supositorio"){
-            return 2
-        }
-        else if(indMedicamento.sTipoMedicina == "Tomable"){
-            return 3
-        }
-        else{
-            return 4
-            
-        }
-    }
-    
-    func checarPosicionPickerDuracion() -> Int{
-        if(indMedicamento.sTipoDuracion == "d"){
-            return 0
-        }
-        else if(indMedicamento.sTipoDuracion == "s"){
-            return 1
-        }
-        else{
-            return 2
-        }
-    }
+	override func viewDidAppear(animated: Bool) {
+		pckNumeroCaja.selectRow(Int(indMedicamento.dCantidadPorCajaActual)-1, inComponent: 0, animated: true)
+		pckCantidad.selectRow(Int((indMedicamento.dDosisPorTipo-10)/10), inComponent: 0, animated: true)
+		
+		pckDosis.selectRow(Int(indMedicamento.dDosisRecetada) - 1, inComponent: 0, animated: true)
+		
+	}
+	
+	
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
 
     
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-	
-    
-    
-    
     func Guardar() -> Bool {
-        
-        
-        
-        if(txDuracion.text != "" && tfDosis.text != "" && tfNombre.text != "" ){
-            
+        if(tfDosis.text != "" && tfNombre.text != "" ){
             //actualiza las notificaciones al nuevo nombre
             if(indMedicamento.sNombre != tfNombre.text!){
-                actualizarNotificaciones()
+                //actualizarNotificaciones()
             }
-            
             
             let realm = try! Realm()
             
@@ -179,25 +171,12 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                 indMedicamento.sNombre = tfNombre.text!
                 indMedicamento.dDosisRecetada = Double(tfDosis.text!)!
                 
-                indMedicamento.dCantidadPorCaja = Double(txMiligramosCaja.text!)!
+                indMedicamento.dDosisPorTipo = Double(txMiligramosCaja.text!)!
               
                 indMedicamento.dCantidadPorCajaActual = Double(txCajaActual.text!)!
-                
+				
 				indMedicamento.sTipoMedicina = arrTiposMedicamento[pckTipoMed.selectedRowInComponent(0)]
-                
-                if(pickerDataDuracion[pickDuracion.selectedRowInComponent(0)] == "Dia(s)"){
-                    indMedicamento.sTipoDuracion = "d"
-                }
-                else if(pickerDataDuracion[pickDuracion.selectedRowInComponent(0)] == "Semana(s)"){
-                    indMedicamento.sTipoDuracion = "s"
-                }
-                
-                else{
-                    indMedicamento.sTipoDuracion = "m"
-                }
-                
-               
-                
+				
                 if(swAlimentos.on){
                     indMedicamento.bNecesitaAlimento = true
                 }
@@ -207,45 +186,29 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                 
                 
                 indMedicamento.sComentario = txviewComentario.text
-                
-                
             }
-            
-            
-            
-            
+			
             return true
             
-            
-            
         }
-        else{
-            let alerta = UIAlertController(title: "Error", message: "Dejaste casillas en blanco!",preferredStyle:  UIAlertControllerStyle.Alert)
+        else {
+            let alerta = UIAlertController(title: "ERROR", message: "¡Dejaste casillas en blanco!",preferredStyle:  UIAlertControllerStyle.Alert)
             
-            alerta.addAction(UIAlertAction(title: "Ok",style: UIAlertActionStyle.Cancel, handler:nil))
+            alerta.addAction(UIAlertAction(title: "OK",style: UIAlertActionStyle.Cancel, handler:nil))
             
             
             presentViewController(alerta,animated:true, completion:nil)
             
             return false
-            
-            
         }
-        
-        
-        
-        
-        
-        
-        
     }
-    
+	
+    /*
     //cambia los nombres de las medicinas en todas las listas de medicinas
     func actualizarNotificaciones(){
         let realm = try! Realm()
         let listasNotif = realm.objects(Notificaciones)
-        print("0")
-        
+		
         try! realm.write {
             print("0.1")
             var listaPendientes = listasNotif.filter("id == 1").first!
@@ -300,69 +263,67 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 
         }
     }
+    */
     
     
-    
-    func guardarbottonpress(sender:AnyObject){
-        
-        if(Guardar()){
+	func guardarbottonpress(sender:AnyObject) {
+		if(Guardar()) {
+            let refreshAlert = UIAlertController(title: "Datos Actualizados", message: "Los datos se grabaron correctamente ", preferredStyle: UIAlertControllerStyle.Alert)
             
-            
-            let refreshAlert = UIAlertController(title: "Guardar", message: "Los datos se guardaron correctamente ", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            refreshAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in
                 
                 self.performSegueWithIdentifier("unwind", sender: sender)
             }))
             
             
             presentViewController(refreshAlert, animated: true, completion: nil)
-            
-            
-            
-            
-            
-            
-            
-        }
-        
-        
-        
-        
+		}
     }
     
-    
+	
     @IBAction func btnBorrarMedicamento(sender: AnyObject) {
-        
-        let realm = try! Realm()
-        
-        try! realm.write {
-            realm.delete(indMedicamento)
-        }
-        
-        
-        
-        
-        let refreshAlert = UIAlertController(title: "Borrado", message: "El medicamento ha sido borrado correctamente", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-            
-            
-            self.navigationController?.popToRootViewControllerAnimated(true)
-            
-        }))
-        
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
-        
-        
-        
+		
+		let adv = UIAlertController(title: "Borrar " + indMedicamento.sNombre, message: "¿Estás seguro?", preferredStyle: UIAlertControllerStyle.Alert)
+		
+		adv.addAction(UIAlertAction(title: "Cancelar", style: .Default, handler: nil))
+		
+		adv.addAction(UIAlertAction(title: "Borrar", style: .Destructive, handler: {(action: UIAlertAction!) in self.borrar()}))
+		
+		presentViewController(adv, animated: true, completion: nil)
     }
+	
+	func borrar() {
+		let realm = try! Realm()
+		
+		let handler = HandlerNotificaciones()
+		
+		handler.deleteNotifcationsFromMed(indMedicamento)
+		
+		try! realm.write {
+			realm.delete(indMedicamento)
+		}
+		
+		self.navigationController?.popToRootViewControllerAnimated(true)
+	}
 	
 	
 	// MARK: - Picker Functions
 	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-		return 1
+		if (pickerView.tag == 1) {
+			return 1
+		}
+		else if (pickerView.tag == 2) {
+			return 1
+		}
+		else if (pickerView.tag == 3) {
+			return 1
+		}
+		else if (pickerView.tag == 4) {
+			return 1
+		}
+		else {
+			return 1
+		}
 	}
 	
 	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -374,9 +335,6 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		}
 		else if (pickerView.tag == 3) {
 			return arrValoresCantidad.count
-		}
-		else if (pickerView.tag == 4) {
-			return arrValores.count
 		}
 		else {
 			return arrValores.count
@@ -396,12 +354,8 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 			txMiligramosCaja.text = "\((pickerView.selectedRowInComponent(component)+1)*10)"
 			return "\(arrValoresCantidad[row])"
 		}
-		else if (pickerView.tag == 4) {
-			tfDosis.text = "\(pickerView.selectedRowInComponent(component)+1)"
-			return "\(arrValores[row])"
-		}
 		else {
-			txDuracion.text = "\(pickerView.selectedRowInComponent(component)+1)"
+			tfDosis.text = "\(pickerView.selectedRowInComponent(component)+1)"
 			return "\(arrValores[row])"
 		}
 	}

@@ -24,6 +24,8 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     @IBOutlet weak var lblcajaactual: UILabel!
     @IBOutlet weak var lblcajamiligramo: UILabel!
 	@IBOutlet weak var imgAlimento: UIImageView!
+	@IBOutlet weak var lbTipoUnidades: UILabel!
+	@IBOutlet weak var lbTipoMedicamento: UILabel!
 	
 	@IBOutlet weak var imImage: UIImageView!
 	@IBOutlet weak var viewImagenes: UIView!
@@ -86,7 +88,8 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         lblNombre.text = indexMedicamento.sNombre
         lblDosis.text = String(indexMedicamento.dDosisRecetada)
         lblVia.text = indexMedicamento.sTipoMedicina
-		lbTipoMed.text = indexMedicamento.sTipoMedicina
+		lbTipoMedicamento.text = indexMedicamento.sTipoMedicina
+		lbTipoMed.text = indexMedicamento.sTipoMedicina + "(s)"
         
         if(indexMedicamento.sTipoDuracion == "s") {
             lblTipoduracion.text = "Semana(s)"
@@ -101,10 +104,10 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
             lblTipoduracion.text = "Mes(es)"
         }
         
-		
+		lbTipoUnidades.text = indexMedicamento.sUnidadesDosis
         lblDuracion.text = String(indexMedicamento.iDuracion)
         lblcajaactual.text = String(indexMedicamento.dCantidadPorCajaActual)
-        lblcajamiligramo.text = String(indexMedicamento.dCantidadPorCaja*indexMedicamento.dDosisPorTipo)
+        lblcajamiligramo.text = String(indexMedicamento.dDosisPorTipo)
 		
         if (indexMedicamento.bNecesitaAlimento)  {
             imgAlimento.image = UIImage(named: "checkIcon")

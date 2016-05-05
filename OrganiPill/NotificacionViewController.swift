@@ -16,18 +16,38 @@ class NotificacionViewController: UIViewController {
     var fechaOriginal : NSDate!
     var notificacion : UILocalNotification!
     var medicina = Medicamento()
+	var swipeRight = UISwipeGestureRecognizer()
+	var swipeLeft = UISwipeGestureRecognizer()
+	var imgCounter: Int = -1
     
     @IBOutlet weak var lblNombre: UILabel!
     @IBOutlet weak var lblTipo: UILabel!
     @IBOutlet weak var lblHora: UILabel!
     @IBOutlet weak var lblComida: UILabel!
     @IBOutlet weak var lblDosis: UILabel!
+	@IBOutlet weak var viewInfo: UIView!
     
+	@IBOutlet weak var imgImage: UIImageView!
+	@IBOutlet weak var pager: UIPageControl!
+	@IBOutlet weak var viewImg: UIView!
+	
+	@IBOutlet weak var sgmSegment: UISegmentedControl!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setDatos()
-        // Do any additional setup after loading the view.
+		
+		//agregar gesture para cambiar imagenes
+		swipeRight.addTarget(self, action: #selector(cambiarFoto))
+		swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+		
+		swipeLeft.addTarget(self, action: #selector(cambiarFoto))
+		swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+		
+		viewImg.addGestureRecognizer(swipeRight)
+		viewImg.addGestureRecognizer(swipeLeft)
+		cambiarFoto(UISwipeGestureRecognizer())
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,9 +76,60 @@ class NotificacionViewController: UIViewController {
         }
         
         lblDosis.text = String(medicina.dDosisRecetada)
+		
+		//definir imagenes
+		imgImage.image = UIImage(contentsOfFile: medicina.sFotoMedicamento)
+		if (medicina.sFotoPastillero == nil) {
+			pager.numberOfPages = 2
+		}
 
         
     }
+	
+	func cambiarFoto(swipe: UISwipeGestureRecognizer) {
+		let swipeGesture = swipe as? UISwipeGestureRecognizer
+		
+		if (swipeGesture!.direction == UISwipeGestureRecognizerDirection.Right) {
+			imgCounter += 1
+		}
+		if (swipeGesture!.direction == UISwipeGestureRecognizerDirection.Left)  {
+			imgCounter -= 1
+		}
+		
+		if (medicina.sFotoPastillero != nil) {
+			imgCounter %= 3
+		}
+		else {
+			imgCounter %= 2
+		}
+		
+		pager.currentPage = abs(imgCounter)
+		
+		switch abs(imgCounter) {
+		case 0:
+			imgImage.image = UIImage(contentsOfFile: medicina.sFotoMedicamento)
+		case 1:
+			imgImage.image = UIImage(contentsOfFile: medicina.sFotoCaja)
+		case 2:
+			imgImage.image = UIImage(contentsOfFile: medicina.sFotoPastillero!)
+		default:
+			print("ERROR")
+		}
+	}
+	
+	@IBAction func cambioSegmento(sender: UISegmentedControl) {
+		switch sender.selectedSegmentIndex {
+		case 0:
+			viewImg.hidden = true
+			viewInfo.hidden = false
+		case 1:
+			viewImg.hidden = false
+			viewInfo.hidden = true
+		default:
+			print("ERROR")
+		}
+	}
+	
 // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

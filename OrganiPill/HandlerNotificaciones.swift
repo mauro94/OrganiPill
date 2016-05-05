@@ -376,6 +376,31 @@ class HandlerNotificaciones{
         
         return hour
     }
+	
+	//borra notificaciones de un medicamento que ha sido borrado
+	func deleteNotifcationsFromMed(medicamento: Medicamento) {
+		var notificacionesActuales: List<Fecha> = List<Fecha>()
+		var notificacionesPendientesNuevas: Notificaciones = Notificaciones()
+		let realm = try! Realm()
+		
+		try! realm.write {
+			notificacionesPendientesNuevas.id = 1
+			
+			let listasNotif = realm.objects(Notificaciones)
+			
+			let listaPendientes = listasNotif.filter("id = 1").first?.listaNotificaciones
+			
+			for notificacion in listaPendientes! {
+				if (notificacion.nombreMed != medicamento.sNombre) {
+					notificacionesActuales.append(notificacion)
+				}
+			}
+		
+			notificacionesPendientesNuevas.listaNotificaciones = notificacionesActuales
+		
+			realm.add(notificacionesPendientesNuevas,update: true)
+		}
+	}
     
     /**func setupNotificationSettings(){
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)

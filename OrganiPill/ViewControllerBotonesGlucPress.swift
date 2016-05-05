@@ -47,7 +47,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
     
     override func viewDidLoad() {
         
-        
+        self.title = "Datos Paraclínicos"
         
         
         
