@@ -13,8 +13,8 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
 
     // MARK: - Outlets
     @IBOutlet weak var tableHorarios: UITableView!
-    
-	@IBOutlet weak var comentarios: UITextView!
+	@IBOutlet weak var viewNoHorario: UIView!
+	
     // MARK: - Global Variables
     var medMedicina : Medicamento = Medicamento()
     var listaHorarios = List<CustomDate>()
@@ -39,6 +39,17 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	override func viewWillAppear(animated: Bool) {
+		if (listaHorarios.count > 0) {
+			tableHorarios.hidden = false
+			viewNoHorario.hidden = true
+		}
+		else {
+			tableHorarios.hidden = true
+			viewNoHorario.hidden = false
+		}
+	}
     
     func newButtonPressed(sender: AnyObject){
         performSegueWithIdentifier("newH", sender: sender)
@@ -187,16 +198,12 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     
     func noHorarioAlert(){
         //creates popup message
-        let alerta = UIAlertController(title: "Alerta!", message: "Parece que olvidaste agregar un horario", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste agregar un horario", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         
         presentViewController(alerta, animated: true, completion: nil)
     }
-	
-	@IBAction func quitaTeclado() {
-		view.endEditing(true)
-	}
 
     @IBAction func presionaTerminar(sender: AnyObject) {
         if(listaHorarios.count == 0){
@@ -205,7 +212,6 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         }
         else{
             medMedicina.horario = listaHorarios
-			medMedicina.sComentario = comentarios.text
             guardaRealm()
             navigationController?.popToRootViewControllerAnimated(true)
         }

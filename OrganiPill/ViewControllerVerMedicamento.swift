@@ -48,8 +48,6 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		self.title = indexMedicamento.sNombre
 		
 		botonSuperiorDerecho = UIBarButtonItem(title: "Editar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(editbottonpress))
 		
@@ -82,6 +80,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
 	
 	override func viewWillAppear(animated: Bool) {
 		recargardatos()
+		self.title = indexMedicamento.sNombre
 	}
 	
     func recargardatos() {

@@ -105,7 +105,7 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let viewSiguiente = segue.destinationViewController as! AgregarMedicamento4ViewController
+        let viewSiguiente = segue.destinationViewController as! AgregarMedicamento5ViewController
         
         //guarda los datos del medicamento de esta vista
         medMedicina.dDosisRecetada = Double(fldDosis.text!)!

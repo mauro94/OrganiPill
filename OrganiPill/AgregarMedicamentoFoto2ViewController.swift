@@ -25,7 +25,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
 		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
         // Do any additional setup after loading the view.
-		self.title = "Imágen de Caja del Medicamento"
+		self.title = "Caja del Medicamento"
     }
     
     override func didReceiveMemoryWarning() {

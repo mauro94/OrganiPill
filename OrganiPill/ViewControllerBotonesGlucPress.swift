@@ -14,6 +14,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
     
     @IBOutlet weak var tbvTable: UITableView!
     
+	@IBOutlet weak var viewNoDatos: UIView!
     
     
     
@@ -38,15 +39,43 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
         tbvTable.reloadData()
     }
     
-    
-    
-    
-    
-    
-    
-    
+	override func viewWillAppear(animated: Bool) {
+		switch sgmControl.selectedSegmentIndex
+		{
+		case 0:
+			
+			if (desplegaGlucosa.count > 0) {
+				tbvTable.hidden = false
+				viewNoDatos.hidden = true
+			}
+			else {
+				tbvTable.hidden = true
+				viewNoDatos.hidden = false
+			}
+			
+			
+		case 1:
+			
+			if (desplegaPresSys.count > 0) {
+				tbvTable.hidden = false
+				viewNoDatos.hidden = true
+			}
+			else {
+				tbvTable.hidden = true
+				viewNoDatos.hidden = false
+			}
+		default:
+			break;
+		}
+	}
+	
+	
+	
+	
+	
+	
     override func viewDidLoad() {
-        
+		
         self.title = "Datos Paraclínicos"
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -158,7 +187,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
         
         let formatoHora = NSDateFormatter()
         formatoHora.locale = NSLocale.init(localeIdentifier: "ES")
-        formatoHora.dateFormat = "EEEE, dd 'de' MMMM h:mm a"
+        formatoHora.dateFormat = "EEE, dd 'de' MMMM h:mm a"
         
         if(opcionSgm){
             let auxIndex:Int = (desplegaGlucosa.count - indexPath.row - 1)
@@ -216,20 +245,32 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
         case 0:
             opcionSgm = true
             tbvTable.reloadData()
+			
+			if (desplegaGlucosa.count > 0) {
+				tbvTable.hidden = false
+				viewNoDatos.hidden = true
+			}
+			else {
+				tbvTable.hidden = true
+				viewNoDatos.hidden = false
+			}
             
             
         case 1:
             opcionSgm = false
             tbvTable.reloadData()
-            
+			
+			if (desplegaPresSys.count > 0) {
+				tbvTable.hidden = false
+				viewNoDatos.hidden = true
+			}
+			else {
+				tbvTable.hidden = true
+				viewNoDatos.hidden = false
+			}
         default:
             break;
         }
-        
-        
-        
-        
-        
     }
     
     
@@ -281,8 +322,8 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
                 let auxIndex:Int = (desplegaPresSys.count - (indexPath?.row)! - 1)
                 viewAgregar.isGlucosa = false
                 
-                viewAgregar.textoArriba = "Systolic:"
-                viewAgregar.textoAbajo = "Diastolic:"
+                viewAgregar.textoArriba = "Sistólica:"
+                viewAgregar.textoAbajo = "Diastólica:"
                 
                 viewAgregar.textoCajaArriba = String(desplegaPresSys[auxIndex].valor)
                 viewAgregar.textoCajaAbajo = String(desplegaPresDiast[auxIndex].valor)

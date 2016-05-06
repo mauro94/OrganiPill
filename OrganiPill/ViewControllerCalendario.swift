@@ -11,7 +11,7 @@ import RealmSwift
 import Realm
 
 class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableViewDataSource, ProtocoloReloadTable {
-	//OUTLETS-------------------------------------------
+	//OUTLETS
 	//botones de cada dia
 	@IBOutlet weak var btDomingo: UIButton!
 	@IBOutlet weak var btLunes: UIButton!
@@ -38,7 +38,9 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	//Vista no medicamentos
 	@IBOutlet weak var viewNoMeds: UIView!
-	//-----------------------------------------------------
+	
+	
+	
 	//VARIABLES
 	let clBoton: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 	let colorDark = UIColor(red: 188.0/255.0, green: 53.0/255.0, blue: 73.0/255.0, alpha: 1)
@@ -60,6 +62,10 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	var swipeRight = UISwipeGestureRecognizer()
 	var swipeLeft = UISwipeGestureRecognizer()
 	var btCounter: Int = -1
+	
+	
+	
+	
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,8 +146,12 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		tbvMedicamentosPendientes.dataSource = self
     }
 	
+	
+	
+	
+	
 	override func viewWillAppear(animated: Bool) {
-		//vista vacia
+		//vista vacia mostrar vista
 		if (medicamentosTabla.count > 0) {
 			tbvMedicamentosPendientes.hidden = false
 			viewNoMeds.hidden = true
@@ -153,10 +163,14 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	}
 	
 	
-
+	
+	
+	
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+	
+	
 	
 	
 	
@@ -168,6 +182,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			boton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
 		}
 		
+		//cambiar color de labels a negro
 		for label in lbNumeroDias {
 			label.textColor = UIColor.blackColor()
 		}
@@ -189,47 +204,10 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		
 		btCounter = iUbicacionArreglo!+1
 		
-		//llenar de datos la tabla
-		medicamentosTabla.removeAll()
-		medicamentosTablaHoras.removeAll()
-	
-		let medicamentosHoy = tomaDeMedicamentos.filter("id = 1").first?.listaNotificaciones
-		if (medicamentosHoy != nil) {
-			for med in medicamentosHoy! {
-				let fechaMed = med.fechaAlerta
-				let units: NSCalendarUnit = [.Weekday, .Day]
-				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
-				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iUbicacionArreglo!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
-				
-				let diaMed = calendar.components(units, fromDate: fechaMed)
-				
-				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
-				
-				if (diaMed.day == diaHoy.day) {
-					let nombreMed = med.nombreMed
-                    print(nombreMed)
-					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
-                    print(medicamento)
-                    print(medicamentosTabla)
-                    print(medicamento.first)
-					
-                    if(medicamento.count != 0){
-                        medicamentosTabla.append(medicamento.first!)
-                        medicamentosTablaHoras.append(med.fechaAlerta)
-                    
-					
-                        //revisar si notificacion ya paso 4 horas de hora original
-                        if (revisar4Horas(med)) {
-                            //sacar de la lista
-                            quitarNotificacionPendiente(fechaMed, sNombre: nombreMed)
-                        }
-                    }
-				}
-			}
-			tbvMedicamentosPendientes.reloadData()
-		}
+		//revisar notificaciones si pasaron de 4 horas
+		revisarCondiciones(iUbicacionArreglo!)
 		
-		//vista vacia
+		//revisar si vista esta vacia
 		if (medicamentosTabla.count > 0) {
 			tbvMedicamentosPendientes.hidden = false
 			viewNoMeds.hidden = true
@@ -239,6 +217,54 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			viewNoMeds.hidden = false
 		}
 	}
+	
+	
+	
+	
+	//funcion que revisa si pasaron 4 horas de un medicamento, si ya paso remover de calendario
+	func revisarCondiciones(iUbicacionArreglo: Int) {
+		//llenar de datos la tabla
+		medicamentosTabla.removeAll()
+		medicamentosTablaHoras.removeAll()
+		
+		let medicamentosHoy = tomaDeMedicamentos.filter("id = 1").first?.listaNotificaciones
+		if (medicamentosHoy != nil) {
+			for med in medicamentosHoy! {
+				let fechaMed = med.fechaAlerta
+				let units: NSCalendarUnit = [.Weekday, .Day]
+				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iUbicacionArreglo+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
+				
+				let diaMed = calendar.components(units, fromDate: fechaMed)
+				
+				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
+				
+				if (diaMed.day == diaHoy.day) {
+					let nombreMed = med.nombreMed
+					print(nombreMed)
+					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
+					print(medicamento)
+					print(medicamentosTabla)
+					print(medicamento.first)
+					
+					if(medicamento.count != 0){
+						medicamentosTabla.append(medicamento.first!)
+						medicamentosTablaHoras.append(med.fechaAlerta)
+						
+						
+						//revisar si notificacion ya paso 4 horas de hora original
+						if (revisar4Horas(med)) {
+							//sacar de la lista
+							quitarNotificacionPendiente(fechaMed, sNombre: nombreMed)
+						}
+					}
+				}
+			}
+			tbvMedicamentosPendientes.reloadData()
+		}
+	}
+	
+	
 	
 	
 	

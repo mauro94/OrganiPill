@@ -67,9 +67,9 @@ class ViewControllerAgregarDatos: UIViewController {
 
     
     func alertaTxt(){
-        let alerta = UIAlertController(title: "Error!", message: "Favor de llenar todas las casillas",preferredStyle:  UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Favor de llenar todas las casillas",preferredStyle:  UIAlertControllerStyle.Alert)
         
-        alerta.addAction(UIAlertAction(title: "Ok",style: UIAlertActionStyle.Cancel, handler:nil))
+        alerta.addAction(UIAlertAction(title: "OK",style: UIAlertActionStyle.Cancel, handler:nil))
         
         
         presentViewController(alerta,animated:true, completion:nil)
@@ -205,7 +205,7 @@ class ViewControllerAgregarDatos: UIViewController {
         }
         let refreshAlert = UIAlertController(title: "Borrado", message: "Los datos se borraron correctamente ", preferredStyle: UIAlertControllerStyle.Alert)
         
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in
             
             self.navigationController?.popViewControllerAnimated(true)
         }))

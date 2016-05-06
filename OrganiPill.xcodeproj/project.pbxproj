@@ -49,6 +49,7 @@
 		34D1306E1CB46C61005E206C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34D1306C1CB46C61005E206C /* LaunchScreen.storyboard */; };
 		34DBD7B11CB5B94B00DA952C /* Medicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBD7B01CB5B94B00DA952C /* Medicamento.swift */; };
 		34DBD7B31CB5C32E00DA952C /* TableViewCellMedicamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */; };
+		34E316661CDC264E006CFDF9 /* AgregarMedicamento5ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E316651CDC264E006CFDF9 /* AgregarMedicamento5ViewController.swift */; };
 		EA18E9511CD80F6D000F8DEE /* MisMedicamentosVerHorarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA18E9501CD80F6D000F8DEE /* MisMedicamentosVerHorarioViewController.swift */; };
 		EA18E9531CD81059000F8DEE /* MisMedicamentosEditarHorarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA18E9521CD81059000F8DEE /* MisMedicamentosEditarHorarioViewController.swift */; };
 		EA30FCA11CDAB079004140E5 /* ViewControllerContactoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30FCA01CDAB079004140E5 /* ViewControllerContactoSettings.swift */; };
@@ -133,6 +134,7 @@
 		34D1306F1CB46C61005E206C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34DBD7B01CB5B94B00DA952C /* Medicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medicamento.swift; sourceTree = "<group>"; };
 		34DBD7B21CB5C32E00DA952C /* TableViewCellMedicamento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellMedicamento.swift; sourceTree = "<group>"; };
+		34E316651CDC264E006CFDF9 /* AgregarMedicamento5ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarMedicamento5ViewController.swift; sourceTree = "<group>"; };
 		EA18E9501CD80F6D000F8DEE /* MisMedicamentosVerHorarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisMedicamentosVerHorarioViewController.swift; sourceTree = "<group>"; };
 		EA18E9521CD81059000F8DEE /* MisMedicamentosEditarHorarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisMedicamentosEditarHorarioViewController.swift; sourceTree = "<group>"; };
 		EA30FCA01CDAB079004140E5 /* ViewControllerContactoSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerContactoSettings.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				EA3E434C1CC9A0680031BEEF /* sbAgregarMedicamento.storyboard */,
+				34E316651CDC264E006CFDF9 /* AgregarMedicamento5ViewController.swift */,
 				317C984E1CC689A900C28D04 /* CustomTableViewCell.swift */,
 				317C98441CC5517900C28D04 /* AgregarHorarioViewController.swift */,
 				3127345A1CBF3701004BD7ED /* AgregarMedicamento3ViewController.swift */,
@@ -471,6 +474,7 @@
 				341399611CC73815006D982B /* ViewControllerBienvenida.swift in Sources */,
 				34C347BD1CCEB70500F6EF50 /* ViewControllerAgregarContacto.swift in Sources */,
 				EA3DEE0B1CD9E72500AE94F6 /* ViewControllerPacienteSettings.swift in Sources */,
+				34E316661CDC264E006CFDF9 /* AgregarMedicamento5ViewController.swift in Sources */,
 				34630BEF1CBEB83D00914FD0 /* ViewControllerCalendario.swift in Sources */,
 				345A1FEF1CCDD99000F6FE76 /* ViewControllerSetupInicial2.swift in Sources */,
 				EA3DEE0D1CD9EB9200AE94F6 /* ViewControllerDoctorSettings.swift in Sources */,

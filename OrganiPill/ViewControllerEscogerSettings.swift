@@ -11,6 +11,7 @@ import RealmSwift
 
 class ViewControllerEscogerSettings: UIViewController {
 
+	@IBOutlet weak var viewCreditos: UIView!
     @IBOutlet weak var containerContacto: UIView!
     @IBOutlet weak var containerDoctor: UIView!
     @IBOutlet weak var sgmPick: UISegmentedControl!
@@ -36,27 +37,38 @@ class ViewControllerEscogerSettings: UIViewController {
             containerPaciente.hidden = false
             containerDoctor.hidden = true
             containerContacto.hidden = true
+			viewCreditos.hidden = true
             navigationItem.rightBarButtonItem = nil
-            
+            break
             
         case 1:
             containerPaciente.hidden = true
             containerDoctor.hidden = false
             containerContacto.hidden = true
+			viewCreditos.hidden = true
             navigationItem.rightBarButtonItem = nil
-           
+           break
             
         case 2:
             containerPaciente.hidden = true
             containerDoctor.hidden = true
             containerContacto.hidden = false
+			viewCreditos.hidden = true
             
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ViewControllerEscogerSettings.nuevoDato(_:)))
-            
+            break
+		case 3:
+			containerPaciente.hidden = true
+			containerDoctor.hidden = true
+			containerContacto.hidden = true
+			viewCreditos.hidden = false
+			
+			navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ViewControllerEscogerSettings.nuevoDato(_:)))
+			break
         default:
             break;
         }
-        
+		
         
         
         

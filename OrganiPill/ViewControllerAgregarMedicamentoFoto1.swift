@@ -51,23 +51,26 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         switch(medMedicina.sTipoMedicina){
         //pastillas
         case "Pastilla":
-            self.title = "Imágen de la Pastilla"
+            self.title = "Pastilla"
             break
         //inyeccion
         case "Inyección":
-            self.title = "Imágen del Bote"
+            self.title = "Bote"
             break
         //supositorio
         case "Supositorio":
-            self.title = "Imágen del Supositorio"
+            self.title = "Supositorio"
             break
         //liquida
         case "Suspensión":
-            self.title = "Imágen del Bote"
+            self.title = "Bote"
             break
         case "Cápsulas":
-            self.title = "Imágen de la Cápsula"
+            self.title = "Cápsula"
             break
+		case "Tableta":
+			self.title = "Tableta"
+			break
         default:
             break
         }
