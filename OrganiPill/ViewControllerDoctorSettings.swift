@@ -53,7 +53,7 @@ class ViewControllerDoctorSettings: UIViewController {
     @IBOutlet weak var GuardarDatosPaciente: UIButton!
     
     @IBAction func GuardarDatosPac(sender: AnyObject) {
-        
+        //guarda los datos
         
         if(tfTelefonoSecundario.text != "" && tfNombre.text != "" && txTelefono.text != "" && txCorreoElectronico.text != "" ){
             let realm = try! Realm()

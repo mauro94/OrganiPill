@@ -33,6 +33,7 @@ class ViewControllerEscogerSettings: UIViewController {
         
         switch sgmPick.selectedSegmentIndex
         {
+            //esconde los containers que no se utilizaran
         case 0:
             containerPaciente.hidden = false
             containerDoctor.hidden = true

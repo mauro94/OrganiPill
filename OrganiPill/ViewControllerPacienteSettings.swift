@@ -56,7 +56,7 @@ class ViewControllerPacienteSettings: UIViewController {
     
     @IBAction func GuardarDatosPac(sender: AnyObject) {
         
-        
+        //guarda los datos del paciente
         if(tfTelefonoSecundario.text != "" && tfNombre.text != "" && txTelefono.text != "" && txCorreoElectronico.text != "" ){
             let realm = try! Realm()
             try! realm.write {

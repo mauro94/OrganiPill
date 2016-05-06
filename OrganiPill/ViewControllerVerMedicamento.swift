@@ -48,7 +48,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+		//crea botones enla esquina derecha
 		botonSuperiorDerecho = UIBarButtonItem(title: "Editar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(editbottonpress))
 		
 		self.navigationItem.rightBarButtonItem = botonSuperiorDerecho
@@ -84,6 +84,8 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
 	}
 	
     func recargardatos() {
+        //Escribe todos los datos en las labels
+        
         lblNombre.text = indexMedicamento.sNombre
         lblDosis.text = String(indexMedicamento.dDosisRecetada)
         lblVia.text = indexMedicamento.sTipoMedicina
@@ -108,6 +110,8 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         lblcajaactual.text = String(indexMedicamento.dCantidadPorCajaActual)
         lblcajamiligramo.text = String(indexMedicamento.dDosisPorTipo)
 		
+        
+        //checa si necestia alimentos
         if (indexMedicamento.bNecesitaAlimento)  {
             imgAlimento.image = UIImage(named: "checkIcon")
         }
@@ -130,6 +134,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
 	
 	func cambiarFoto(swipe: UISwipeGestureRecognizer) {
 		let swipeGesture = swipe as? UISwipeGestureRecognizer
+        //cambia de imagen al darle swipe
 		
 		if (swipeGesture!.direction == UISwipeGestureRecognizerDirection.Right) {
 			imgCounter += 1
@@ -162,6 +167,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
     
 	@IBAction func cambioSegmento(sender: UISegmentedControl) {
 		switch sender.selectedSegmentIndex {
+            //al cambiar de opcion en el segmented control crea botones nuevos
 		case 0:
 			scScrollView.hidden = false
 			container.hidden = true
@@ -197,7 +203,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         if(segue.identifier == "edit") {
             
             let view = segue.destinationViewController as! ViewControllerEditar
-            
+            //manda el medicamento a la otra view
             view.indMedicamento = indexMedicamento
             //view.delegado = self
             view.delegado = delegado

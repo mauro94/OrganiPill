@@ -38,7 +38,7 @@ class ViewControllerAgregarDatos: UIViewController {
         lblDatoArriba.text = textoArriba
         lbldatoAbajo.text = textoAbajo
         txtDeArriba.text = textoCajaArriba
-        
+        //si es glucosa esconder la otra casilla de texto
         if(isGlucosa){
            txtAbajo.hidden = true
         }
@@ -140,7 +140,7 @@ class ViewControllerAgregarDatos: UIViewController {
             
         }
         else{
-            
+            //
             if(isGlucosa && checarDatosGlucosa()){
                 
                 let auxmedida: Medidas! = Medidas()

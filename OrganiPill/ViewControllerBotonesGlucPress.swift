@@ -43,6 +43,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
 		switch sgmControl.selectedSegmentIndex
 		{
 		case 0:
+            //si existe datos guardados los muestra
 			
 			if (desplegaGlucosa.count > 0) {
 				tbvTable.hidden = false
@@ -226,7 +227,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
     
     func nuevoDato(sender: AnyObject){
         
-        
+        //mandar el segue correcto
         if(opcionSgm){
             performSegueWithIdentifier("newDG", sender: sender)
             
@@ -241,6 +242,7 @@ class ViewControllerBotonesGlucPress: UIViewController, UITableViewDataSource, U
     @IBAction func SegmentedOpcion(sender: AnyObject)  {
         
         switch sgmControl.selectedSegmentIndex
+            //esconder la table
         {
         case 0:
             opcionSgm = true
