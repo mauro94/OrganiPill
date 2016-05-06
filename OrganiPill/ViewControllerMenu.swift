@@ -41,8 +41,6 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        botonSuperiorDerecho = UIBarButtonItem(title: "Creditos", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(creditbottonpress))
         
         self.navigationItem.rightBarButtonItem = botonSuperiorDerecho
         
@@ -214,11 +212,6 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
         alerta.addAction(UIAlertAction(title: "Tomar medicina", style: UIAlertActionStyle.Default, handler: nil))
         
         self.presentViewController(alerta, animated: true, completion: nil)
-    }
-    
-    func creditbottonpress(sender:AnyObject){
-        performSegueWithIdentifier("creditos", sender: sender)
-        
     }
     
 
