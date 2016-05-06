@@ -28,13 +28,14 @@ class HandlerNotificaciones{
     func generarNotificaciones(){
         let fechaActual = NSDate()
         let units: NSCalendarUnit = [.Hour, .Minute, .Weekday]
-        let myComponents = calendar.components(units, fromDate: fechaActual)
+        var myComponents = calendar.components(units, fromDate: fechaActual)
         let unidadRestantes = medMedicina.iDuracion
         
         
         //recorre horarios
         for i in 0...medMedicina.horario.count - 1{
             
+            myComponents = calendar.components(units, fromDate: fechaActual)
             let j = getFirstDay(i, myComponents: myComponents)
             
             myComponents.hour = medMedicina.horario[i].horas
@@ -232,7 +233,6 @@ class HandlerNotificaciones{
         
         //leer lista actual guardada
         let notif = realm.objects(Notificaciones).filter("id == 1")
-        //print(notif)
 
         //escribe nueva lista
         if(notif.count == 0){
@@ -257,7 +257,6 @@ class HandlerNotificaciones{
             
             try! realm.write{
                 //se actualiza la lista
-                print(listaNotif.listaNotificaciones.count)
                 for i in 0...listaNotif.listaNotificaciones.count-1{
                     listaActual.listaNotificaciones.append(listaNotif.listaNotificaciones[i])
                 }
