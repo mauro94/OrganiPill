@@ -58,6 +58,8 @@ class NotificacionViewController: UIViewController {
 		navBar.barTintColor = color
 		navBar.translucent = false
 		navBar.barStyle = UIBarStyle.Black
+		
+		self.view.setNeedsDisplay()
     }
 
     override func didReceiveMemoryWarning() {
