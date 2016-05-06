@@ -11,7 +11,7 @@ import MessageUI
 import RealmSwift
 
 class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
-	//outlet
+	//OUTLETS
 	@IBOutlet weak var btMisMedicamentos: UIButton!
 	@IBOutlet weak var btCalendario: UIButton!
 	@IBOutlet weak var btAgregarMedicamento: UIButton!
@@ -31,7 +31,7 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
 	
 	var tamanoFont: CGFloat = 28.0
 	
-	//variables
+	//VARIABLES
 	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 
     let realm = try! Realm()
@@ -187,7 +187,7 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
     }
     
     func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        let sendMailErrorAlert = UIAlertView(title: "No se pudo enviar el correo", message: "Su dispositivo no pudo enviar el correo.  Porfavor revise la configuracion de su correo.", delegate: self, cancelButtonTitle: "OK")
         sendMailErrorAlert.show()
     }
     
@@ -206,25 +206,9 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
         
         alerta.addAction(UIAlertAction(title: "Recordar más tarde", style: UIAlertActionStyle.Destructive, handler: nil))
         
-        //presionar esto lo lleva a la vista para registrar una medicina como tomada
-        //alerta.addAction(UIAlertAction(title: "Tomar medicina", style: UIAlertActionStyle.Default, handler: {action in self.tomarMedicinaController(nombreMed, fecha: fecha, notification: notification)}))
-        
         alerta.addAction(UIAlertAction(title: "Tomar medicina", style: UIAlertActionStyle.Default, handler: nil))
         
         self.presentViewController(alerta, animated: true, completion: nil)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-	
-	
 
 }

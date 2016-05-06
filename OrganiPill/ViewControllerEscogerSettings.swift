@@ -63,7 +63,7 @@ class ViewControllerEscogerSettings: UIViewController {
 			containerContacto.hidden = true
 			viewCreditos.hidden = false
 			
-			navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ViewControllerEscogerSettings.nuevoDato(_:)))
+			navigationItem.rightBarButtonItem = nil
 			break
         default:
             break;

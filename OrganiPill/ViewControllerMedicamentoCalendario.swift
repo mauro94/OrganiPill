@@ -67,6 +67,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
         // Do any additional setup after loading the view.
 		self.title = sNombre
 		
+		//llenar informacion
 		lbHora.text = sHora
 		if (bAlimento) {
 			imgAlimento.image = UIImage(named: "checkIcon")
@@ -78,17 +79,11 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		lbDosis.text = sDosis
 		lbTipoMed.text = sTipoMed
 		
+		//delegados del tableview
 		tablaSiguientesHoras.delegate = self
 		tablaSiguientesHoras.dataSource = self
 		
-		//obtener datos de realm
-		//let realm = try! Realm()
-		//let tomaDeMedicamentos = realm.objects(Notificaciones)
-		
-		//obtener lista de alertas de un medicamento
-		//let medicamentosPendientes = tomaDeMedicamentos.filter("id = 1").first!.listaNotificaciones
-		//siguientesHoras = medicamentosPendientes.filter("nombreMed = %@", sNombre)
-        
+		//llenar lista de siguientes alertas
         getSiguientesHoras()
 		
 		//agregar gesture para cambiar imagenes
@@ -108,13 +103,22 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 			pager.numberOfPages = 2
 		}
     }
-    
+	
+	
+	
+	
+    //actualizar tabla
     override func willMoveToParentViewController(parent: UIViewController?) {
         if parent == nil {
             delegado.reloadTable()
         }
     }
-    
+	
+	
+	
+	
+	
+    //obtener datos para llenar tabla de alertas
     func getSiguientesHoras(){
         //obtener datos de realm
         let realm = try! Realm()
@@ -125,22 +129,39 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
         siguientesHoras = medicamentosPendientes.filter("nombreMed = %@", sNombre)
     }
 	
+	
+	
+	
+	//revisar segment control y actualizar vista
 	override func viewWillAppear(animated: Bool) {
 		cambiarVista(segSeccion)
 	}
+	
+	
+	
+	
+	
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 	
+	
+	
+	
+	
+	//actualizar vista dependiendo de seleccion en segment control
 	@IBAction func cambiarVista(sender: UISegmentedControl) {
+		//feacha actual
 		let fechaActual = NSDate()
 		
+		//si el primre boton esta activo
 		if (sender.selectedSegmentIndex == 0) {
 			viewInformacion.hidden = false
 			viewImagen.hidden = true
 			
+			//si ya paso la hora de tomar la medicina mostrar botones de tomado y posponer
 			if (fechaActual.earlierDate(horaMedicina) == horaMedicina) {
 				btPosponer.hidden = false
 				btTomoMedicamento.hidden = false
@@ -152,10 +173,12 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 				constraintSiBoton.priority = 1
 			}
 		}
+		//si el segundo boton esta activo
 		else {
 			viewInformacion.hidden = true
 			viewImagen.hidden = false
 			
+			//si ya paso la hora de tomar la medicina mostrar botones de tomado y posponer
 			if (fechaActual.earlierDate(horaMedicina) == horaMedicina) {
 				btPosponer.hidden = false
 				btTomoMedicamento.hidden = false
@@ -169,6 +192,11 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		}
 	}
 	
+	
+	
+	
+	
+	//cambiar imagen cuando se hace swipe
 	func cambiarImagen(swipe: UIGestureRecognizer) {
 		let swipeGesture = swipe as? UISwipeGestureRecognizer
 		
@@ -179,6 +207,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 			imgCounter -= 1
 		}
 		
+		//cuando son 2 o 3 fotos
 		if (sImgPastillero != nil) {
 			imgCounter %= 3
 		}
@@ -200,8 +229,11 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		}
 	}
 	
-	// MARK: - UITableView
 	
+	
+	
+	
+	// MARK: - UITableView
 	// numero de filas de la table
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return siguientesHoras.count
@@ -214,12 +246,15 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		
 		let cell: tbcMedicamentoInfo = self.tablaSiguientesHoras.dequeueReusableCellWithIdentifier("cell") as! tbcMedicamentoInfo
 		
+		//formato de fecha
 		let formatoHoraConMeridiano = NSDateFormatter()
 		formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
 		formatoHoraConMeridiano.dateFormat = "MMMM d, h:mm a"
 		
+		//llenar datos
 		cell.lbHora.text = formatoHoraConMeridiano.stringFromDate(siguientesHoras[indexPath.row].fechaAlerta)
 		
+		//condiciones para mostrar dibujo en celdas
 		if (siguientesHoras[indexPath.row] == siguientesHoras[0]) {
 			if (siguientesHoras.count == 1) {
 				cell.bUnicaCelda = true
@@ -244,6 +279,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 			cell.bUnicaCelda = false
 		}
 		
+		//color de seleccion de celda
 		let backgroundView = UIView()
 		backgroundView.backgroundColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 0.2)
 		cell.selectedBackgroundView = backgroundView
@@ -252,7 +288,12 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
 		
 		return cell
 	}
-    
+	
+	
+	
+	
+	
+    //acciones cuando presiona el boton de tomar medicina
     @IBAction func presionaTomar(sender: UIButton) {
         var fechaAux = Fecha()
         
@@ -298,8 +339,13 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
         delegado.reloadTable()
         delegado.quitaVista()
     }
-    
-    
+	
+	
+	
+	
+	
+	
+    //funcion que define accines cuando se presiona posponer
     @IBAction func presionaPosponer(sender: UIButton) {
         var fechaAux = Fecha()
         
@@ -341,17 +387,5 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
         tablaSiguientesHoras.reloadData()
         delegado.reloadTable()
         delegado.quitaVista()
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+	}
 }

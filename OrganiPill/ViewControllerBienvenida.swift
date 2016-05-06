@@ -27,6 +27,7 @@ class ViewControllerBienvenida: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 	
+	//animacion inicial
 	func makeAnimation() {
 		let altura = self.view.bounds.height
 		UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
@@ -36,6 +37,7 @@ class ViewControllerBienvenida: UIViewController {
 		
 	}
 	
+	//barra color blanco
 	override func preferredStatusBarStyle() -> UIStatusBarStyle {
 		return .LightContent
 	}
@@ -45,17 +47,4 @@ class ViewControllerBienvenida: UIViewController {
 		btBoton.layer.borderWidth = 0.5
 		btBoton.layer.borderColor = UIColor.whiteColor().CGColor
 	}
-	
-	
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

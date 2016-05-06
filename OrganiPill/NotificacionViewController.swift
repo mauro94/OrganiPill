@@ -139,7 +139,7 @@ class NotificacionViewController: UIViewController {
 
     
     @IBAction func presionaSnooze(sender: AnyObject) {
-        snoozeNotif(1)
+        snoozeNotif(5)
         performSegueWithIdentifier("snoozeMedicina", sender: sender)
     }
 

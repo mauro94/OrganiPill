@@ -20,6 +20,7 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
 	var medicamentosTabla = [Medicamento]()
 	var medicamentosTablaHoras = [NSDate?]()
 	
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -33,19 +34,31 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
 		//obtener datos para tabla
 		let calendar = NSCalendar.currentCalendar()
 		let dateFechaHoy = NSDate()
+		//obtener notificaciones pasadas/tomadas y anuladas
 		let medicamentosTomados = medicamentosTomadosAlertas.filter("id = 2").first?.listaNotificaciones
 		let medicamentosAnulados = medicamentosTomadosAlertas.filter("id = 3").first?.listaNotificaciones
+		
+		//si hay notificaciones tomadas
 		if (medicamentosTomados != nil) {
+			//por cada notificacion tomada
 			for med in medicamentosTomados! {
+				//obtener fecha de la alerta
 				let fechaMed = med.fechaAlerta
+				//unidades de calendario
 				let units: NSCalendarUnit = [.Weekday, .Day]
+				//numero de dia de la semana 1...7
 				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+				//fecha del boton seleccionado actual
 				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iDiaSemanaActual!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
 				
+				//componentes de fecha de alerta
 				let diaMed = calendar.components(units, fromDate: fechaMed)
+				//componentes de fecha del boton seleccionado
 				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
 				
+				//si son el mismo dia
 				if (diaMed.day == diaHoy.day) {
+					//llenar tabla con datos
 					let nombreMed = med.nombreMed
 					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
 					medicamentosTabla.append(medicamento.first!)
@@ -54,17 +67,27 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
 			}
 		}
 		
+		//si hay notificaciones anuladas
 		if (medicamentosAnulados != nil) {
+			//por cada notificacion anulada
 			for med in medicamentosAnulados! {
+				//obtener fecha de la alerta
 				let fechaMed = med.fechaAlerta
+				//unidades de calendario
 				let units: NSCalendarUnit = [.Weekday, .Day]
+				//numero de dia de la semana 1...7
 				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
+				//fecha del boton seleccionado actual
 				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iDiaSemanaActual!+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
 				
+				//componentes de fecha de alerta
 				let diaMed = calendar.components(units, fromDate: fechaMed)
+				//componentes de fecha del boton seleccionado
 				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
 				
+				//si son el mismo dia
 				if (diaMed.day == diaHoy.day) {
+					//llenar tabla con datos
 					let nombreMed = med.nombreMed
 					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
 					medicamentosTabla.append(medicamento.first!)
@@ -72,13 +95,23 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
 				}
 			}
 		}
+		//actualizar tabla
 		tbvTable.reloadData()
     }
+	
+	
+	
+	
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	
+	
+	
+	
 
     // MARK: - Table view data source
 
@@ -86,28 +119,38 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
+	
+	
+	
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return medicamentosTabla.count
     }
+	
+	
 
 	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: tbcMedicamentoInfo = self.tbvTable.dequeueReusableCellWithIdentifier("cell") as! tbcMedicamentoInfo
 		
+		//llenar datos medicamento
 		let lugar = medicamentosTabla.count - 1 - indexPath.row
 		
+		//formato de fecha
 		let formatoHoraConMeridiano = NSDateFormatter()
         formatoHoraConMeridiano.locale = NSLocale.init(localeIdentifier: "ES")
 		formatoHoraConMeridiano.dateFormat = "h:mm a"
 		
+		//si no es notificacion nula
 		if (medicamentosTablaHoras[lugar] != nil) {
 			cell.lbHora.text = formatoHoraConMeridiano.stringFromDate(medicamentosTablaHoras[lugar]!)
 		}
+			//si es notificacion nula
 		else {
 			cell.lbHora.text = "NO TOMADO"
 		}
+		
 		cell.lbNombreMedicamento.text = medicamentosTabla[lugar].sNombre
 		
 		if (medicamentosTabla[lugar] == medicamentosTabla[medicamentosTabla.count-1] && lugar == medicamentosTabla.count-1) {
@@ -136,52 +179,5 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
 
 		
         return cell
-    }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+	}
 }

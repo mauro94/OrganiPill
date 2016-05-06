@@ -221,41 +221,47 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	
 	
+	
 	//funcion que revisa si pasaron 4 horas de un medicamento, si ya paso remover de calendario
 	func revisarCondiciones(iUbicacionArreglo: Int) {
+		let units: NSCalendarUnit = [.Weekday, .Day]
+		
 		//llenar de datos la tabla
 		medicamentosTabla.removeAll()
 		medicamentosTablaHoras.removeAll()
 		
-		let medicamentosHoy = tomaDeMedicamentos.filter("id = 1").first?.listaNotificaciones
-		if (medicamentosHoy != nil) {
-			for med in medicamentosHoy! {
-				let fechaMed = med.fechaAlerta
-				let units: NSCalendarUnit = [.Weekday, .Day]
+		//obtener lista de notificaciones pendientes
+		let notificacionesDia = tomaDeMedicamentos.filter("id = 1").first?.listaNotificaciones
+		
+		//si hay notificaciones
+		if (notificacionesDia != nil) {
+			//por cada notificacion
+			for notificacion in notificacionesDia! {
+				//obtener fecha de Notificacion
+				let fechaNotificacion = notificacion.fechaAlerta
+				
+				//obtener fecha de boton seleccionado
 				let idDiaDeLaSemana = calendar.components(units, fromDate: dateFechaHoy)
 				let fechaBoton = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: iUbicacionArreglo+1 - idDiaDeLaSemana.weekday, toDate: dateFechaHoy, options: NSCalendarOptions.WrapComponents)
 				
-				let diaMed = calendar.components(units, fromDate: fechaMed)
+				//obtener componentes de las fechas
+				let diaNotificacion = calendar.components(units, fromDate: fechaNotificacion)
+				let diaBoton = calendar.components(units, fromDate: fechaBoton!)
 				
-				let diaHoy = calendar.components(units, fromDate: fechaBoton!)
-				
-				if (diaMed.day == diaHoy.day) {
-					let nombreMed = med.nombreMed
-					print(nombreMed)
+				//si son el mismo dia
+				if (diaNotificacion.day == diaBoton.day) {
+					let nombreMed = notificacion.nombreMed
 					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
-					print(medicamento)
-					print(medicamentosTabla)
-					print(medicamento.first)
 					
 					if(medicamento.count != 0){
 						medicamentosTabla.append(medicamento.first!)
-						medicamentosTablaHoras.append(med.fechaAlerta)
+						medicamentosTablaHoras.append(notificacion.fechaOriginal)
 						
 						
 						//revisar si notificacion ya paso 4 horas de hora original
-						if (revisar4Horas(med)) {
+						if (revisar4Horas(notificacion)) {
 							//sacar de la lista
-							quitarNotificacionPendiente(fechaMed, sNombre: nombreMed)
+							quitarNotificacionPendiente(fechaNotificacion, sNombre: nombreMed)
 						}
 					}
 				}
@@ -268,14 +274,18 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	
 	
+	//revisa si fecha de medicina ya paso 4 horas
 	func revisar4Horas(alerta: Fecha) -> Bool {
-		let units: NSCalendarUnit = [.Hour, .Minute]
+		//fecha original de la alerta
 		let fechaOriginal = alerta.fechaOriginal
 		
+		//sumar 4 horas a la fecha
 		let fechaLimite = calendar.dateByAddingUnit(NSCalendarUnit.Hour, value: 4, toDate: fechaOriginal, options: NSCalendarOptions.WrapComponents)
 		
+		//obtener fecha actual
 		let fechaActual = NSDate()
 		
+		//si ya pasaron 4 horas
 		if (fechaActual.earlierDate(fechaLimite!) == fechaLimite) {
 				return true
 		}
@@ -283,6 +293,10 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	}
 	
 	
+
+	
+	
+	//funcion que quita las notificaciones caducadas
 	func quitarNotificacionPendiente(fechaAlerta: NSDate, sNombre: String) {
 		//saca las listas de notificaciones
 		let realm = try! Realm()
@@ -290,8 +304,8 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		var fechaAux: Fecha = Fecha()
 		
 		try! realm.write{
-			var listaPendientes = listasNotif.filter("id == 1").first!
-			var listaAnuladas = listasNotif.filter("id == 3").first!
+			let listaPendientes = listasNotif.filter("id == 1").first!
+			let listaAnuladas = listasNotif.filter("id == 3").first!
 			
 			//borrar notificacion actual de la lista de notificaciones
 			for i in 0...listaPendientes.listaNotificaciones.count-1{
@@ -315,6 +329,8 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			realm.add(listaAnuladas, update: true)
 		}
 	}
+	
+	
 	
 	
 	
@@ -349,11 +365,15 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	
 	
+	
+	
 	//funcion que agregar bordes a los botones
 	func agregaBorderButton(sender: UIButton) {
 		sender.layer.borderWidth = 0.5
 		sender.layer.borderColor = clBoton.CGColor
 	}
+	
+	
 	
 	
 	
@@ -403,6 +423,8 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 	
 	
 	
+	
+	
 	func cambiarDiaGesture(swipe: UIGestureRecognizer) {
 		let swipeGesture = swipe as? UISwipeGestureRecognizer
 		
@@ -441,6 +463,8 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 			print("ERROR")
 		}
 	}
+	
+	
 	
 	
 	

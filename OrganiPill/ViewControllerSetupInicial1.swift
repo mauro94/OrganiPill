@@ -10,14 +10,14 @@ import UIKit
 import RealmSwift
 
 class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationControllerDelegate, UITextFieldDelegate {
-	//outlets
+	//OUTLETS
 	@IBOutlet weak var tfNombre: UITextField!
 	@IBOutlet weak var tfTelefono: UITextField!
 	@IBOutlet weak var tfTelefono2: UITextField!
 	@IBOutlet weak var tfCorreoElectronico: UITextField!
 	@IBOutlet weak var scroll: UIScrollView!
 	
-	//variables
+	//VARIABLES
 	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
 	var paciente: Persona = Persona()
 	var activeField : UITextField?
@@ -28,12 +28,14 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
         // Do any additional setup after loading the view.
 		self.title = "Información Personal"
 		
+		//ui navigation
 		self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
 		self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 		self.navigationController?.navigationBar.barTintColor = color
 		self.navigationController?.navigationBar.translucent = false
 		self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
 		
+		//mover vista cuando aparece el teclado
 		let tap = UITapGestureRecognizer(target: self, action: #selector(quitaTeclado))
 		
 		self.view.addGestureRecognizer(tap)
@@ -50,14 +52,62 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
 		view.endEditing(true)
 	}
 	
+	//mensaje de error
+	func emptyField(field : String){
+		//creates popup message
+		let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
+		
+		alerta.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+		
+		presentViewController(alerta, animated: true, completion: nil)
+	}
+	
+    // MARK: - Navigation
+	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+		//si se activa popover
+		if (identifier == "seguePopOver") {
+			quitaTeclado()
+			return true
+		}
+		//si se va a pasar a la siguiente vista
+		if(tfNombre.text != "" && tfTelefono.text != "" && tfCorreoElectronico.text != ""){
+			return true
+		}
+		//si falto llenar un dato
+		else{
+			emptyField("algún campo obligatorio (*)")
+			return false
+		}
+	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)  {
+		if segue.identifier == "seguePopOver" {
+			let popoverViewController = segue.destinationViewController as! UIViewController
+			popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+			popoverViewController.popoverPresentationController!.delegate = self
+		}
+		
+		else {
+			let viewSiguiente = segue.destinationViewController as! ViewControllerSetupInicial2
+			//guarda los datos de esta vista
+			paciente.sNombre = tfNombre.text!
+			paciente.sTelefono = tfTelefono.text!
+			if (tfTelefono2 != "") {
+				paciente.sTelefonoSecundario = tfTelefono2.text!
+			}
+			paciente.sCorreoElectronico = tfCorreoElectronico.text!
+			
+			viewSiguiente.paciente = paciente
+		}
+	}
+	
+	//MARK - Mover vista cuando aparece teclado
 	private func registrarseParaNotificacionesDeTeclado() {
 		NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(keyboardWasShown(_:)),
 		                                                 name:UIKeyboardWillShowNotification, object:nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(keyboardWillBeHidden(_:)),
 		                                                 name:UIKeyboardWillHideNotification, object:nil)
 	}
-	
-	// SUBE HASTA EL CAMPO QUE SE VA A EDITAR
 	
 	func keyboardWasShown (aNotification : NSNotification )
 	{
@@ -87,55 +137,6 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
 	
 	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
 		return UIModalPresentationStyle.None
-	}
-	
-	func emptyField(field : String){
-		//creates popup message
-		let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)
-		
-		alerta.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
-		
-		presentViewController(alerta, animated: true, completion: nil)
-	}
-	
-
-
-	
-    // MARK: - Navigation
-	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
-		if (identifier == "seguePopOver") {
-			quitaTeclado()
-			return true
-		}
-		
-		if(tfNombre.text != "" && tfTelefono.text != "" && tfCorreoElectronico.text != ""){
-			return true
-		}
-		else{
-			emptyField("algún campo obligatorio (*)")
-			return false
-		}
-	}
-	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)  {
-		if segue.identifier == "seguePopOver" {
-			let popoverViewController = segue.destinationViewController as! UIViewController
-			popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
-			popoverViewController.popoverPresentationController!.delegate = self
-		}
-		
-		else {
-			let viewSiguiente = segue.destinationViewController as! ViewControllerSetupInicial2
-			//guarda los datos de esta vista
-			paciente.sNombre = tfNombre.text!
-			paciente.sTelefono = tfTelefono.text!
-			if (tfTelefono2 != "") {
-				paciente.sTelefonoSecundario = tfTelefono2.text!
-			}
-			paciente.sCorreoElectronico = tfCorreoElectronico.text!
-			
-			viewSiguiente.paciente = paciente
-		}
 	}
 
 }
