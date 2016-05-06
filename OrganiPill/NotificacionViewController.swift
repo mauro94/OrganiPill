@@ -11,6 +11,7 @@ import RealmSwift
 
 class NotificacionViewController: UIViewController {
 
+    //variables
     var sNombre : String!
     var fechaAlerta : NSDate!
     var fechaOriginal : NSDate!
@@ -21,20 +22,19 @@ class NotificacionViewController: UIViewController {
 	var imgCounter: Int = -1
 	let color: UIColor = UIColor(red: 255.0/255.0, green: 70.0/255.0, blue: 89.0/255.0, alpha: 1)
     
+    //Outlets
     @IBOutlet weak var lblNombre: UILabel!
     @IBOutlet weak var lblTipo: UILabel!
     @IBOutlet weak var lblHora: UILabel!
     @IBOutlet weak var lblComida: UILabel!
     @IBOutlet weak var lblDosis: UILabel!
 	@IBOutlet weak var viewInfo: UIView!
-    
 	@IBOutlet weak var imgImage: UIImageView!
 	@IBOutlet weak var pager: UIPageControl!
 	@IBOutlet weak var viewImg: UIView!
-	
 	@IBOutlet weak var sgmSegment: UISegmentedControl!
-	
 	@IBOutlet weak var navBar: UINavigationBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -69,6 +69,7 @@ class NotificacionViewController: UIViewController {
 		return .LightContent
 	}
     
+    //genera los textos para los labels
     func setDatos(){
 
         let realm = try! Realm()
@@ -100,6 +101,7 @@ class NotificacionViewController: UIViewController {
 
     }
     
+    //maneja la accion de tomar medicina
     @IBAction func presionaTomarMedicina(sender: UIButton) {
         tomarMed()
         
@@ -110,6 +112,7 @@ class NotificacionViewController: UIViewController {
             medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada
         }
         
+        //BUG: Usar el UIAlert genera un bug en el calendario
         /**let returnTrue = {
             () -> ((UIAlertAction!) -> ()) in
             return {
@@ -134,16 +137,17 @@ class NotificacionViewController: UIViewController {
             alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: returnTrue()))
             presentViewController(alerta, animated: true, completion: nil)
         }**/
+        
         self.performSegueWithIdentifier("tomarMedicina", sender: sender)
     }
 
-    
+    //maneja la accion de presionar posponer
     @IBAction func presionaSnooze(sender: AnyObject) {
         snoozeNotif(5)
         performSegueWithIdentifier("snoozeMedicina", sender: sender)
     }
 
-	
+    //cambia de foto con un swipe
 	func cambiarFoto(swipe: UISwipeGestureRecognizer) {
 		let swipeGesture = swipe as? UISwipeGestureRecognizer
 		
@@ -175,6 +179,7 @@ class NotificacionViewController: UIViewController {
 		}
 	}
 	
+    //decide que boton del segmented control mostrar
 	@IBAction func cambioSegmento(sender: UISegmentedControl) {
 		switch sender.selectedSegmentIndex {
 		case 0:
@@ -188,14 +193,9 @@ class NotificacionViewController: UIViewController {
 		}
 	}
 
-    
-
-    
+    //maneja la logica de posponer una medicina
     func snoozeNotif(snoozeMins : Int){
         var fechaAux = Fecha()
-        
-        //se cancela la notificacion que mandó a esta vista
-        //UIApplication.sharedApplication().cancelLocalNotification(notificacion)
         
         //saca las listas de notificaciones
         let realm = try! Realm()

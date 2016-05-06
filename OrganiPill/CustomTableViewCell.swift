@@ -10,6 +10,7 @@ import UIKit
 
 class CustomTableViewCell: UITableViewCell {
 
+    //outlets de la celda
     @IBOutlet weak var lblHora: UILabel!
     @IBOutlet weak var bttnD: UIButton!
     @IBOutlet weak var bttnL: UIButton!

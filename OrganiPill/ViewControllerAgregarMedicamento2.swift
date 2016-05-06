@@ -69,6 +69,7 @@ class ViewControllerAgregarMedicamento2: UIViewController, UIPickerViewDataSourc
 		self.view.endEditing(true)
 	}
 	
+    //alerta si no todo está completo
     func emptyField(field : String){
         //creates popup message
         let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste llenar \(field)", preferredStyle: UIAlertControllerStyle.Alert)

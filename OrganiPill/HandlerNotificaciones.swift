@@ -24,17 +24,18 @@ class HandlerNotificaciones{
         
     }
     
-    //controlador para generar notificaciones
+    //controlador para generar notificaciones a partir de una medicina nueva
     func generarNotificaciones(){
         let fechaActual = NSDate()
         let units: NSCalendarUnit = [.Hour, .Minute, .Weekday]
-        let myComponents = calendar.components(units, fromDate: fechaActual)
+        var myComponents = calendar.components(units, fromDate: fechaActual)
         let unidadRestantes = medMedicina.iDuracion
         
         
         //recorre horarios
         for i in 0...medMedicina.horario.count - 1{
             
+            myComponents = calendar.components(units, fromDate: fechaActual)
             let j = getFirstDay(i, myComponents: myComponents)
             
             myComponents.hour = medMedicina.horario[i].horas
@@ -191,7 +192,6 @@ class HandlerNotificaciones{
         }
     }
     
-    //TODO arreglar porque los primeros tienen el mismo dia
     //genera una lista con notificaciones para iDuracion dias
     func finalizarListaNotif_D(){
         var i : Int = 0
@@ -233,7 +233,6 @@ class HandlerNotificaciones{
         
         //leer lista actual guardada
         let notif = realm.objects(Notificaciones).filter("id == 1")
-        //print(notif)
 
         //escribe nueva lista
         if(notif.count == 0){
@@ -258,7 +257,6 @@ class HandlerNotificaciones{
             
             try! realm.write{
                 //se actualiza la lista
-                print(listaNotif.listaNotificaciones.count)
                 for i in 0...listaNotif.listaNotificaciones.count-1{
                     listaActual.listaNotificaciones.append(listaNotif.listaNotificaciones[i])
                 }
@@ -284,12 +282,12 @@ class HandlerNotificaciones{
         }
     }
     
+    //regenera las notificaciones a partir de la lista de Realm
     func rescheduleNotificaciones(){
         let realm = try! Realm()
 
         try! realm.write{
             let listaPendientes = realm.objects(Notificaciones).filter("id == 1").first!
-            //var listaOrdenada = sortNotifDates(listaPendientes.listaNotificaciones)
             var listaOrdenada = List<Fecha>()
             
             if(listaPendientes.listaNotificaciones.count != 0){
@@ -311,7 +309,6 @@ class HandlerNotificaciones{
         var i : Int = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         
-        //ALERT: .count-1
         while(i < 64 && i < listaPendientes.listaNotificaciones.count){
             scheduleLocal(listaPendientes.listaNotificaciones[i])
             i += 1
@@ -405,42 +402,4 @@ class HandlerNotificaciones{
 			realm.add(notificacionesPendientesNuevas,update: true)
 		}
 	}
-    
-    /**func setupNotificationSettings(){
-        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-
-        if(notificationSettings.types == UIUserNotificationType.None){
-
-        var notificationTypes = UIUserNotificationType()
-
-        var tomarNotif = UIMutableUserNotificationAction()
-        tomarNotif.identifier = "tomarMed"
-        tomarNotif.title = "Tomar medicina"
-        tomarNotif.activationMode = UIUserNotificationActivationMode.Foreground
-        tomarNotif.destructive = false
-        tomarNotif.authenticationRequired = false
-        
-        var snoozeNotif = UIMutableUserNotificationAction()
-        snoozeNotif.identifier = "snoozeMed"
-        snoozeNotif.title = "Aplazar"
-        snoozeNotif.activationMode = UIUserNotificationActivationMode.Background
-        snoozeNotif.destructive = false
-        snoozeNotif.authenticationRequired = true
-        
-        let actionsArray = NSArray(objects: tomarNotif, snoozeNotif)
-        
-        var medicinaCategory = UIMutableUserNotificationCategory()
-        medicinaCategory.identifier = "medicinaCategory"
-        medicinaCategory.setActions(actionsArray as! [UIUserNotificationAction], forContext: UIUserNotificationActionContext.Minimal)
-        
-        let categoriesForSettings = NSSet(objects: medicinaCategory)
-        
-        let newNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categoriesForSettings as! Set<UIUserNotificationCategory>)
-            
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-
-        }
-        
-        
-    }**/
 }

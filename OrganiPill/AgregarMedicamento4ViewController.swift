@@ -51,6 +51,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
 		}
 	}
     
+    //hace un segue para agregar horario
     func newButtonPressed(sender: AnyObject){
         performSegueWithIdentifier("newH", sender: sender)
     }
@@ -67,6 +68,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         }
     }
     
+    //edita un horario
     func editarHorario(horario : CustomDate){
         let realm = try! Realm()
         
@@ -80,6 +82,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         navigationController?.popViewControllerAnimated(true)
     }
     
+    //checa que el horario NUEVO no sea existente
     func revisarHorario(horario : CustomDate) -> Bool{
         for i in listaHorarios{
             if (i.horas == horario.horas && i.minutos == horario.minutos){
@@ -90,6 +93,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         return true
     }
     
+    //checa que el horario EDITADO no sea existente
     func revisarHorarioEditar(horario : CustomDate) -> Bool{
         for i in 0...listaHorarios.count-1{
             if (index != i && listaHorarios[i].horas == horario.horas && listaHorarios[i].minutos == horario.minutos){
@@ -100,6 +104,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         return true
     }
     
+    //borra un horario de la lista
     func borrarHorario(horario : CustomDate){
         listaHorarios.removeAtIndex(index)
         tableHorarios.reloadData()
@@ -196,6 +201,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         }
     }
     
+    //alerta si no hay ningun horario
     func noHorarioAlert(){
         //creates popup message
         let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste agregar un horario", preferredStyle: UIAlertControllerStyle.Alert)

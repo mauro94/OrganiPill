@@ -18,6 +18,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
     var medMedicina : Medicamento = Medicamento()
     var pathImagen : String!
     var tieneImagen : Bool = false
+    var filename:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
         // Dispose of any resources that can be recreated.
     }
     
+    //alerta si no hay imagen
     func emptyImage(){
         //creates popup message
         let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste elegir una foto", preferredStyle: UIAlertControllerStyle.Alert)
@@ -42,6 +44,7 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
         presentViewController(alerta, animated: true, completion: nil)
     }
     
+    //abre la galeria para elegir una foto
     @IBAction func abreGaleria(sender: UIButton) {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -50,8 +53,8 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    //abre la camara para tomar una foto
     @IBAction func abreCamara(sender: UIButton) {
-        
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .Camera
@@ -59,18 +62,19 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    //agarra el path donde se gurada la foto
     func getDocumentsDirectory() -> NSString {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
     
-    
-    var filename:String!
+    //maneja las acciones al elegir una foto
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         let foto = info[UIImagePickerControllerOriginalImage] as? UIImage;
         
+        //guarda la foto
         if let image = foto {
             if let data = UIImagePNGRepresentation(image) {
                 filename = getDocumentsDirectory().stringByAppendingPathComponent("\(medMedicina.sNombre)2.png")
@@ -78,13 +82,8 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
                 
             }
         }
-        
-        
-      
-        
+
         pathImagen = filename
-        
-      
         
         imgFoto.image = foto
         dismissViewControllerAnimated(true, completion: nil)
