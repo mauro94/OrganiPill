@@ -19,6 +19,8 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
     var medMedicina : Medicamento = Medicamento()
     var pathImagen : String!
     var tieneImagen : Bool = false
+    var filename: String!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,7 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
         // Dispose of any resources that can be recreated.
     }
     
+    //deja seleccionar una foto de la galeria
     @IBAction func abreGaleria(sender: UIButton) {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -42,6 +45,7 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    //deja seleccionar una foto con la camara
     @IBAction func abreCamara(sender: UIButton) {
         
         let picker = UIImagePickerController()
@@ -51,18 +55,19 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    //genera el path de la foto
     func getDocumentsDirectory() -> NSString {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
     
-    
-    var filename: String!
+    //accion hecha al seleccionar/tomar una foto
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         let foto = info[UIImagePickerControllerOriginalImage] as? UIImage;
         
+        //guarda la foto
         if let image = foto {
             if let data = UIImagePNGRepresentation(image) {
                 filename = getDocumentsDirectory().stringByAppendingPathComponent("\(medMedicina.sNombre)3.png")
@@ -86,6 +91,7 @@ class AgregarMedicamentoFoto3ViewController: UIViewController, UIImagePickerCont
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Borrar", style: UIBarButtonItemStyle.Done, target: self, action: #selector(AgregarMedicamentoFoto3ViewController.cancelarButtonPressed(_:)))
     }
 	
+    //maneja como borrar una foto
 	func cancelarButtonPressed(sender: AnyObject){
 		tieneImagen = false
 		imgFoto.image = nil

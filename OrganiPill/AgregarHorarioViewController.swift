@@ -80,6 +80,7 @@ class AgregarHorarioViewController: UIViewController{
         // Dispose of any resources that can be recreated.
     }
     
+    //alerta si deja los dias vacios
     func noDayAlert(){
         //creates popup message
         let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste seleccionar un día", preferredStyle: UIAlertControllerStyle.Alert)
@@ -89,6 +90,7 @@ class AgregarHorarioViewController: UIViewController{
         presentViewController(alerta, animated: true, completion: nil)
     }
     
+    //alerta si ya existe la hora
     func duplicadoAlert(){
         //creates popup message
         let alerta = UIAlertController(title: "¡Alerta!", message: "Ya tienes esta hora registrada, puedes editar los días haciendo click en la lista", preferredStyle: UIAlertControllerStyle.Alert)
@@ -112,6 +114,7 @@ class AgregarHorarioViewController: UIViewController{
         sender.layer.borderColor = onBttnColor.CGColor
     }
     
+    //pinta el dia
     @IBAction func selectDay(sender: UIButton) {
         //color de prendido
         if(!sender.selected){
@@ -126,18 +129,20 @@ class AgregarHorarioViewController: UIViewController{
         sender.selected = !sender.selected
     }
     
+    //maneja la navegacion sin guardar
     func cancelarButtonPressed(sender: AnyObject){
         navigationController?.popViewControllerAnimated(true)
     }
     
+    //maneja el boton de borrar
     func borrarButtonPressed(sender: AnyObject){
         let aux = CustomDate()
         delegado.borrarHorario(aux)
         delegado.quitaVista()
     }
     
+    //guarda la fecha
     @IBAction func guardarButtonPressed(sender: AnyObject){
-        
         //hace la lista de dias programados
         for i in 0...6{
             if(bttnDias[i].selected){
