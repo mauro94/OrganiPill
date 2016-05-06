@@ -302,6 +302,8 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		try! realm.write {
 			realm.delete(indMedicamento)
 		}
+        
+        handler.rescheduleNotificaciones()
 		
 		self.navigationController?.popToRootViewControllerAnimated(true)
 	}
