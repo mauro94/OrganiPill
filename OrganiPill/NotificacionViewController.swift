@@ -112,6 +112,9 @@ class NotificacionViewController: UIViewController {
         try! realm.write{
             //se reduce la cantidad de medicina (pastillas, cucharadas) por la dosis tomada
             medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada
+            if(medicina.dCantidadPorCajaActual < 0){
+                medicina.dCantidadPorCajaActual = 0
+            }
         }
         
         //BUG: Usar el UIAlert genera un bug en el calendario
