@@ -139,14 +139,16 @@ class NotificacionViewController: UIViewController {
             alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: returnTrue()))
             presentViewController(alerta, animated: true, completion: nil)
         }**/
-        
-        self.performSegueWithIdentifier("tomarMedicina", sender: sender)
+
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     //maneja la accion de presionar posponer
     @IBAction func presionaSnooze(sender: AnyObject) {
         snoozeNotif(5)
-        performSegueWithIdentifier("snoozeMedicina", sender: sender)
+
+        self.dismissViewControllerAnimated(true, completion: nil)
+
     }
 
     //cambia de foto con un swipe

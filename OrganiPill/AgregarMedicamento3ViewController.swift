@@ -129,9 +129,4 @@ class AgregarMedicamento3ViewController: UIViewController, UIPickerViewDataSourc
                 return "x"
         }
     }
-    
-    
-    
-    
-
 }

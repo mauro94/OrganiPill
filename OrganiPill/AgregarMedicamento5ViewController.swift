@@ -44,5 +44,4 @@ class AgregarMedicamento5ViewController: UIViewController {
 		
 		viewSiguiente.medMedicina = medMedicina
     }
-
 }

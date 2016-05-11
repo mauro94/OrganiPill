@@ -125,6 +125,7 @@ class ViewControllerSetupInicial3: UIViewController, UITableViewDelegate, UITabl
 				realm.add(doctor)
 				realm.add(contactos)
 			}
+            
 		}
     }
 	
