@@ -131,12 +131,22 @@ class ViewControllerAgregarContactoSettings: UIViewController, UIPopoverPresenta
         presentViewController(alerta, animated: true, completion: nil)
     }
     
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "seguePopOver" {
             let popoverViewController = segue.destinationViewController as! UIViewController
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
         }
+    }
+    
+    func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(candidate)
     }
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -156,56 +166,67 @@ class ViewControllerAgregarContactoSettings: UIViewController, UIPopoverPresenta
         
         if(tfNombre.text != "" && tfTelefono.text != "" && tfCorreoElectronico.text != "") {
             
-            if(isEdit){
-                try! realm.write {
-                    
-                    //guarda los datos de esta vista
-                    auxPersonaEdit.sNombre = tfNombre.text!
-                    auxPersonaEdit.sTelefono = tfTelefono.text!
-                    auxPersonaEdit.sCorreoElectronico = tfCorreoElectronico.text!
-                    
+            if(validateEmail(tfCorreoElectronico.text!)){
+                if(isEdit){
+                    try! realm.write {
+                        
+                        //guarda los datos de esta vista
+                        auxPersonaEdit.sNombre = tfNombre.text!
+                        auxPersonaEdit.sTelefono = tfTelefono.text!
+                        auxPersonaEdit.sCorreoElectronico = tfCorreoElectronico.text!
+                        
+                        
+                    }
                     
                 }
+                else{
+                    //guarda los datos de esta vista
+                    auxPersona.sNombre = tfNombre.text!
+                    auxPersona.sTelefono = tfTelefono.text!
+                    auxPersona.sCorreoElectronico = tfCorreoElectronico.text!
+                    auxPersona.sTipo = "c"
+                }
+                
+                
+                
+                
+                
+                
+                
+                if (tfTelefono2 != "") {
+                    if(isEdit){
+                        try! realm.write {
+                            auxPersonaEdit.sTelefonoSecundario = tfTelefono2.text!
+                        }
+                    }
+                    else{
+                        auxPersona.sTelefonoSecundario = tfTelefono2.text!
+                        
+                    }
+                    
+                }
+                
+                if(!isEdit){
+                    try! realm.write {
+                        realm.add(auxPersona)
+                        
+                    }
+                    
+                }
+                
+                
+                
+                self.performSegueWithIdentifier("unwindContacto", sender: self)
                 
             }
             else{
-                //guarda los datos de esta vista
-                auxPersona.sNombre = tfNombre.text!
-                auxPersona.sTelefono = tfTelefono.text!
-                auxPersona.sCorreoElectronico = tfCorreoElectronico.text!
-                auxPersona.sTipo = "c"
-            }
-            
-            
-            
-            
-            
-            
-            
-            if (tfTelefono2 != "") {
-                if(isEdit){
-                    try! realm.write {
-                        auxPersonaEdit.sTelefonoSecundario = tfTelefono2.text!
-                    }
-                }
-                else{
-                    auxPersona.sTelefonoSecundario = tfTelefono2.text!
-                    
-                }
-                
-            }
-            
-            if(!isEdit){
-                try! realm.write {
-                    realm.add(auxPersona)
-                    
-                }
+                emptyField("el mail correctamente")
                 
             }
             
             
-           
-            self.performSegueWithIdentifier("unwindContacto", sender: self)
+            
+            
         }
         else {
             emptyField("algún campo obligatorio (*)")

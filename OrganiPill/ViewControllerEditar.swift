@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     //OUTLETS
     @IBOutlet weak var txviewComentario: UITextView!
     @IBOutlet weak var swAlimentos: UISwitch!
@@ -38,6 +38,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        tfNombre.delegate = self
 		
 		self.title = "Editar"
 		
@@ -95,6 +96,8 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		}
 		
 		//numero de meds en caja
+        
+        
 		txCajaActual.text = String(indMedicamento.dCantidadPorCajaActual)
 		
 		pckNumeroCaja.delegate = self
@@ -201,6 +204,11 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
             
             return false
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 	
     /*

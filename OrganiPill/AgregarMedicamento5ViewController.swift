@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AgregarMedicamento5ViewController: UIViewController {
+class AgregarMedicamento5ViewController: UIViewController,UITextViewDelegate {
 	//OUTLETS
 	@IBOutlet weak var tvComments: UITextView!
 	
@@ -17,6 +17,7 @@ class AgregarMedicamento5ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tvComments.delegate = self
 		self.title = "Comentarios"
 		
 		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -32,6 +33,14 @@ class AgregarMedicamento5ViewController: UIViewController {
 		self.view.endEditing(true)
 	}
 
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
 	
     // MARK: - Navigation
 

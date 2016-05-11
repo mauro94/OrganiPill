@@ -35,6 +35,7 @@ class ViewControllerEscogerSettings: UIViewController {
         {
             //esconde los containers que no se utilizaran
         case 0:
+            view.endEditing(true)
             containerPaciente.hidden = false
             containerDoctor.hidden = true
             containerContacto.hidden = true
@@ -43,6 +44,7 @@ class ViewControllerEscogerSettings: UIViewController {
             break
             
         case 1:
+            view.endEditing(true)
             containerPaciente.hidden = true
             containerDoctor.hidden = false
             containerContacto.hidden = true
@@ -51,6 +53,7 @@ class ViewControllerEscogerSettings: UIViewController {
            break
             
         case 2:
+            view.endEditing(true)
             containerPaciente.hidden = true
             containerDoctor.hidden = true
             containerContacto.hidden = false
@@ -59,6 +62,7 @@ class ViewControllerEscogerSettings: UIViewController {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ViewControllerEscogerSettings.nuevoDato(_:)))
             break
 		case 3:
+            view.endEditing(true)
 			containerPaciente.hidden = true
 			containerDoctor.hidden = true
 			containerContacto.hidden = true

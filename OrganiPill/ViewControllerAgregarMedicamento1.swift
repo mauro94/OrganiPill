@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate,UITextFieldDelegate {
     // MARK: - Outlets
     @IBOutlet weak var pickerTipoMedicamentos: UIPickerView!
     @IBOutlet weak var fldNombre: UITextField!
@@ -21,6 +21,7 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fldNombre.delegate = self
 		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 
         self.pickerTipoMedicamentos.dataSource = self
@@ -33,6 +34,11 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 	
 	@IBAction func quitarTeclado() {
