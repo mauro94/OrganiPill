@@ -57,7 +57,7 @@ class ViewControllerPacienteSettings: UIViewController {
     @IBAction func GuardarDatosPac(sender: AnyObject) {
         
         //guarda los datos del paciente
-        if(tfTelefonoSecundario.text != "" && tfNombre.text != "" && txTelefono.text != "" && txCorreoElectronico.text != "" ){
+        if(tfNombre.text != "" && txTelefono.text != "" && txCorreoElectronico.text != "" ){
             let realm = try! Realm()
             try! realm.write {
                 let pacPac = realm.objects(Persona)
@@ -99,6 +99,10 @@ class ViewControllerPacienteSettings: UIViewController {
         
     }
     
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

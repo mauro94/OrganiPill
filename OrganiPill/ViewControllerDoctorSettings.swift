@@ -55,7 +55,7 @@ class ViewControllerDoctorSettings: UIViewController {
     @IBAction func GuardarDatosPac(sender: AnyObject) {
         //guarda los datos
         
-        if(tfTelefonoSecundario.text != "" && tfNombre.text != "" && txTelefono.text != "" && txCorreoElectronico.text != "" ){
+        if( tfNombre.text != "" && txTelefono.text != "" && txCorreoElectronico.text != "" ){
             let realm = try! Realm()
             try! realm.write {
                 let pacPac = realm.objects(Persona)
