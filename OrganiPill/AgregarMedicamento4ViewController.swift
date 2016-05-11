@@ -219,6 +219,12 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
         else{
             medMedicina.horario = listaHorarios
             guardaRealm()
+            
+
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let mainVC = storyboard.instantiateViewControllerWithIdentifier("Primero")
+            UIApplication.sharedApplication().delegate?.window?!.rootViewController = mainVC
+            UIApplication.sharedApplication().delegate?.window?!.makeKeyAndVisible()
             navigationController?.popToRootViewControllerAnimated(true)
         }
     }

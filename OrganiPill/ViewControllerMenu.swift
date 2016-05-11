@@ -38,6 +38,22 @@ class ViewControllerMenu: UIViewController,MFMailComposeViewControllerDelegate {
     
     
     
+    override func viewWillAppear(animated: Bool) {
+        
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        let realm = try! Realm()
+        let paciente = realm.objects(Paciente)
+        
+        //si no existe una instancia de persona hacer setup
+        if (paciente.count == 0) {
+            let storyboard = UIStoryboard(name: "setupInicial", bundle: nil)
+            let setupVC = storyboard.instantiateViewControllerWithIdentifier("Primero")
+            self.presentViewController(setupVC, animated: true, completion: nil)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
