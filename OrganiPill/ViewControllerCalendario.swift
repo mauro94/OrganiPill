@@ -159,6 +159,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		else {
 			tbvMedicamentosPendientes.hidden = true
 			viewNoMeds.hidden = false
+            tbvMedicamentosPendientes.reloadData()
 		}
 	}
 	
