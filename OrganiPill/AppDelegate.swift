@@ -13,6 +13,7 @@ import RealmSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
+    var activeViewCont : UIViewController!
 
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -140,7 +141,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navigationController = application.windows[0].rootViewController as! UINavigationController
             //let activeViewCont = navigationController.visibleViewController
             print(navigationController.viewControllers)
-            let activeViewCont = navigationController.visibleViewController
+            if(!navigationController.visibleViewController!.isKindOfClass(NotificacionViewController) && !navigationController.visibleViewController!.isKindOfClass(UIAlertController)){
+                activeViewCont = navigationController.visibleViewController
+            }
+            else{
+                //let activeViewCont = self.window?.rootViewController
+            }
             print(activeViewCont)
             
             //self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
