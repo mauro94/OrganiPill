@@ -24,13 +24,14 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     var index : Int!
 	var indexCell: NSIndexPath!
     let onBttnColor : UIColor = UIColor(red: 255/255, green: 70/255, blue: 89/255, alpha: 1)
+	var iNumdias: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		
 		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
-        self.title = "Horario"
+        self.title = "Recordatorios"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AgregarMedicamento4ViewController.newButtonPressed(_:)))
     }
@@ -169,18 +170,34 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     }
 
     // MARK: - Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-        let viewAgregar = segue.destinationViewController as! AgregarHorarioViewController
-        
-        viewAgregar.delegado = self
-        
+	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+		if (identifier == "comentario") {
+			if(listaHorarios.count == 0){
+				noHorarioAlert()
+				return false
+			}
+			return true
+		}
+		return true
+	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		
         //nuevo horario
         if(segue.identifier == "newH"){
+			let viewAgregar = segue.destinationViewController as! AgregarHorarioViewController
+			
+			viewAgregar.delegado = self
+			
             viewAgregar.horaEdit = "12:00"
+			viewAgregar.iNumDias = iNumdias
         }
         //editar horario
         else if(segue.identifier == "editH"){
+			let viewAgregar = segue.destinationViewController as! AgregarHorarioViewController
+			
+			viewAgregar.delegado = self
+			
             //guarda el indice seleccionado
             let indexPath = self.tableHorarios.indexPathForSelectedRow
             index = indexPath!.row
@@ -196,45 +213,31 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
             for i in listaHorarios[index].listaDias{
                 viewAgregar.diasEdit.append(i.dia)
             }
-            
+			
+            viewAgregar.iNumDias = iNumdias
             viewAgregar.editing = true
         }
+		
+		else if(segue.identifier == "comentario"){
+			let viewAgregar = segue.destinationViewController as! AgregarMedicamento5ViewController
+			
+			medMedicina.horario = listaHorarios
+			
+			viewAgregar.medMedicina = medMedicina
+		}
     }
     
     //alerta si no hay ningun horario
     func noHorarioAlert(){
         //creates popup message
-        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste agregar un horario", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste agregar un recordatorio", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         
         presentViewController(alerta, animated: true, completion: nil)
-    }
+	}
+	
 
-    @IBAction func presionaTerminar(sender: AnyObject) {
-        if(listaHorarios.count == 0){
-            noHorarioAlert()
-            return
-        }
-        else{
-            medMedicina.horario = listaHorarios
-            guardaRealm()
-            navigationController?.popToRootViewControllerAnimated(true)
-        }
-    }
-    
-    //guarda la medicina y notificaciones a la base de datos REALM
-    func guardaRealm(){
-        let realm = try! Realm()
-        
-        try! realm.write {
-            realm.add(medMedicina)
-        }
-        
-        let notif : HandlerNotificaciones = HandlerNotificaciones(medMedicamento: medMedicina)
-        
-        notif.generarNotificaciones()
-    }
     
     //genera un string en formato "HH:MM" a partir de componentes
     func getHourAsString(components : NSDateComponents) -> String{

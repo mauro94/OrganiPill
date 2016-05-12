@@ -38,12 +38,18 @@ class AgregarHorarioViewController: UIViewController{
     var horaEdit : String!
     var diasEdit : [Int] = []
     var bttnDias = [UIButton]!(nil)
+	var iNumDias: Int!
+	var counterDias: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker.datePickerMode = UIDatePickerMode.Time
-        
-        self.title = "Agregar Horario"
+		if (!bEditing) {
+			self.title = "Nuevo Recordatorio"
+		}
+		else {
+			self.title = "Editar Recordatorio"
+		}
         
         //Agrega boton derecho a la barra de navegacion
 		if (editing) {
@@ -116,19 +122,38 @@ class AgregarHorarioViewController: UIViewController{
     
     //pinta el dia
     @IBAction func selectDay(sender: UIButton) {
-        //color de prendido
-        if(!sender.selected){
-            sender.backgroundColor = onBttnColor
-        }
-        //color de apagado
-        else{
-            sender.backgroundColor = UIColor.whiteColor()
-        }
-        
-        //voltea el valor
-        sender.selected = !sender.selected
+		if (counterDias < iNumDias) {
+			//color de prendido
+			if(!sender.selected){
+				sender.backgroundColor = onBttnColor
+				counterDias += 1
+			}
+				//color de apagado
+			else{
+				sender.backgroundColor = UIColor.whiteColor()
+				counterDias -= 1
+			}
+			
+			//voltea el valor
+			sender.selected = !sender.selected
+		}
+		else {
+			if(sender.selected){
+				//voltea el valor
+				sender.selected = !sender.selected
+				sender.backgroundColor = UIColor.whiteColor()
+				counterDias -= 1
+			}
+			else {
+			let alerta = UIAlertController(title: "¡Alerta!", message: "La duración seleccionada es de \(iNumDias!) día(s)", preferredStyle: UIAlertControllerStyle.Alert)
+			
+			alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
+			
+			presentViewController(alerta, animated: true, completion: nil)
+			}
+		}
     }
-    
+	
     //maneja la navegacion sin guardar
     func cancelarButtonPressed(sender: AnyObject){
         navigationController?.popViewControllerAnimated(true)

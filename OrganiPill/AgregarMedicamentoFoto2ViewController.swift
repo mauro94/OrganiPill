@@ -94,9 +94,25 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
 		imgFoto.hidden = false
 		viewNoImagen.hidden = true
     }
+	
+	@IBAction func btSiguiente(sender: AnyObject) {
+		if(tieneImagen){
+			if (medMedicina.sTipoMedicina == "Inyección" || medMedicina.sTipoMedicina == "Suspensión") {
+				performSegueWithIdentifier("noPastillero", sender: sender)
+			}
+			else {
+				performSegueWithIdentifier("pastillero", sender: sender)
+			}
+		}
+		else {
+			emptyImage()
+		}
+	}
+	
+	
     
      // MARK: - Navigation
-    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
         if(tieneImagen){
             return true
         }
@@ -107,12 +123,24 @@ class AgregarMedicamentoFoto2ViewController: UIViewController, UIImagePickerCont
     }
     
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let viewSiguiente = segue.destinationViewController as! AgregarMedicamentoFoto3ViewController
-        
-        //guarda los datos del medicamento de esta vista
-        medMedicina.sFotoCaja = pathImagen
-        
-        viewSiguiente.medMedicina = medMedicina
+		if (segue.identifier == "pastillero") {
+			let viewSiguiente = segue.destinationViewController as! AgregarMedicamentoFoto3ViewController
+			
+			//guarda los datos del medicamento de esta vista
+			medMedicina.sFotoCaja = pathImagen
+			
+			viewSiguiente.medMedicina = medMedicina
+		}
+		else {
+			let viewSiguiente = segue.destinationViewController as! AgregarMedicamento3ViewController
+			
+			//guarda los datos del medicamento de esta vista
+			medMedicina.sFotoCaja = pathImagen
+			medMedicina.sFotoPastillero = nil
+			
+			viewSiguiente.medMedicina = medMedicina
+		}
+		
      }
-    
+	
 }

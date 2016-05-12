@@ -67,7 +67,7 @@ class ViewControllerAgregarMedicamentoFoto1: UIViewController, UIImagePickerCont
         case "Suspensión":
             self.title = "Bote"
             break
-        case "Cápsulas":
+        case "Cápsula":
             self.title = "Cápsula"
             break
 		case "Tableta":

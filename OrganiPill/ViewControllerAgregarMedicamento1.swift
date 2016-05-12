@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     // MARK: - Outlets
     @IBOutlet weak var pickerTipoMedicamentos: UIPickerView!
     @IBOutlet weak var fldNombre: UITextField!
@@ -18,6 +18,7 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     // MARK: - Global Variables
     let arrTiposMedicamento = ["Supositorio", "Inyección", "Cápsula", "Pastilla", "Tableta", "Suspensión"]
     var medMedicina : Medicamento = Medicamento()
+	var iRow: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,14 +27,38 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
         self.pickerTipoMedicamentos.dataSource = self
         self.pickerTipoMedicamentos.delegate = self
         self.pickerTipoMedicamentos.selectRow(2, inComponent: 0, animated: true)
-        
+		
+		fldNombre.delegate = self
+		
 		self.title = "Agregar Medicamento"
+		
+		registrarseParaNotificacionesDeTeclado()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	private func registrarseParaNotificacionesDeTeclado() {
+		NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(keyboardWasShown(_:)),
+		                                                 name:UIKeyboardWillShowNotification, object:nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(keyboardWillBeHidden(_:)),
+		                                                 name:UIKeyboardWillHideNotification, object:nil)
+	}
+	
+	func keyboardWasShown (aNotification : NSNotification ) {
+		pickerTipoMedicamentos.userInteractionEnabled = false
+	}
+	
+	func keyboardWillBeHidden (aNotification : NSNotification) {
+		pickerTipoMedicamentos.userInteractionEnabled = true
+	}
+	
+	func textFieldShouldReturn(textField: UITextField!) -> Bool {
+		textField.resignFirstResponder()
+		return true
+	}
 	
 	@IBAction func quitarTeclado() {
 		self.view.endEditing(true)
@@ -59,12 +84,13 @@ class ViewControllerAgregarMedicamento1: UIViewController, UIPickerViewDataSourc
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return arrTiposMedicamento[row]
+		return arrTiposMedicamento[row]
     }
 
     // MARK: - Navigation
     override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
-        if(fldNombre.text != ""){
+		let trimmedString = (fldNombre.text)!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        if(trimmedString != ""){
 			//obtner datos de realm
 			let realm = try! Realm()
 			let medicamentos = realm.objects(Medicamento)
