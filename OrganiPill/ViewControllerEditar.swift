@@ -9,18 +9,13 @@
 import UIKit
 import RealmSwift
 
-class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class ViewControllerEditar: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     //OUTLETS
     @IBOutlet weak var txviewComentario: UITextView!
     @IBOutlet weak var swAlimentos: UISwitch!
     @IBOutlet weak var txCajaActual: UITextField!
     @IBOutlet weak var txMiligramosCaja: UITextField!
-	@IBOutlet weak var sgmTipoCantidad: UISegmentedControl!
-	@IBOutlet weak var pckCantidad: UIPickerView!
-	@IBOutlet weak var pckNumeroCaja: UIPickerView!
     @IBOutlet weak var scScrollView: UIScrollView!
-	@IBOutlet weak var pckDosis: UIPickerView!
-    @IBOutlet weak var pckTipoMed: UIPickerView!
     @IBOutlet weak var tfNombre: UITextField!
     @IBOutlet weak var tfDosis: UITextField!
 	@IBOutlet weak var lbNumeroMedsEnCaja: UILabel!
@@ -32,6 +27,8 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 	var arrValoresCaja = [Int]()
 	var arrValoresCantidad = [Int]()
 	var arrValores = [Int]()
+	var activeField : UITextField?
+	var activeTextv : UITextView?
 	
     var delegado = ProtocoloReloadTable!(nil)
     var indMedicamento : Medicamento! = Medicamento()
@@ -53,11 +50,8 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		tfNombre.text = indMedicamento.sNombre
 		
 		//tipo de medicamento
-		pckTipoMed.delegate = self
-		pckTipoMed.dataSource = self
+
 		let ubicacion = arrTiposMedicamento.indexOf(indMedicamento.sTipoMedicina)
-		pckTipoMed.selectRow(ubicacion!, inComponent: 0, animated: true)
-		pckTipoMed.tag = 1
 		
 		switch(indMedicamento.sTipoMedicina){
 		case "Pastilla":
@@ -98,38 +92,16 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		//numero de meds en caja
         
         
-		txCajaActual.text = String(indMedicamento.dCantidadPorCajaActual)
+		txCajaActual.text = String(Int(indMedicamento.dCantidadPorCajaActual))
 		
-		pckNumeroCaja.delegate = self
-		pckNumeroCaja.dataSource = self
-		pckNumeroCaja.tag = 2
 		
 		//cantidad de meds por caja
 		lbDosisPorMed.text = subTitulo
 		
-		txMiligramosCaja.text = String(indMedicamento.dDosisPorTipo)
-		
-		pckCantidad.delegate = self
-		pckCantidad.dataSource = self
-		pckCantidad.tag = 3
-		
-		switch indMedicamento.sUnidadesDosis {
-		case "Miligramos":
-			sgmTipoCantidad.selectedSegmentIndex = 0
-		case "Mililitros":
-			sgmTipoCantidad.selectedSegmentIndex = 1
-		case "Microgramos":
-			sgmTipoCantidad.selectedSegmentIndex = 2
-		default:
-			print("ERROR")
-		}
+		txMiligramosCaja.text = String(Int(indMedicamento.dDosisPorTipo))
 		
 		//dosis
-		tfDosis.text = String( indMedicamento.dDosisRecetada)
-		
-		pckDosis.delegate = self
-		pckDosis.dataSource = self
-		pckDosis.tag = 4
+		tfDosis.text = String( Int(indMedicamento.dDosisRecetada))
 		
 		//comentarios
 		txviewComentario.text = indMedicamento.sComentario
@@ -144,20 +116,23 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		}
 
 		scScrollView.contentSize = self.view.frame.size
-	}
-	
-	override func viewDidAppear(animated: Bool) {
-		pckNumeroCaja.selectRow(Int(indMedicamento.dCantidadPorCajaActual)-1, inComponent: 0, animated: true)
-		pckCantidad.selectRow(Int((indMedicamento.dDosisPorTipo-10)/10), inComponent: 0, animated: true)
 		
-		pckDosis.selectRow(Int(indMedicamento.dDosisRecetada) - 1, inComponent: 0, animated: true)
+		//mover vista cuando aparece el teclado
+		let tap = UITapGestureRecognizer(target: self, action: #selector(quitaTeclado))
 		
+		self.view.addGestureRecognizer(tap)
+		
+		self.registrarseParaNotificacionesDeTeclado()
 	}
 	
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
+	}
+	
+	func quitaTeclado() {
+		view.endEditing(true)
 	}
 
     
@@ -177,9 +152,7 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
                 indMedicamento.dDosisPorTipo = Double(txMiligramosCaja.text!)!
               
                 indMedicamento.dCantidadPorCajaActual = Double(txCajaActual.text!)!
-				
-				indMedicamento.sTipoMedicina = arrTiposMedicamento[pckTipoMed.selectedRowInComponent(0)]
-				
+								
                 if(swAlimentos.on){
                     indMedicamento.bNecesitaAlimento = true
                 }
@@ -316,75 +289,49 @@ class ViewControllerEditar: UIViewController, UIPickerViewDelegate, UIPickerView
 		self.navigationController?.popToRootViewControllerAnimated(true)
 	}
 	
-	
-	// MARK: - Picker Functions
-	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-		if (pickerView.tag == 1) {
-			return 1
-		}
-		else if (pickerView.tag == 2) {
-			return 1
-		}
-		else if (pickerView.tag == 3) {
-			return 1
-		}
-		else if (pickerView.tag == 4) {
-			return 1
-		}
-		else {
-			return 1
-		}
+	//MARK - Mover vista cuando aparece teclado
+	private func registrarseParaNotificacionesDeTeclado() {
+		NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(keyboardWasShown(_:)),
+		                                                 name:UIKeyboardWillShowNotification, object:nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(keyboardWillBeHidden(_:)),
+		                                                 name:UIKeyboardWillHideNotification, object:nil)
 	}
 	
-	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-		if (pickerView.tag == 1) {
-			return arrTiposMedicamento.count;
-		}
-		else if (pickerView.tag == 2) {
-			return arrValoresCaja.count
-		}
-		else if (pickerView.tag == 3) {
-			return arrValoresCantidad.count
-		}
-		else {
-			return arrValores.count
-		}
+	func keyboardWasShown (aNotification : NSNotification )
+	{
+		let kbSize = aNotification.userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
 		
+		let contentInset = UIEdgeInsetsMake(0.0, 0.0, kbSize.height + 80, 0.0)
+		scScrollView.contentInset = contentInset
+		scScrollView.scrollIndicatorInsets = contentInset
+		scScrollView.contentSize = self.view.frame.size
 	}
 	
-	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-		if (pickerView.tag == 1) {
-			return arrTiposMedicamento[row]
-		}
-		else if (pickerView.tag == 2) {
-			txCajaActual.text = "\(pickerView.selectedRowInComponent(component)+1)"
-			return "\(arrValoresCaja[row])"
-		}
-		else if (pickerView.tag == 3) {
-			txMiligramosCaja.text = "\((pickerView.selectedRowInComponent(component)+1)*10)"
-			return "\(arrValoresCantidad[row])"
-		}
-		else {
-			tfDosis.text = "\(pickerView.selectedRowInComponent(component)+1)"
-			return "\(arrValores[row])"
-		}
+	func keyboardWillBeHidden (aNotification : NSNotification)
+	{
+		let contentInsets : UIEdgeInsets = UIEdgeInsetsZero
+		scScrollView.contentInset = contentInsets
+		scScrollView.scrollIndicatorInsets = contentInsets;
+		scScrollView.contentSize = self.view.frame.size
 	}
 	
+	func textFieldDidBeginEditing (textField : UITextField ) {
+		activeField = textField
+	}
 	
+	func textFieldDidEndEditing (textField : UITextField ) {
+		activeField = nil
+	}
 	
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    
-    
-    
-    
-    
+	func textViewDidBeginEditing(textView: UITextView) {
+		activeTextv = txviewComentario
+	}
+	
+	func textViewDidEndEditing(textView: UITextView) {
+		activeTextv = nil
+	}
+	
+	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+		return UIModalPresentationStyle.None
+	}
 }

@@ -31,7 +31,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
 		
 		self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
-        self.title = "Recordatorios"
+        self.title = "Horario"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AgregarMedicamento4ViewController.newButtonPressed(_:)))
     }
@@ -230,7 +230,7 @@ class AgregarMedicamento4ViewController: UIViewController, UITableViewDataSource
     //alerta si no hay ningun horario
     func noHorarioAlert(){
         //creates popup message
-        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste agregar un recordatorio", preferredStyle: UIAlertControllerStyle.Alert)
+        let alerta = UIAlertController(title: "¡Alerta!", message: "Parece que olvidaste agregar un horario", preferredStyle: UIAlertControllerStyle.Alert)
         
         alerta.addAction(UIAlertAction(title: "Regresar", style: UIAlertActionStyle.Cancel, handler: nil))
         

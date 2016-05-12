@@ -44,7 +44,14 @@ class AgregarMedicamento5ViewController: UIViewController, UITextViewDelegate {
 	}
 
 	@IBAction func terminar(sender: AnyObject) {
-		medMedicina.sComentario = tvComments.text
+		let trimmedString = (tvComments.text)!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+		if(trimmedString != ""){
+			medMedicina.sComentario = tvComments.text
+		}
+		else {
+			medMedicina.sComentario = ""
+		}
+		
 		guardaRealm()
 		
 		let alerta = UIAlertController(title: "¡Listo!", message: "\(medMedicina.sNombre) ha sido agregado a tu medicamentos", preferredStyle: UIAlertControllerStyle.Alert)

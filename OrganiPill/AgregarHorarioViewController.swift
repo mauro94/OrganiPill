@@ -45,10 +45,10 @@ class AgregarHorarioViewController: UIViewController{
         super.viewDidLoad()
         datePicker.datePickerMode = UIDatePickerMode.Time
 		if (!bEditing) {
-			self.title = "Nuevo Recordatorio"
+			self.title = "Nuevo Horario"
 		}
 		else {
-			self.title = "Editar Recordatorio"
+			self.title = "Editar Horario"
 		}
         
         //Agrega boton derecho a la barra de navegacion

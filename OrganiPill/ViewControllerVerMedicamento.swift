@@ -87,7 +87,7 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         //Escribe todos los datos en las labels
         
         lblNombre.text = indexMedicamento.sNombre
-        lblDosis.text = String(indexMedicamento.dDosisRecetada)
+        lblDosis.text = String(Int(indexMedicamento.dDosisRecetada))
         lblVia.text = indexMedicamento.sTipoMedicina
 		lbTipoMedicamento.text = indexMedicamento.sTipoMedicina
 		lbTipoMed.text = indexMedicamento.sTipoMedicina + "(s)"
@@ -107,8 +107,8 @@ class ViewControllerVerMedicamento: UIViewController, MFMailComposeViewControlle
         
 		lbTipoUnidades.text = indexMedicamento.sUnidadesDosis
         lblDuracion.text = String(indexMedicamento.iDuracion)
-        lblcajaactual.text = String(indexMedicamento.dCantidadPorCajaActual)
-        lblcajamiligramo.text = String(indexMedicamento.dDosisPorTipo)
+        lblcajaactual.text = String(Int(indexMedicamento.dCantidadPorCajaActual))
+        lblcajamiligramo.text = String(Int(indexMedicamento.dDosisPorTipo))
 		
         
         //checa si necestia alimentos
