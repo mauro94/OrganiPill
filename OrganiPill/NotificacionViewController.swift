@@ -143,6 +143,11 @@ class NotificacionViewController: UIViewController {
             presentViewController(alerta, animated: true, completion: nil)
         }**/
 
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainVC = storyboard.instantiateViewControllerWithIdentifier("Primero")
+        UIApplication.sharedApplication().delegate?.window?!.rootViewController = mainVC
+        UIApplication.sharedApplication().delegate?.window?!.makeKeyAndVisible()
+        navigationController?.popToRootViewControllerAnimated(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -150,6 +155,11 @@ class NotificacionViewController: UIViewController {
     @IBAction func presionaSnooze(sender: AnyObject) {
         snoozeNotif(5)
 
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainVC = storyboard.instantiateViewControllerWithIdentifier("Primero")
+        UIApplication.sharedApplication().delegate?.window?!.rootViewController = mainVC
+        UIApplication.sharedApplication().delegate?.window?!.makeKeyAndVisible()
+        navigationController?.popToRootViewControllerAnimated(true)
         self.dismissViewControllerAnimated(true, completion: nil)
 
     }

@@ -12,7 +12,7 @@ import RealmSwift
 class Notificaciones: Object {
     var listaNotificaciones = List<Fecha>()
     //var listaMedicamentos = List<CustomString>()
-    var id : Int = 1
+    var id : Int = 0
     
     override static func primaryKey() -> String? {
         return "id"
