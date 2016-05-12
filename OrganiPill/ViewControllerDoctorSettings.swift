@@ -52,32 +52,55 @@ class ViewControllerDoctorSettings: UIViewController {
     
     @IBOutlet weak var GuardarDatosPaciente: UIButton!
     
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
     @IBAction func GuardarDatosPac(sender: AnyObject) {
+        //guarda los datos
         
-        
-        if(tfTelefonoSecundario.text != "" && tfNombre.text != "" && txTelefono.text != "" && txCorreoElectronico.text != "" ){
-            let realm = try! Realm()
-            try! realm.write {
-                let pacPac = realm.objects(Persona)
+        if( tfNombre.text != "" && txTelefono.text != "" && txCorreoElectronico.text != "" ){
+            
+            if(validateEmail(txCorreoElectronico.text!)){
                 
-                pacPac[1].sNombre  = tfNombre.text!
+                let realm = try! Realm()
+                try! realm.write {
+                    let pacPac = realm.objects(Persona)
+                    
+                    pacPac[1].sNombre  = tfNombre.text!
+                    
+                    pacPac[1].sTelefono = txTelefono.text!
+                    pacPac[1].sTelefonoSecundario = tfTelefonoSecundario.text!
+                    
+                    pacPac[1].sCorreoElectronico = txCorreoElectronico.text!
+                    
+                    
+                    
+                    
+                }
                 
-                pacPac[1].sTelefono = txTelefono.text!
-                pacPac[1].sTelefonoSecundario = tfTelefonoSecundario.text!
+                let alerta = UIAlertController(title: "Guardado", message: "La informacion ha sido guardada correctamente",preferredStyle:  UIAlertControllerStyle.Alert)
                 
-                pacPac[1].sCorreoElectronico = txCorreoElectronico.text!
-                
+                alerta.addAction(UIAlertAction(title: "Ok",style: UIAlertActionStyle.Cancel, handler:nil))
                 
                 
+                presentViewController(alerta,animated:true, completion:nil)
+                
+            }
+            else{
+                let alerta = UIAlertController(title: "Error", message: "El mail es incorrecto!",preferredStyle:  UIAlertControllerStyle.Alert)
+                
+                alerta.addAction(UIAlertAction(title: "Ok",style: UIAlertActionStyle.Cancel, handler:nil))
+                
+                
+                presentViewController(alerta,animated:true, completion:nil)
                 
             }
             
-            let alerta = UIAlertController(title: "Guardado", message: "La informacion ha sido guardada correctamente",preferredStyle:  UIAlertControllerStyle.Alert)
-            
-            alerta.addAction(UIAlertAction(title: "Ok",style: UIAlertActionStyle.Cancel, handler:nil))
             
             
-            presentViewController(alerta,animated:true, completion:nil)
             
             
             
@@ -97,6 +120,10 @@ class ViewControllerDoctorSettings: UIViewController {
         
     }
     
+    func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(candidate)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

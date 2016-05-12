@@ -47,7 +47,7 @@ class AgregarMedicamento5ViewController: UIViewController, UITextViewDelegate {
 		medMedicina.sComentario = tvComments.text
 		guardaRealm()
 		
-		let alerta = UIAlertController(title: "¡Listo!", message: "\(medMedicina.sNombre) agregado a tu medicamentos", preferredStyle: UIAlertControllerStyle.Alert)
+		let alerta = UIAlertController(title: "¡Listo!", message: "\(medMedicina.sNombre) ha sido agregado a tu medicamentos", preferredStyle: UIAlertControllerStyle.Alert)
 		
 		alerta.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
 		

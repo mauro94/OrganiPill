@@ -112,6 +112,9 @@ class NotificacionViewController: UIViewController {
         try! realm.write{
             //se reduce la cantidad de medicina (pastillas, cucharadas) por la dosis tomada
             medicina.dCantidadPorCajaActual -= medicina.dDosisRecetada
+            if(medicina.dCantidadPorCajaActual < 0){
+                medicina.dCantidadPorCajaActual = 0
+            }
         }
         
         //BUG: Usar el UIAlert genera un bug en el calendario
@@ -139,14 +142,26 @@ class NotificacionViewController: UIViewController {
             alerta.addAction(UIAlertAction(title: "Ignorar", style: .Default, handler: returnTrue()))
             presentViewController(alerta, animated: true, completion: nil)
         }**/
-        
-        self.performSegueWithIdentifier("tomarMedicina", sender: sender)
+
+        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //let mainVC = storyboard.instantiateViewControllerWithIdentifier("Primero")
+        //UIApplication.sharedApplication().delegate?.window?!.rootViewController = mainVC
+        //UIApplication.sharedApplication().delegate?.window?!.makeKeyAndVisible()
+        //navigationController?.popToRootViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     //maneja la accion de presionar posponer
     @IBAction func presionaSnooze(sender: AnyObject) {
         snoozeNotif(5)
-        performSegueWithIdentifier("snoozeMedicina", sender: sender)
+
+        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //let mainVC = storyboard.instantiateViewControllerWithIdentifier("Primero")
+        //UIApplication.sharedApplication().delegate?.window?!.rootViewController = mainVC
+        //UIApplication.sharedApplication().delegate?.window?!.makeKeyAndVisible()
+        //navigationController?.popToRootViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
+
     }
 
     //cambia de foto con un swipe

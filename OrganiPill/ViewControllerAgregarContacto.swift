@@ -70,10 +70,20 @@ class ViewControllerAgregarContacto: UIViewController, UIPopoverPresentationCont
 			editando = false
 		}
 	}
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(candidate)
     }
 	
 	//barra blanca
@@ -116,21 +126,31 @@ class ViewControllerAgregarContacto: UIViewController, UIPopoverPresentationCont
     // MARK: - Navigation
 	@IBAction func AgregarContacto(sender: AnyObject) {
 		if(tfNombre.text != "" && tfTelefono.text != "" && tfCorreoElectronico.text != "") {
-			//guarda los datos de esta vista
-			contacto.sNombre = tfNombre.text!
-			contacto.sTelefono = tfTelefono.text!
-			if (tfTelefono2 != "") {
-				contacto.sTelefonoSecundario = tfTelefono2.text!
-			}
-			contacto.sCorreoElectronico = tfCorreoElectronico.text!
-			
-			if (!editando) {
-				delegado.guardaContacto(contacto)
-			}
-			else {
-				delegado.editarContacto(contacto)
-			}
-			self.performSegueWithIdentifier("unwindContacto", sender: self)
+            
+            if(validateEmail(tfCorreoElectronico.text!)){
+                
+                //guarda los datos de esta vista
+                contacto.sNombre = tfNombre.text!
+                contacto.sTelefono = tfTelefono.text!
+                if (tfTelefono2 != "") {
+                    contacto.sTelefonoSecundario = tfTelefono2.text!
+                }
+                contacto.sCorreoElectronico = tfCorreoElectronico.text!
+                
+                if (!editando) {
+                    delegado.guardaContacto(contacto)
+                }
+                else {
+                    delegado.editarContacto(contacto)
+                }
+                self.performSegueWithIdentifier("unwindContacto", sender: self)
+            }
+            else{
+                emptyField("el mail correctamente")
+                
+            }
+            
+            
 		}
 		else {
 			emptyField("algún campo obligatorio (*)")

@@ -51,6 +51,11 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
 	func quitaTeclado() {
 		view.endEditing(true)
 	}
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 	
 	//mensaje de error
 	func emptyField(field : String){
@@ -61,6 +66,12 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
 		
 		presentViewController(alerta, animated: true, completion: nil)
 	}
+    
+    func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(candidate)
+    }
+    
 	
     // MARK: - Navigation
 	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
@@ -70,8 +81,15 @@ class ViewControllerSetupInicial1: UIViewController, UIPopoverPresentationContro
 			return true
 		}
 		//si se va a pasar a la siguiente vista
-		if(tfNombre.text != "" && tfTelefono.text != "" && tfCorreoElectronico.text != ""){
-			return true
+		if(tfNombre.text != "" && tfTelefono.text != "" && tfCorreoElectronico.text != "" ){
+            if(validateEmail(tfCorreoElectronico.text!)){
+                return true
+            }
+            else{
+                emptyField("el mail correctamente")
+                return false
+            }
+			
 		}
 		//si falto llenar un dato
 		else{

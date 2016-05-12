@@ -43,7 +43,15 @@ class ViewControllerSetupInicial2: UIViewController, UIPopoverPresentationContro
 	func quitaTeclado() {
 		view.endEditing(true)
 	}
+    func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(candidate)
+    }
 	
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 	
 	func emptyField(field : String){
 		//creates popup message
@@ -63,7 +71,16 @@ class ViewControllerSetupInicial2: UIViewController, UIPopoverPresentationContro
 		}
 		//si se va a pasar a la siguiente vista
 		if(tfNombre.text != "" && tfTelefonoConsultorio.text != "" && tfCorreoElectronico.text != ""){
-			return true
+            
+            if(validateEmail(tfCorreoElectronico.text!)){
+                return true
+            }
+            else{
+                emptyField("el mail correctamente")
+                return false
+            }
+            
+			
 		}
 		//si falto llenar un dato
 		else{

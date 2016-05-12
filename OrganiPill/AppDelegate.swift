@@ -13,11 +13,12 @@ import RealmSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
+    var activeViewCont : UIViewController!
 
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
-		storyboard()
+		//storyboard()
         
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
         
@@ -50,25 +51,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	//MARK - Modificar storyboard inicial
 	func storyboard() {
-		let storyboard: UIStoryboard = self.grabStoryboard()
-		self.setInitialScreen(storyboard)
+		//var storyboard: UIStoryboard = self.grabStoryboard()
+		//self.setInitialScreen(storyboard)
+        
+        /**let realm = try! Realm()
+        let paciente = realm.objects(Paciente)
+        
+        //si no existe una instancia de persona hacer setup
+        if (paciente.count == 0) {
+            let storyboard = UIStoryboard(name: "setupInicial", bundle: nil)
+            let setupVC = storyboard.instantiateViewControllerWithIdentifier("Primero")
+            self.window?.rootViewController?.presentViewController(setupVC, animated: true, completion: nil)
+        }**/
+
 	}
 	
 	//funcion que decide que storyboard es el inicial
 	func grabStoryboard() -> UIStoryboard {
 		var storyboard: UIStoryboard
-		
-		let realm = try! Realm()
-		let paciente = realm.objects(Paciente)
-
-		//si no existe una  instancia de persona pedir datos
-		if (paciente.count == 0) {
-			storyboard = UIStoryboard(name: "setupInicial", bundle: nil)
-		}
-		
-		else {
-			storyboard = UIStoryboard(name: "Main", bundle: nil)
-		}
+        storyboard = UIStoryboard(name: "Main", bundle: nil)
 		
 		return storyboard
 	}
@@ -95,23 +96,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fechaOriginal = userInfo["fechaOriginal"] as! NSDate
         
         //si la aplicacion recibe notificacion mientras se usa, presentar alerta
+        //self.storyboard()
+
         if application.applicationState == .Active {
-           /** let alerta = UIAlertController(title: "¡Alerta!", message: "Hora de tomar \(nombreMed)", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            //presionar esto lo lleva a la vista para registrar una medicina como tomada
-            alerta.addAction(UIAlertAction(title: "Más información", style: UIAlertActionStyle.Default, handler: {action in self.tomarMedicinaController(nombreMed, fechaAlerta: fechaAlerta, fechaOriginal: fechaOriginal, notification: notification)
-                self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
-            print(exit)}))
-            
-            //presionar este boton pospone la notificacion 5 minutos
-            alerta.addAction(UIAlertAction(title: "Posponer 5 minutos", style: UIAlertActionStyle.Destructive, handler: {action in
-                self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
-            print(exit)}))
-            
-            //al completar el boton te lleva al menu
-            window?.rootViewController?.presentViewController(alerta, animated: true, completion: nil)**/
-            
-            storyboard()
+            //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            //var initViewController = storyboard.instantiateViewControllerWithIdentifier("Primero")
+            //self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+            //self.window?.rootViewController = initViewController
+            //self.window?.makeKeyWindow()
             
             let alert = UIAlertController(title: "¡Alerta!", message: "Hora de tomar \(nombreMed)", preferredStyle: .Alert)
             // Handler for each of the actions
@@ -132,6 +124,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
                     let storyboard = UIStoryboard(name: "sbNotificacion", bundle: nil)
                     let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion") as! NotificacionViewController
+                    
+                    
                     notifViewController.sNombre = nombreMed
                     notifViewController.fechaAlerta = fechaAlerta
                     notifViewController.fechaOriginal = fechaOriginal
@@ -143,8 +137,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             alert.addAction(UIAlertAction(title: "Ver medicina", style: .Default, handler: dismissAndAction()))
             alert.addAction(UIAlertAction(title: "Posponer 5 minutos", style: .Destructive, handler: dismissAndSnooze()))
-            window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-
+            
+            let navigationController = application.windows[0].rootViewController as! UINavigationController
+            //let activeViewCont = navigationController.visibleViewController
+            print(navigationController.viewControllers)
+            if(!navigationController.visibleViewController!.isKindOfClass(NotificacionViewController) && !navigationController.visibleViewController!.isKindOfClass(UIAlertController)){
+                activeViewCont = navigationController.visibleViewController
+            }
+            else{
+                //let activeViewCont = self.window?.rootViewController
+            }
+            print(activeViewCont)
+            
+            //self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+            //self.window?.rootViewController = activeViewCont
+            //self.window?.makeKeyAndVisible()
+            //self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+            activeViewCont!.presentViewController(alert, animated: true, completion: nil)
         }
         //si abre la notificacion desde fuera, llevarlo directamente a la aplicacion
         else{
@@ -154,16 +163,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func tomarMedicinaController(nombreMed : String, fechaAlerta : NSDate, fechaOriginal : NSDate, notification : UILocalNotification){
         let storyboard = UIStoryboard(name: "sbNotificacion", bundle: nil)
-        let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion") as! NotificacionViewController
+        let notifViewController = storyboard.instantiateViewControllerWithIdentifier("notificacion")
         
-        notifViewController.sNombre = nombreMed
-        notifViewController.fechaAlerta = fechaAlerta
-        notifViewController.fechaOriginal = fechaOriginal
-        notifViewController.notificacion = notification
         
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window?.rootViewController = notifViewController
-        self.window?.makeKeyAndVisible()
+        (notifViewController as! NotificacionViewController).sNombre = nombreMed
+        (notifViewController as! NotificacionViewController).fechaAlerta = fechaAlerta
+        (notifViewController as! NotificacionViewController).fechaOriginal = fechaOriginal
+        (notifViewController as! NotificacionViewController).notificacion = notification
+        
+        //self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        //self.window?.rootViewController = notifViewController
+        //self.window?.makeKeyAndVisible()
+        
+        self.window?.rootViewController?.presentViewController(notifViewController, animated: true, completion: nil)
+
     }
 
 }

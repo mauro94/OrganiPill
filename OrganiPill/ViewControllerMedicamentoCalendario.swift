@@ -311,7 +311,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
             //borrar notificacion actual de la lista de notificaciones
             for i in 0...listaPendientes.listaNotificaciones.count-1{
                 //found a match
-                if(listaPendientes.listaNotificaciones[i].fechaAlerta == horaMedicina && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                if(listaPendientes.listaNotificaciones[i].fechaOriginal == horaMedicina && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
                     //guarda la fecha para usarla en la lista de tomadas
                     fechaAux = listaPendientes.listaNotificaciones[i]
                     
@@ -359,7 +359,7 @@ class ViewControllerMedicamentoCalendario: UIViewController, UITableViewDelegate
             //borrar notificacion actual de la lista de notificaciones
             for i in 0...listaPendientes.listaNotificaciones.count-1{
                 //found a match
-                if(listaPendientes.listaNotificaciones[i].fechaAlerta == horaMedicina && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
+                if(listaPendientes.listaNotificaciones[i].fechaOriginal == horaMedicina && listaPendientes.listaNotificaciones[i].nombreMed == sNombre){
                     //guarda la fecha para usarla despues
                     fechaAux = listaPendientes.listaNotificaciones[i]
                     

@@ -28,40 +28,7 @@ class TableViewControllerMisMedicamentos: UITableViewController, ProtocoloReload
        
         self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
-        //--------------------------- PDF --------------------------------------------------
-    
-        let html = "<b>Hello <i>World!</i></b> <p>PENE FOREVER</p>"
-        let fmt = UIMarkupTextPrintFormatter(markupText: html)
         
-        let render = UIPrintPageRenderer()
-        render.addPrintFormatter(fmt, startingAtPageAtIndex: 0)
-        
-        let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) 
-        let printable = CGRectInset(page, 0, 0)
-        
-        render.setValue(NSValue(CGRect: page), forKey: "paperRect")
-        render.setValue(NSValue(CGRect: printable), forKey: "printableRect")
-
-        let pdfData = NSMutableData()
-        UIGraphicsBeginPDFContextToData(pdfData, CGRectZero, nil)
-        
-        for i in 1...render.numberOfPages() {
-            
-            UIGraphicsBeginPDFPage();
-            let bounds = UIGraphicsGetPDFContextBounds()
-            render.drawPageAtIndex(i - 1, inRect: bounds)
-        }
-        
-        UIGraphicsEndPDFContext();
-
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        
-        pdfData.writeToFile("\(documentsPath)/file.pdf", atomically: true)
-        
-        
-        print(documentsPath);
-        
-        //--------------------------- PDF --------------------------------------------------
         
     }
     
@@ -80,6 +47,7 @@ class TableViewControllerMisMedicamentos: UITableViewController, ProtocoloReload
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         let realm = try! Realm()
+        //Saca la cantidad de medicamentos registrados
         
         return realm.objects(Medicamento).count
     }
@@ -99,6 +67,8 @@ class TableViewControllerMisMedicamentos: UITableViewController, ProtocoloReload
         
         //var num : Int = current.horario[0].listaDias[3]
         
+        
+        //checa los dias en que se debe tomar el medicamento y marca la letra en rojo
         for h in 0...(current.horario.count - 1) {
             
             for d in 0...(current.horario[h].listaDias.count - 1 ){
@@ -132,7 +102,7 @@ class TableViewControllerMisMedicamentos: UITableViewController, ProtocoloReload
         }
         
         
-        
+        //llena la cell con la imagen y nombre del medicamento
         cell.lbNombreMedicamento.text =  current.sNombre
         
         cell.imMedicamento.image = UIImage(contentsOfFile: current.sFotoMedicamento)
@@ -149,41 +119,7 @@ class TableViewControllerMisMedicamentos: UITableViewController, ProtocoloReload
         return cell
     }
 
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-     if editingStyle == .Delete {
-     // Delete the row from the data source
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     } else if editingStyle == .Insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
+  
     
     // MARK: - Navigation
     
@@ -195,7 +131,9 @@ class TableViewControllerMisMedicamentos: UITableViewController, ProtocoloReload
         
         let realm = try! Realm()
         
+        //manda el medicamento del renglon seleccionado
         let current = realm.objects(Medicamento)[indexPath!.row]
+        
         
         view.indexMedicamento = current
         

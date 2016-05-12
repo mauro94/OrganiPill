@@ -61,8 +61,12 @@ class TableViewControllerMedicamentosTomados: UITableViewController {
 					//llenar tabla con datos
 					let nombreMed = med.nombreMed
 					let medicamento = medicamentos.filter("sNombre == %@", nombreMed)
-					medicamentosTabla.append(medicamento.first!)
-					medicamentosTablaHoras.append(med.fechaAlerta)
+                    if(medicamento.first != nil){
+                        medicamentosTabla.append(medicamento.first!)
+                        medicamentosTablaHoras.append(med.fechaAlerta)
+                        
+                    }
+					
 				}
 			}
 		}

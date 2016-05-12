@@ -159,6 +159,7 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		else {
 			tbvMedicamentosPendientes.hidden = true
 			viewNoMeds.hidden = false
+            tbvMedicamentosPendientes.reloadData()
 		}
 	}
 	
@@ -280,13 +281,13 @@ class ViewControllerCalendario: UIViewController, UITableViewDelegate, UITableVi
 		let fechaOriginal = alerta.fechaOriginal
 		
 		//sumar 4 horas a la fecha
-		let fechaLimite = calendar.dateByAddingUnit(NSCalendarUnit.Hour, value: 4, toDate: fechaOriginal, options: NSCalendarOptions.WrapComponents)
+		let fechaLimite = NSDate(timeInterval: 4*60*60, sinceDate: fechaOriginal)
 		
 		//obtener fecha actual
 		let fechaActual = NSDate()
 		
 		//si ya pasaron 4 horas
-		if (fechaActual.earlierDate(fechaLimite!) == fechaLimite) {
+		if (fechaActual.earlierDate(fechaLimite) == fechaLimite) {
 				return true
 		}
 		return false

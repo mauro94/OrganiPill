@@ -125,8 +125,36 @@ class ViewControllerSetupInicial3: UIViewController, UITableViewDelegate, UITabl
 				realm.add(doctor)
 				realm.add(contactos)
 			}
+            
 		}
     }
+    
+    @IBAction func presionaTerminar(sender: AnyObject) {
+        //self.dismissViewControllerAnimated(true, completion: nil)
+        
+        let realm = try! Realm()
+        var pacPaciente: Paciente = Paciente()
+        
+        paciente.sTipo = "p"
+        doctor.sTipo = "d"
+        
+        for cont in contactos {
+            cont.sTipo = "c"
+        }
+        
+        pacPaciente.persona = paciente
+        
+        try! realm.write {
+            realm.add(pacPaciente)
+            realm.add(doctor)
+            realm.add(contactos)
+        }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let menuVC = storyboard.instantiateViewControllerWithIdentifier("Primero")
+        self.presentViewController(menuVC, animated: true, completion: nil)
+    }
+    
 	
 	@IBAction func unwindContacto(sender: UIStoryboardSegue) {
 		//en balnco... no se requiere hacer nada al regresar

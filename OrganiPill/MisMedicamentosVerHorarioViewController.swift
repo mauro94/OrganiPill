@@ -71,6 +71,7 @@ class MisMedicamentosVerHorario: UIViewController, UITableViewDataSource, UITabl
         let realm = try! Realm()
         
         try! realm.write {
+            //agrega nuevo horario
             listaHorarios.append(horario)
             tableHorarios.reloadData()
         }
@@ -82,6 +83,7 @@ class MisMedicamentosVerHorario: UIViewController, UITableViewDataSource, UITabl
         let realm = try! Realm()
         
         try! realm.write {
+            //edita el horario
         
             listaHorarios[index] = horario
             tableHorarios.reloadData()
@@ -110,9 +112,10 @@ class MisMedicamentosVerHorario: UIViewController, UITableViewDataSource, UITabl
     
     
     func borrarHorario(horario : CustomDate){
-        
+        //borra el horario si no es el unico creado
         
         if (listaHorarios.count > 1){
+            
             
             let realm = try! Realm()
             
